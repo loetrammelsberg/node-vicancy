@@ -43,7 +43,7 @@ router.post('/', function (req, res) {
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
+// all of our routes will be prefixed with /
 app.use('/', router);
 
 app.get('/', function (req, res) {
