@@ -38,7 +38,7 @@ router.post('/', function (req, res) {
 });
 
 if (token != '') {
-        userUrl = 'https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + token
+       var userUrl = 'https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + token
         router.get(userUrl, function (req, res) {
             res.json({ user: 'hooray! welcome to our get api!' });
         });
