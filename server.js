@@ -29,16 +29,17 @@ router.get('/', function (req, res) {
     res.json({ message: 'hooray! welcome to our get api!' });
 });
 
-var token = '';
 var userUrl = '';
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
-    token = req.body.token;
-    userUrl = 'https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + token;
-    res.send({userUrl});
+    userUrl = 'https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token;
+    next();
+    // res.send({userUrl});
 });
 
-
+router.get(userUrl, function (req, res) {
+    res.json({ message: 'hooray! welcome to our get api!' });
+});
 
 // more routes for our API will happen here
 
