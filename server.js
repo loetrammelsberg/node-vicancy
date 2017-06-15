@@ -34,17 +34,17 @@ var token = '';
 router.post('/', function (req, res) {
     res.json({ message: 'hooray! welcome to our post api!', token: req.body.token });
     token = req.body.token;
-    
-});
+    var userUrl = 'https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + token;
+    console.log (userUrl);
+    if (token != '') {
 
-var userUrl = 'https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + token;
-
-if (token != '') {
-       
         router.get(userUrl, function (req, res) {
             res.json({ user: 'hooray! welcome to our get api!' });
         });
     }
+});
+
+
 
 // more routes for our API will happen here
 
