@@ -34,19 +34,14 @@ var token = '';
 router.post('/', function (req, res) {
     token = req.body.token;
     console.log (token);
-    res.json({ message: 'hooray! welcome to our post api!', token: req.body.token });
+    // res.json({ message: 'hooray! welcome to our post api!', token: req.body.token });
     
     var userUrl = 'https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + token;
-    
-    if (token != '') {
-
-        app.get(userUrl, function (req, res) {
-            res.json({ user: 'hooray! welcome to our get api!' });
-        });
-    }
 });
 
-
+app.get(userUrl, function (req, res) {
+            res.json({ user: 'hooray! welcome to our get api!' });
+});
 
 // more routes for our API will happen here
 
