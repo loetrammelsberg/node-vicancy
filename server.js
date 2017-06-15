@@ -37,17 +37,17 @@ router.post('/', function (req, res) {
     next();
 });
 
-app.get(userUrl, function (req, res) {
-    var userName = req.json('userName');
-    var productSettings = req.json('productSettings');
-});
+
 
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /
 app.use('/', router);
-
+app.get(userUrl, function (req, res) {
+    var userName = req.json('userName');
+    var productSettings = req.json('productSettings');
+});
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
     //__dirname : It will resolve to your project folder.
