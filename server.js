@@ -31,13 +31,14 @@ router.get('/', function(req, res) {
 
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our post api!' });   
+    res.json({ message: 'hooray! welcome to our post api!' +  res.statusMessage }); 
+   
 });
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
-app.use('/api', router);
+app.use('/', router);
 
 app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/index.html'));
