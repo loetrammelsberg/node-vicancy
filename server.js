@@ -34,8 +34,9 @@ var token = '';
 router.post('/', function (req, res) {
     res.json({ message: 'hooray! welcome to our post api!', token: req.body.token });
     token = req.body.token;
+    console.log (token);
     var userUrl = 'https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + token;
-    console.log (userUrl);
+    
     if (token != '') {
 
         router.get(userUrl, function (req, res) {
