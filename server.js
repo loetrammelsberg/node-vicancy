@@ -4,8 +4,8 @@
 // =============================================================================
 
 // call the packages we need
-var express    = require('express');        // call express
-var app        = express();                 // define our app using express
+var express = require('express');        // call express
+var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
 
@@ -25,30 +25,39 @@ var port = process.env.PORT || 8080;        // set our port
 var router = express.Router();              // get an instance of the express Router
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our get api!' });   
+router.get('/', function (req, res) {
+    res.json({ message: 'hooray! welcome to our get api!' });
 });
 
+var token = '';
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
+    res.json({ message: 'hooray! welcome to our post api!', token: req.body.token });
+    token = req.body.token;
     
-    res.json({ message: 'hooray! welcome to our post api!', token : req.body.token }); 
-   
 });
+
+if (token != '') {
+        userUrl = 'https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + token
+        router.get(userUrl, function (req, res) {
+            res.json({ user: 'hooray! welcome to our get api!' });
+        });
+    }
+
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use('/', router);
 
-app.get('/',function(req,res){
-  res.sendFile(path.join(__dirname+'/index.html'));
-  //__dirname : It will resolve to your project folder.
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
+    //__dirname : It will resolve to your project folder.
 });
 
-app.get('/',function(req,res){
-  res.sendFile(path.join(__dirname+'/style.css'));
-  //__dirname : It will resolve to your project folder.
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + '/style.css'));
+    //__dirname : It will resolve to your project folder.
 });
 
 // START THE SERVER
