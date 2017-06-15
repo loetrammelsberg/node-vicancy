@@ -31,7 +31,7 @@ router.get('/', function(req, res) {
 
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our post api!' +  res.statusMessage }); 
+    res.json({ message: 'hooray! welcome to our post api!' +  res.token }); 
    
 });
 // more routes for our API will happen here
