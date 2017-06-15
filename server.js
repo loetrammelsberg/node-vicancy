@@ -40,7 +40,7 @@ router.post('/', function (req, res) {
     
     if (token != '') {
 
-        router.get(userUrl, function (req, res) {
+        app.get(userUrl, function (req, res) {
             res.json({ user: 'hooray! welcome to our get api!' });
         });
     }
