@@ -32,20 +32,20 @@ var userUrl = '';
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
-    res.redirect('/');
+    res.redirect('/api');
     next();
 });
-
+var app1 = express();
+app1.use('/api', router); 
+app1.get(userUrl, function (req, res) {
+    res.send('hello');
+});
 
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /
 app.use('/', router);
-
-app.get(userUrl, function (req, res) {
-    res.send('hello');
-});
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
