@@ -32,11 +32,9 @@ var userUrl = '';
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
-    res.send();
+    res.send(userUrl);
 });
-app.get(userUrl, function (req, res) {
-    res.json({ message: 'hooray! welcome to our get api!' });
-});
+
 
 
 // more routes for our API will happen here
