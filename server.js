@@ -35,7 +35,7 @@ var userUrl = '';
 router1.post('/', function (req, res, next) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     next();
-    // res.send({userUrl});
+    res.send('hello');
 
 });
 router2.get(userUrl, function (req, res, next) {
