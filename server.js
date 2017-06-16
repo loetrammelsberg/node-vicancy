@@ -48,7 +48,7 @@ request({
         'Custom-Header': 'Custom Value'
     },
     body: 'Hello Hello! String body!' //Set the body as a string
-}
+});
 
 
 // more routes for our API will happen here
