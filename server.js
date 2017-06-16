@@ -48,7 +48,11 @@ router.post('/', function (req, res) {
 app.use('/', router);
 
 app.get('/api', function (req, res) {
-    request(userUrl, function (error, response, body) {
+    var options = {
+        uri: userUrl ,
+        method: 'GET'
+    }
+    request(options, function (error, response, body) {
         var data = {
             userName: '',
             productSetting: ''
