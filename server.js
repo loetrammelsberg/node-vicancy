@@ -32,8 +32,8 @@ var router = express.Router();              // get an instance of the express Ro
 var userUrl = '';
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
-    userUrl = 'https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token;
-    res.render({userUrl});
+    userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
+    res.get({userUrl});
   
 });
     
