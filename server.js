@@ -9,6 +9,7 @@ var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
 var request = require('request');
+var http = require("http");
 
 app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
 app.use(express.static(__dirname + '/Script')); //Store all JS and CSS in Scripts folder.
