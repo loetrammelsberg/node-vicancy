@@ -35,19 +35,10 @@ var token = '';
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     token = req.body.token;
-    //res.redirect(userUrl);
-    request({
-        url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials', //URL to hit
-        qs: { token: token }, //Query string data
-        method: 'GET', // specify the request type
-        headers: { // speciyfy the headers
-            'Content-Type': 'application/json'
-        },
-        body: 'Hello Hello! String body!' //Set the body as a string
-    });
+    res.redirect('/api');
 
 });
-app.get('/', function (req, res) {
+router.get('/api', function (req, res) {
     request({
         url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials', //URL to hit
         qs: { token: token }, //Query string data
