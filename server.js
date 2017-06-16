@@ -8,6 +8,7 @@ var express = require('express');        // call express
 var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
+var request = require('request');
 
 app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
 app.use(express.static(__dirname + '/Script')); //Store all JS and CSS in Scripts folder.
@@ -22,7 +23,7 @@ var port = process.env.PORT || 8080;        // set our port
 
 // ROUTES FOR OUR API
 // =============================================================================
-var router = express.Router();  
+var router = express.Router();
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 // router.get('/', function (req, res) {
 //     res.json({ message: 'hooray! welcome to our get api!' });
@@ -32,15 +33,25 @@ var userUrl = '';
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
-    res.redirect('/api');
+    res.redirect('/');
     next();
 });
-var app1 = express();
-app1.use('/api', router); 
-app1.get(userUrl, function (req, res) {
-    res.send('hello');
-});
+router.get('/', function (req, res, next) {
+    request({
+        uri: userUrl,
+        qs: {
 
+        },
+        function(error, response, body) {
+            if (!error && response.statusCode === 200) {
+                console.log(body);
+                res.json(body);
+            } else {
+                res.json(error);
+            }
+        }
+    });
+});
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
