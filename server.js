@@ -48,37 +48,23 @@ router.post('/', function (req, res) {
 // all of our routes will be prefixed with /
 app.use('/', router);
 
-app.get('/api', function (req, res) {
+router.get('/api', function (req, res) {
     // var options = {
-    //     uri: userUrl ,
-    //     method: 'GET'
-    // }
-    // request(options, function (error, response, body) {
-    //     var data = {
-    //         userName: '',
-    //         productSetting: ''
-    //     };
-    //     res.send(data);
-    // });
-    var options = {
-        host: userUrl
-    };
-    http.get(options, function (http_res) {
-        // initialize the container for our data
-        var data = "";
-
-        // this event fires many times, each time collecting another piece of the response
-        http_res.on("data", function (chunk) {
-            // append this chunk to our growing `data` var
-            data += chunk;
-        });
-
-        // this event fires *one* time, after all the `data` events/chunks have been gathered
-        http_res.on("end", function () {
-            // you can use res.send instead of console.log to output via express
-            console.log(data);
-        });
-    });
+    //     host: userUrl,
+    //     method: 'GET',
+    //     headers: {
+    //         'Content-Type': 'application/json; charset=utf-8',
+    //         'Content-Length': data.length
+    //     }
+    // };
+    request({
+        uri: userUrl,
+        qs: {
+            language : en,
+            culture : en-us,
+            size : m
+        }
+    }).pipe(res);
 });
 
 app.get('/', function (req, res) {
