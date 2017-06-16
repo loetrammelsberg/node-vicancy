@@ -49,7 +49,7 @@ router.get('/api', function (req, res) {
     //     },
     //     body: 'Hello Hello! String body!' //Set the body as a string
     // });
-    res.send('hello');
+    res.send(userUrl);
 });
 
 // more routes for our API will happen here
