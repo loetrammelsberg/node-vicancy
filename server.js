@@ -38,18 +38,18 @@ router.post('/', function (req, res) {
     res.redirect('/');
 
 });
-
-request({
-    url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials', //URL to hit
-    qs: {token: token}, //Query string data
-    method: 'GET', // specify the request type
-    headers: { // speciyfy the headers
-        'Content-Type': 'MyContentType',
-        'Custom-Header': 'Custom Value'
-    },
-    body: 'Hello Hello! String body!' //Set the body as a string
+app.get('/', function (req, res) {
+    request({
+        url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials', //URL to hit
+        qs: { token: token }, //Query string data
+        method: 'GET', // specify the request type
+        headers: { // speciyfy the headers
+            'Content-Type': 'MyContentType',
+            'Custom-Header': 'Custom Value'
+        },
+        body: 'Hello Hello! String body!' //Set the body as a string
+    });
 });
-
 
 // more routes for our API will happen here
 
