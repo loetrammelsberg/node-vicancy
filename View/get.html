@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-        $.get("https://dashboard-staging.hrofficelabs.com/api/external/credentials", function (data, status) {
+        var token = GetURLParameter('token');
+
+        $.get("https://dashboard-staging.hrofficelabs.com/api/external/credentials?token="+token, function (data, status) {
             alert("Data: " + data + "\nStatus: " + status);
         });
     </script>
