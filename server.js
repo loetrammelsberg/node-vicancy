@@ -38,7 +38,7 @@ router.post('/', function (req, res) {
     res.redirect('/api');
 
 });
-app.get('/api', function (req, res) {
+router.get('/api', function (req, res) {
     request.get(userUrl, options, function (err, res, body) {
         //TODO Do something with response
         res.send('hello');
