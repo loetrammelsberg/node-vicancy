@@ -60,6 +60,9 @@ app.get('/api', function (req, res) {
     //     };
     //     res.send(data);
     // });
+    var options = {
+        host: userUrl
+    };
     http.get(options, function (http_res) {
         // initialize the container for our data
         var data = "";
