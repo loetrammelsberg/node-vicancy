@@ -36,17 +36,8 @@ router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     token = req.body.token;
     // res.redirect('/get.html?token='+token);
-    // res.redirect('/api');
-    request({
-        url: userUrl,
-        json: true
-    }, function (error, response, body) {
-
-        if (!error && response.statusCode === 200) {
-            console.log(body) // Print the json response
-        }
-
-    });
+    res.redirect(userUrl);
+  
 });
 
 
@@ -56,6 +47,9 @@ router.post('/', function (req, res) {
 // all of our routes will be prefixed with /
 app.use('/', router);
 
+app.get(userUrl, function (req, res) {
+     res.json({ message: 'hooray! welcome to our get api!' });
+});
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
