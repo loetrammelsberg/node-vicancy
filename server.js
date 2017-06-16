@@ -37,8 +37,6 @@ router.post('/', function (req, res) {
     token = req.body.token;
     // res.redirect('/get.html?token='+token);
     // res.redirect('/api');
-    var request = require("request")
-
     request({
         url: userUrl,
         json: true
@@ -47,7 +45,8 @@ router.post('/', function (req, res) {
         if (!error && response.statusCode === 200) {
             console.log(body) // Print the json response
         }
-    }
+
+    });
 });
 
 
