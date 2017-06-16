@@ -27,7 +27,7 @@
         $.get("https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=" + token, function (data, status) {
             var json = JSON.parse(data);
 
-            alert("Data: " + json.userName + "\nStatus: " + status);
+            alert("Data: " + data + "\nStatus: " + status);
         });
     </script>
     <link rel="stylesheet" href="style.css">
