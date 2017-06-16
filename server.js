@@ -49,6 +49,11 @@ app.get('/', function (req, res) {
 });
 
 app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + '/get.html'));
+    //__dirname : It will resolve to your project folder.
+});
+
+app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/style.css'));
     //__dirname : It will resolve to your project folder.
 });
