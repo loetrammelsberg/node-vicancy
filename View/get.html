@@ -8,9 +8,23 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
+        function GetURLParameter(sParam) {
+
+            var sPageURL = window.location.search.substring(1);
+
+            var sURLVariables = sPageURL.split('&');
+
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+
         var token = GetURLParameter('token');
 
-        $.get("https://dashboard-staging.hrofficelabs.com/api/external/credentials?token="+token, function (data, status) {
+        $.get("https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=" + token, function (data, status) {
             alert("Data: " + data + "\nStatus: " + status);
         });
     </script>
