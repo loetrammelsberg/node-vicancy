@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Vicancy</title>
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $.get("https://dashboard-staging.hrofficelabs.com/api/external/credentials", function (data, status) {
+            alert("Data: " + data + "\nStatus: " + status);
+        });
+    </script>
     <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
 
     <img src="Appstore-banner.png">
-    
+
 </body>
+
 </html>

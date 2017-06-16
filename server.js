@@ -35,44 +35,10 @@ var token = '';
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     token = req.body.token;
-    res.redirect('/api');
+    res.redirect('/get.html');
 
 });
-router.get('/api', function (req, res) {
-    http.get(userUrl, (res) => {
-        const { statusCode } = res;
-        const contentType = res.headers['content-type'];
 
-        let error;
-        if (statusCode !== 200) {
-            error = new Error('Request Failed.\n' +
-                `Status Code: ${statusCode}`);
-        } else if (!/^application\/json/.test(contentType)) {
-            error = new Error('Invalid content-type.\n' +
-                `Expected application/json but received ${contentType}`);
-        }
-        if (error) {
-            console.error(error.message);
-            // consume response data to free up memory
-            res.resume();
-            return;
-        }
-
-        res.setEncoding('utf8');
-        let rawData = '';
-        res.on('data', (chunk) => { rawData += chunk; });
-        res.on('end', () => {
-            try {
-                const parsedData = JSON.parse(rawData);
-                console.log(parsedData);
-            } catch (e) {
-                console.error(e.message);
-            }
-        });
-    }).on('error', (e) => {
-        console.error(`Got error: ${e.message}`);
-    });
-});
 
 // more routes for our API will happen here
 
