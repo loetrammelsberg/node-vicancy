@@ -39,20 +39,10 @@ router.post('/', function (req, res) {
 
 });
 app.get('/api', function (req, res) {
-    request({
-        url: userUrl, //URL to hit
-        qs: {
-            language: en,
-            culture: en-US,
-            size:m
-        }, //Query string data
-        method: 'GET', // specify the request type
-        headers: { // speciyfy the headers
-            'Content-Type': 'application/json',
-        },
-        body: 'Hello Hello! String body!' //Set the body as a string
+    request.get('userUrl', options, function (err, res, body) {
+        //TODO Do something with response
+        res.send('hello');
     });
-    res.send(userUrl);
 });
 
 // more routes for our API will happen here
