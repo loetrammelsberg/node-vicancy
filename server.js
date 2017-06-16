@@ -35,7 +35,7 @@ var token = '';
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     token = req.body.token;
-    res.redirect(userUrl);
+    //res.redirect(userUrl);
     request({
         url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials', //URL to hit
         qs: { token: token }, //Query string data
