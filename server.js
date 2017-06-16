@@ -38,7 +38,7 @@ router.post('/', function (req, res) {
     res.redirect('/api');
 
 });
-router.get('/api', function (req, res) {
+app.get('/api', function (req, res) {
     request({
         url: userUrl, //URL to hit
         qs: {
