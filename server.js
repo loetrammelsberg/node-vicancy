@@ -41,7 +41,11 @@ router.post('/', function (req, res) {
 router.get('/api', function (req, res) {
     request({
         url: userUrl, //URL to hit
-        qs: { token: token }, //Query string data
+        qs: {
+            language: en,
+            culture: en-US,
+            size:m
+        }, //Query string data
         method: 'GET', // specify the request type
         headers: { // speciyfy the headers
             'Content-Type': 'application/json',
