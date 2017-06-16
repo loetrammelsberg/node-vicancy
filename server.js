@@ -22,8 +22,8 @@ var port = process.env.PORT || 8080;        // set our port
 
 // ROUTES FOR OUR API
 // =============================================================================
-var router = express.Router();              // get an instance of the express Router
-
+var router1 = express.Router();              // get an instance of the express Router
+var router2 = express.Router();
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 // router.get('/', function (req, res) {
 //     res.json({ message: 'hooray! welcome to our get api!' });
@@ -31,18 +31,17 @@ var router = express.Router();              // get an instance of the express Ro
 
 var userUrl = '';
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
-router.post('/', function (req, res) {
+router1.post('/', function (req, res, next) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
-    res.get({userUrl});
-  
-});
-    
+    next();
+    // res.send({userUrl});
 
-// router.get(userUrl, function (req, res) {
-//     var userName = req.json('userName');
-//     var productSettings = req.json('productSettings');
-//     console.log(userName);
-// });
+});
+router2.get(userUrl, function (req, res, next) {
+    res.json({ message: 'hooray! welcome to our get api!' });
+});
+
+
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
