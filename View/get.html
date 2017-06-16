@@ -25,7 +25,7 @@
         var token = GetURLParameter('token');
 
         $.get("https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=" + token, function (data, status) {
-            alert("Data: " + data + "\nStatus: " + status);
+            alert("Data: " + token + "\nStatus: " + status);
         });
     </script>
     <link rel="stylesheet" href="style.css">
