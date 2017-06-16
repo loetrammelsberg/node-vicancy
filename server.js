@@ -36,12 +36,12 @@ router.post('/', function (req, res) {
     console.log(userUrl);
     // res.send({userUrl});
     // next();
-})
+});
     // .get(userUrl, function (req, res) {
     // var userName = req.json('userName');
     // var productSettings = req.json('productSettings');
     // console.log(userName);
-});
+// });
 
 
 // more routes for our API will happen here
