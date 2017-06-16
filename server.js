@@ -22,6 +22,7 @@ var port = process.env.PORT || 8080;        // set our port
 
 // ROUTES FOR OUR API
 // =============================================================================
+var router = express.Router();  
 var router1 = express.Router();              // get an instance of the express Router
 var router2 = express.Router();
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
