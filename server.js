@@ -36,7 +36,18 @@ router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     token = req.body.token;
     // res.redirect('/get.html?token='+token);
-    res.redirect('/api');
+    // res.redirect('/api');
+    var request = require("request")
+
+    request({
+        url: userUrl,
+        json: true
+    }, function (error, response, body) {
+
+        if (!error && response.statusCode === 200) {
+            console.log(body) // Print the json response
+        }
+    }
 });
 
 
@@ -46,9 +57,7 @@ router.post('/', function (req, res) {
 // all of our routes will be prefixed with /
 app.use('/', router);
 
-app.get('/api', function (req, res) {
-   
-});
+
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
     //__dirname : It will resolve to your project folder.
