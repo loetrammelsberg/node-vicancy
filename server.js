@@ -33,17 +33,16 @@ var userUrl = '';
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     userUrl = 'https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token;
-    console.log(userUrl);
-    // res.send({userUrl});
-    // next();
+    res.redirect({userUrl});
+  
 });
-    // .get(userUrl, function (req, res) {
-    // var userName = req.json('userName');
-    // var productSettings = req.json('productSettings');
-    // console.log(userName);
+    
+
+// router.get(userUrl, function (req, res) {
+//     var userName = req.json('userName');
+//     var productSettings = req.json('productSettings');
+//     console.log(userName);
 // });
-
-
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
