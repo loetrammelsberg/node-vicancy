@@ -34,13 +34,13 @@ var userUrl = '';
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     res.redirect('/');
-    next();
-});
-router.get('/', function (req, res, next) {
     request(userUrl, function (err, body) {
         res.json(body); //res is the response object, and it passes info back to client side
     });
 });
+// router.get('/', function (req, res, next) {
+
+// });
 
 // more routes for our API will happen here
 
