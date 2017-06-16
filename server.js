@@ -47,7 +47,7 @@ router.post('/', function (req, res) {
 // all of our routes will be prefixed with /
 app.use('/', router);
 
-app.get(userUrl, function (req, res) {
+app.get('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token='+token, function (req, res) {
      res.json({ message: 'hooray! welcome to our get api!' });
 });
 
