@@ -39,16 +39,15 @@ router.post('/', function (req, res) {
 
 });
 router.get('/api', function (req, res) {
-    // request({
-    //     url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials', //URL to hit
-    //     qs: { token: token }, //Query string data
-    //     method: 'GET', // specify the request type
-    //     headers: { // speciyfy the headers
-    //         'Content-Type': 'MyContentType',
-    //         'Custom-Header': 'Custom Value'
-    //     },
-    //     body: 'Hello Hello! String body!' //Set the body as a string
-    // });
+    request({
+        url: userUrl, //URL to hit
+        qs: { token: token }, //Query string data
+        method: 'GET', // specify the request type
+        headers: { // speciyfy the headers
+            'Content-Type': 'application/json',
+        },
+        body: 'Hello Hello! String body!' //Set the body as a string
+    });
     res.send(userUrl);
 });
 
