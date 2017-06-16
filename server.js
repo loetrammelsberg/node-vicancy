@@ -36,8 +36,9 @@ var token = '';
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     token = req.body.token;
+    res.send(token);
     res.redirect('/get.html?token='+token);
-    // res.redirect('/api');
+
 
 });
 
@@ -48,24 +49,6 @@ router.post('/', function (req, res) {
 // all of our routes will be prefixed with /
 app.use('/', router);
 
-router.get('/api', function (req, res) {
-    // var options = {
-    //     host: userUrl,
-    //     method: 'GET',
-    //     headers: {
-    //         'Content-Type': 'application/json; charset=utf-8',
-    //         'Content-Length': data.length
-    //     }
-    // };
-    request({
-        uri: userUrl,
-        qs: {
-            language : en,
-            culture : en-us,
-            size : m
-        }
-    }).pipe(res);
-});
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
