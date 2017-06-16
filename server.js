@@ -33,7 +33,6 @@ var userUrl = '';
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     res.render('/get.html');
-    res.end();
 });
 
 console.log(userUrl);
