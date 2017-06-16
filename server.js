@@ -39,7 +39,7 @@ router.post('/', function (req, res) {
 
 });
 app.get('/api', function (req, res) {
-    request.get('userUrl', options, function (err, res, body) {
+    request.get(userUrl, options, function (err, res, body) {
         //TODO Do something with response
         res.send('hello');
     });
