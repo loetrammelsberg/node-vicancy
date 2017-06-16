@@ -34,11 +34,12 @@ var userUrl = '';
 router.post('/', function (req, res) {
     userUrl = 'https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token;
     //res.send({userUrl});
-
-});
-router.get(userUrl, function (req, res) {
+    //res.end();
+})
+    .get(userUrl, function (req, res) {
     var userName = req.json('userName');
     var productSettings = req.json('productSettings');
+    console.log(userName);
 });
 
 
