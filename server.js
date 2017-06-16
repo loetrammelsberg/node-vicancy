@@ -37,21 +37,11 @@ router.post('/', function (req, res) {
     next();
 });
 router.get('/', function (req, res, next) {
-    request({
-        uri: userUrl,
-        qs: {
-
-        },
-        function(error, response, body) {
-            if (!error && response.statusCode === 200) {
-                console.log(body);
-                res.json(body);
-            } else {
-                res.json(error);
-            }
-        }
+    request(userUrl, function (err, body) {
+        res.json(body); //res is the response object, and it passes info back to client side
     });
 });
+
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
