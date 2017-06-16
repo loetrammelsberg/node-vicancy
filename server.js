@@ -30,17 +30,26 @@ var router = express.Router();
 // });
 
 var userUrl = '';
+var token = '';
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
+    token = req.body.token;
     res.redirect('/');
-    request(userUrl, function (err, body) {
-        res.json(body); //res is the response object, and it passes info back to client side
-    });
-});
-// router.get('/', function (req, res, next) {
 
-// });
+});
+
+request({
+    url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials', //URL to hit
+    qs: {token: token}, //Query string data
+    method: 'GET', // specify the request type
+    headers: { // speciyfy the headers
+        'Content-Type': 'MyContentType',
+        'Custom-Header': 'Custom Value'
+    },
+    body: 'Hello Hello! String body!' //Set the body as a string
+}
+
 
 // more routes for our API will happen here
 
