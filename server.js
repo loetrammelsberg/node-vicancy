@@ -50,7 +50,8 @@ app.use('/', router);
 app.get('/api', function (req, res) {
     request(userUrl, function (error, response, body) {
         var data = {
-            body: body
+            userName: '',
+            productSetting: ''
         };
         res.send(data);
     });
