@@ -50,8 +50,9 @@ app.use('/', router);
 app.get('/api', function (req, res) {
     if (flag) {
         var options = {
-            hostname: "https://dashboard-staging.hrofficelabs.com",
-            path: "/api/external/credentials",
+            url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
+            // hostname: "https://dashboard-staging.hrofficelabs.com",
+            // path: "/api/external/credentials",
             method: "GET",
             qs: {token : token},
             headers: {
