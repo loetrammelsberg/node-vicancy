@@ -38,10 +38,11 @@ router.post('/', function (req, res) {
     token = req.body.token;
     res.redirect('/');
 });
-
+var user = '';
 request(userUrl, function (error, response, body) {
+    console.log('hello');
     if (!error && response.statusCode == 200) {
-        console.log(body)
+        console.log(body);
     }
 })
 
