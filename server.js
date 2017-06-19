@@ -70,13 +70,13 @@ router.post('/', function (req, res) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
 
-        // client
-        //     .query('SELECT table_schema,table_name FROM information_schema.tables;')
-        //     .on('row', function (row) {
-        //         console.log(JSON.stringify(row));
-        //     });
+        client
+            .query("SELECT * from resellers WHERE name = 'Unique'")
+            .on('row', function (row) {
+                console.log(JSON.stringify(row));
+            });
     });
-    res.redirect('/');
+    res.send(username);
 });
 
 
