@@ -8,8 +8,6 @@ var express = require('express');        // call express
 var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
-var request = require('request');
-var http = require("http");
 
 app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
 app.use(express.static(__dirname + '/Script')); //Store all JS and CSS in Scripts folder.
@@ -31,21 +29,23 @@ var router = express.Router();
 // });
 
 var userUrl = '';
-
+var flag = false;
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
+    flag = true;
     res.send(req.body.token);
 });
-// var options = {
-//     url: userUrl,
-//     port: 80,
-//     method: 'GET'
-// };
-// request(options, function(error, response, body){
-//     if(error) console.log(error);
-//     else console.log(body);
-// });
+
+var request = require('request');
+if (flag) {
+    request(userUrl, function (error, response, body) {
+        console.log('error:', error); // Print the error if one occurred 
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+        console.log('body:', body); // Print the HTML for the Google homepage. 
+    });
+}
+
 
 // more routes for our API will happen here
 
