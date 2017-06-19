@@ -30,10 +30,12 @@ var router = express.Router();
 // });
 
 var userUrl = '';
+var token = '';
 var flag = false;
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
+    token = req.body.token;
     flag = true;
     res.redirect('/api');
 });
@@ -47,7 +49,16 @@ app.use('/', router);
 
 app.get('/api', function (req, res) {
     if (flag) {
-        console.log('hello');
+        var options = {
+            hostname: "https://dashboard-staging.hrofficelabs.com",
+            path: "/api/external/credentials",
+            method: "GET",
+            form: {token : token},
+            headers: {
+                "Content-Type": "application/json",
+            }
+
+        }
         request.get(userUrl, function (error, response, body) {
             console.log('error:', error); // Print the error if one occurred 
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
