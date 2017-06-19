@@ -34,6 +34,7 @@ var token = '';
 var userData = '';
 var username = '';
 var flag = false;
+
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
@@ -62,7 +63,7 @@ router.post('/', function (req, res) {
     token = '';
     var pos = username.lastIndexOf("/");
     username = username.substring(pos+1, username.length);
-    res.send(username);
+    res.redirect('/');
 });
 
 
