@@ -64,21 +64,25 @@ router.post('/', function (req, res) {
     token = '';
     var pos = username.lastIndexOf("/");
     username = username.substring(pos + 1, username.length);
-    pg.defaults.ssl = true;
     
+    database(username);
+
+    res.redirect('/');
+});
+
+function database(username) {
+    pg.defaults.ssl = true;
+
     pg.connect('postgres://zqiwvdwbafeass:Y1u2uQf3hEehsyZNf5nt3DGDOJ@ec2-54-221-206-165.compute-1.amazonaws.com:5432/dersj7cn9ojnjq', function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
-        console.log("SELECT * from resellers WHERE name = '" + username +"");
-        client.query("SELECT * from resellers WHERE name = '" + username +"")
+        console.log("SELECT * from resellers WHERE name = '" + username + "");
+        client.query("SELECT * from resellers WHERE name = '" + username + "")
             .on('row', function (row) {
                 console.log(JSON.stringify(row));
             });
     });
-    res.redirect('/');
-});
-
-
+}
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
