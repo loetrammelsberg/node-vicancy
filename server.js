@@ -37,6 +37,7 @@ router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     token = req.body.token;
     flag = true;
+    console.log(token);
     if (flag) {
         var options = {
             url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
@@ -49,7 +50,7 @@ router.post('/', function (req, res) {
             }
 
         }
-        console.log(token);
+        
         request.get(options, function (error, response, body) {
             console.log('error:', error); // Print the error if one occurred 
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
