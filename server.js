@@ -31,22 +31,21 @@ var router = express.Router();
 // });
 
 var userUrl = '';
-var token = '';
+
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
-    token = req.body.token;
-
+    res.send(req.body.token);
 });
-var options = {
-    url: userUrl,
-    port: 80,
-    method: 'GET'
-};
-request(options, function(error, response, body){
-    if(error) console.log(error);
-    else console.log(body);
-});
+// var options = {
+//     url: userUrl,
+//     port: 80,
+//     method: 'GET'
+// };
+// request(options, function(error, response, body){
+//     if(error) console.log(error);
+//     else console.log(body);
+// });
 
 // more routes for our API will happen here
 
