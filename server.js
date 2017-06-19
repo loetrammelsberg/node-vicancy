@@ -9,6 +9,7 @@ var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
 var request = require('request');
+var pg = require('pg');
 
 app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
 app.use(express.static(__dirname + '/Script')); //Store all JS and CSS in Scripts folder.
@@ -54,7 +55,7 @@ router.post('/', function (req, res) {
         request.get(options, function (error, response, body) {
             console.log('error:', error); // Print the error if one occurred 
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-            console.log('body:', body); 
+            console.log('body:', body);
             userData = JSON.parse(body);
             username = userData.userName;
             console.log(userData.userName);
@@ -62,7 +63,19 @@ router.post('/', function (req, res) {
     }
     token = '';
     var pos = username.lastIndexOf("/");
-    username = username.substring(pos+1, username.length);
+    username = username.substring(pos + 1, username.length);
+    pg.defaults.ssl = true;
+    
+    pg.connect('postgres://zqiwvdwbafeass:Y1u2uQf3hEehsyZNf5nt3DGDOJ@ec2-54-221-206-165.compute-1.amazonaws.com:5432/dersj7cn9ojnjq', function (err, client) {
+        if (err) throw err;
+        console.log('Connected to postgres! Getting schemas...');
+
+        // client
+        //     .query('SELECT table_schema,table_name FROM information_schema.tables;')
+        //     .on('row', function (row) {
+        //         console.log(JSON.stringify(row));
+        //     });
+    });
     res.redirect('/');
 });
 
