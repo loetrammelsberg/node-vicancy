@@ -64,7 +64,7 @@ router.post('/', function (req, res) {
     token = '';
     var pos = username.lastIndexOf("/");
     username = username.substring(pos + 1, username.length);
-    
+
     database(username);
 
     res.redirect('/');
