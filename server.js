@@ -38,13 +38,13 @@ router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     token = req.body.token;
     request(userUrl, function (error, response, body) {
+        res.send(body);
         if (!error && response.statusCode == 200) {
-            body = user;
-            var jsonObject = JSON.parse(body);
-            alert(body);
+           
         }
     })
-    res.send(jsonObject);
+
+    
 });
 
 
