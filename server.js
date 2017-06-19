@@ -61,7 +61,7 @@ router.post('/', function (req, res) {
     }
     token = '';
     var pos = username.lastIndexOf("/");
-    username = username.substring(pos+1, str.length);
+    username = username.substring(pos+1, username.length);
     res.send(username);
 });
 
