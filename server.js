@@ -36,17 +36,23 @@ var token = '';
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     token = req.body.token;
-    res.redirect('/get.html?token='+token);
-
-
+    res.redirect('/');
 });
 
+request(userUrl, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log(body)
+    }
+})
 
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /
 app.use('/', router);
+
+
+
 
 
 app.get('/', function (req, res) {
