@@ -31,6 +31,7 @@ var router = express.Router();
 
 var userUrl = '';
 var token = '';
+var temp = '';
 var flag = false;
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
@@ -50,15 +51,15 @@ router.post('/', function (req, res) {
             }
 
         }
-        
         request.get(options, function (error, response, body) {
             console.log('error:', error); // Print the error if one occurred 
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-            console.log('body:', body); // Print the HTML for the Google homepage. 
+            console.log('body:', body); 
+            temp = body;
         });
     }
     token = '';
-    res.redirect('/');
+    res.send(temp);
 });
 
 
