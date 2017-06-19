@@ -40,9 +40,9 @@ router.post('/', function (req, res) {
 });
 var user = '';
 request(userUrl, function (error, response, body) {
-    console.log('hello');
+    alert('hello');
     if (!error && response.statusCode == 200) {
-        console.log(body);
+        alert(body);
     }
 })
 
