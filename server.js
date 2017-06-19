@@ -76,7 +76,7 @@ router.post('/', function (req, res) {
                 console.log(JSON.stringify(row));
             });
     });
-    res.send(username);
+    res.redirect('/');
 });
 
 
