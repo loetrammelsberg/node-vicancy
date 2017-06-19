@@ -55,11 +55,12 @@ router.post('/', function (req, res) {
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
             console.log('body:', body); 
             userData = JSON.parse(body);
+            username = userData.userName;
             console.log(userData.userName);
         });
     }
     token = '';
-    username = userData.userName.substring(pos+1, str.length);
+    username = username.substring(pos+1, str.length);
     res.send(username);
 });
 
