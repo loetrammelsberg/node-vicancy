@@ -8,6 +8,7 @@ var express = require('express');        // call express
 var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
+var request = require('request');
 
 app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
 app.use(express.static(__dirname + '/Script')); //Store all JS and CSS in Scripts folder.
@@ -34,18 +35,10 @@ var flag = false;
 router.post('/', function (req, res) {
     userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     flag = true;
-    res.send(req.body.token);
+    res.redirect('/api', req.body.token);
 });
 
-var request = require('request');
-if (flag) {
-    console.log('hello');
-    request(userUrl, function (error, response, body) {
-        console.log('error:', error); // Print the error if one occurred 
-        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-        console.log('body:', body); // Print the HTML for the Google homepage. 
-    });
-}
+
 
 
 // more routes for our API will happen here
@@ -54,6 +47,16 @@ if (flag) {
 // all of our routes will be prefixed with /
 app.use('/', router);
 
+app.get('/api', function (req, res) {
+    if (flag) {
+        console.log('hello');
+        request(userUrl, function (error, response, body) {
+            console.log('error:', error); // Print the error if one occurred 
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+            console.log('body:', body); // Print the HTML for the Google homepage. 
+        });
+    }
+});
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
     //__dirname : It will resolve to your project folder.
