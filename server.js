@@ -40,10 +40,11 @@ router.post('/', function (req, res) {
     request(userUrl, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             body = user;
+            var jsonObject = JSON.parse(body);
             alert(body);
         }
     })
-    res.redirect('/');
+    res.send(jsonObject);
 });
 
 
