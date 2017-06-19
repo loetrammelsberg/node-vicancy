@@ -65,14 +65,13 @@ router.post('/', function (req, res) {
     var pos = username.lastIndexOf("/");
     username = username.substring(pos + 1, username.length);
 
-    database(username);
-
     res.redirect('/');
+    database(username);
 });
 
 function database(username) {
     pg.defaults.ssl = true;
-
+    console.log(username);
     pg.connect('postgres://zqiwvdwbafeass:Y1u2uQf3hEehsyZNf5nt3DGDOJ@ec2-54-221-206-165.compute-1.amazonaws.com:5432/dersj7cn9ojnjq', function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
