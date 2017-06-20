@@ -42,13 +42,12 @@ router.post('/', function (req, res) {
     console.log(token);
     if (flag) {
         username = getUsername();
-        username = trimUsername(username);
+        
 
     }
     token = '';
-    if (username != '') {
-        res.redirect('/data');
-    }
+
+    res.redirect('/');
 });
 
 function getUsername() {
@@ -68,9 +67,13 @@ function getUsername() {
         console.log('error:', error); // Print the error if one occurred 
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
         console.log('body:', body);
+        if (statusCode == 200) {
+            var username = body.userName;
+            username = trimUsername(username);
+            database(username);
+            console.log(username);
+        }
 
-        var username = body.userName;
-        console.log(username);
     });
     return username;
 }
@@ -98,10 +101,7 @@ function database(username) {
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /
 app.use('/', router);
-app.get('/data', function (req, res) {
-    database(username);
-    res.redirect('/');
-});
+
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
     //__dirname : It will resolve to your project folder.
