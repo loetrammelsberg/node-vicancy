@@ -91,7 +91,7 @@ function database(username) {
         console.log("SELECT * from resellers WHERE name = '" + username + "'");
         client.query("SELECT * from resellers WHERE name = '" + username + "'")
             .on('row', function (row) {
-                console.log(row);
+                console.log(row + "hello");
                 console.log(JSON.stringify(row));
             });
     });
