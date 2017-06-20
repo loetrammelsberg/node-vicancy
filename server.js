@@ -105,8 +105,9 @@ function selectUser(username, client) {
     var result = '';
     client.query("SELECT * from resellers WHERE name = '" + username + "'")
         .on('row', function (row) {
-            console.log(row);
-            result = row
+            result = JSON.parse(row)
+            console.log(result);
+           // result = row
             
         });
     return result;
