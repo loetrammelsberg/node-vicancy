@@ -80,7 +80,9 @@ function getUsername() {
 function trimUsername(username) {
     var pos = username.lastIndexOf("/");
     username = username.substring(pos + 1, username.length);
-    username = username.charAt(0).toUpperCase();
+    var char = username.charAt(0).toUpperCase();
+    username = username.substring(1,username.length);
+    username = char + username;
     return username;
 }
 
