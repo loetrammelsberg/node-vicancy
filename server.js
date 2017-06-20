@@ -99,15 +99,15 @@ function database(username) {
         //     rowResult = selectUser(username, client);
         // }
     });
-    console.log(rowResult);
+    console.log(rowResult.id);
 }
 
 function selectUser(username, client) {
     var result = '';
     client.query("SELECT * from resellers WHERE name = '" + username + "'")
         .on('row', function (row) {
-            result = row;
-            console.log(JSON.stringify(row));
+            result = JSON.stringify(row);
+            console.log();
         });
     return result;
 }
