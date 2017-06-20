@@ -46,7 +46,7 @@ router.post('/', function (req, res) {
     token = '';
     username = trimUsername(username);
 
-    console.log(username);
+    console.log(username + "hello");
     res.redirect('/');
 });
 function getUsername() {
@@ -68,7 +68,7 @@ function getUsername() {
         console.log('body:', body);
 
         var username = body.userName;
-        console.log(userData.userName);
+        console.log(username);
     });
     return username;
 }
