@@ -68,8 +68,7 @@ function getUsername(callback) {
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
         console.log('body:', body);
         if (!error && response.statusCode == 200) {
-            result = JSON.parse(body);
-            return callback(result, false);
+            return callback(JSON.parse(body), false);
         } else {
             return callback(null, error);;
         }
