@@ -89,7 +89,7 @@ function database(username) {
     pg.connect('postgres://zqiwvdwbafeass:Y1u2uQf3hEehsyZNf5nt3DGDOJ@ec2-54-221-206-165.compute-1.amazonaws.com:5432/dersj7cn9ojnjq', function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
-        rowResult = selectUser(username);
+        rowResult = selectUser(username, client);
         
         if (rowResult == '') {
             inserUser(username);
@@ -99,7 +99,7 @@ function database(username) {
     console.log(rowResult);
 }
 
-function selectUser(username) {
+function selectUser(username, client) {
     var result = '';
     client.query("SELECT * from resellers WHERE name = '" + username + "'")
         .on('row', function (row) {
@@ -109,7 +109,7 @@ function selectUser(username) {
     return result;
 }
 
-function inserUser(username) {
+function inserUser(username, client) {
     client.query("INSERT INTO rellers from resellers (name,language) VALUES ('"+ username +"',nl)");
 }
 // more routes for our API will happen here
