@@ -51,8 +51,7 @@ router.post('/', function (req, res) {
 
         }
         data = request.get(options);
-        username = JSON.parse(data);
-        console.log(username);
+        console.log(data);
         // request.get(options, function (error, response, body) {
         //     console.log('error:', error); // Print the error if one occurred 
         //     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
@@ -62,9 +61,9 @@ router.post('/', function (req, res) {
         //     console.log(userData.userName);
         // });
     }
-    token = '';
-    var pos = username.lastIndexOf("/");
-    username = username.substring(pos + 1, username.length);
+    // token = '';
+    // var pos = username.lastIndexOf("/");
+    // username = username.substring(pos + 1, username.length);
 
     res.redirect('/');
 });
