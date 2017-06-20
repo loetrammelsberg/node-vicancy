@@ -109,9 +109,9 @@ function selectUser(username, client) {
     return result;
 }
 
-function inserUser(username, client) {
+function inserUser(username,err, client) {
     client.query("INSERT INTO resellers (name) VALUES ('" + username + "')");
-     if (err) throw err;
+    if (err) throw err;
 }
 // more routes for our API will happen here
 
