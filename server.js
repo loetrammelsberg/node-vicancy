@@ -50,21 +50,21 @@ router.post('/', function (req, res) {
             }
 
         }
-        data = request.get(options);
-        console.log(data);
-        // request.get(options, function (error, response, body) {
-        //     console.log('error:', error); // Print the error if one occurred 
-        //     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-        //     console.log('body:', body);
-        //     userData = JSON.parse(body);
-        //     username = userData.userName;
-        //     console.log(userData.userName);
-        // });
+        
+        var check = request.get(options, function (error, response, body) {
+            console.log('error:', error); // Print the error if one occurred 
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+            console.log('body:', body);
+            userData = JSON.parse(body);
+            username = userData.userName;
+            console.log(userData.userName);
+        });
+        check.end();
     }
-    // token = '';
-    // var pos = username.lastIndexOf("/");
-    // username = username.substring(pos + 1, username.length);
-
+    token = '';
+    var pos = username.lastIndexOf("/");
+    username = username.substring(pos + 1, username.length);
+    console.log(username + 'hello');
     res.redirect('/');
 });
 
