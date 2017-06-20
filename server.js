@@ -46,7 +46,7 @@ router.post('/', function (req, res) {
         rowResult = getUsername();
     }
     token = '';
-    console.log(rowResult.row[0].id);
+    console.log(rowResult);
     res.redirect('/');
 });
 
