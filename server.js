@@ -8,7 +8,7 @@ var express = require('express');        // call express
 var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
-var request = require('then-request');
+var request = require('request');
 var pg = require('pg');
 
 app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
@@ -41,34 +41,42 @@ router.post('/', function (req, res) {
     flag = true;
     console.log(token);
     if (flag) {
-        var options = {
-            url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
-            method: "GET",
-            qs: { token: token },
-            headers: {
-                "Content-Type": "application/json",
-            },
-            json : true
-
-        }
-
-        request(options, function (error, response, body) {
-            console.log('error:', error); // Print the error if one occurred 
-            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-            console.log('body:', body);
-            
-            username = body.userName;
-            console.log(userData.userName);
-        });
+       username = getUsername();
     }
     token = '';
-  
-    var pos = username.lastIndexOf("/");
-    username = username.substring(pos + 1, username.length);
+    username = trimUsername(username);
+
     console.log(username);
     res.redirect('/');
 });
+function getUsername() {
+    var username = '';
+    var options = {
+        url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
+        method: "GET",
+        qs: { token: token },
+        headers: {
+            "Content-Type": "application/json",
+        },
+        json: true
 
+    }
+
+    request.get(options, function (error, response, body) {
+        console.log('error:', error); // Print the error if one occurred 
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+        console.log('body:', body);
+
+        var username = body.userName;
+        console.log(userData.userName);
+    });
+    return username;
+}
+function trimUsername(username) {
+    var pos = username.lastIndexOf("/");
+    username = username.substring(pos + 1, username.length);
+    return username;
+}
 function database(username) {
     pg.defaults.ssl = true;
 
