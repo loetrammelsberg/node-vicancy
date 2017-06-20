@@ -41,13 +41,14 @@ router.post('/', function (req, res) {
     flag = true;
     console.log(token);
     if (flag) {
-       username = getUsername();
-       username = trimUsername(username);
-       
+        username = getUsername();
+        username = trimUsername(username);
+
     }
     token = '';
-
-    res.redirect('/data');
+    if (username != '') {
+        res.redirect('/data');
+    }
 });
 
 function getUsername() {
@@ -98,8 +99,8 @@ function database(username) {
 // all of our routes will be prefixed with /
 app.use('/', router);
 app.get('/data', function (req, res) {
-   database(username);
-   res.redirect('/');
+    database(username);
+    res.redirect('/');
 });
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
