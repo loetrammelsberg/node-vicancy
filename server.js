@@ -64,10 +64,10 @@ router.post('/', function (req, res) {
     token = '';
     var pos = username.lastIndexOf("/");
     username = username.substring(pos + 1, username.length);
-    if (username != ''){
-        database(username);
-    }
-    res.redirect('/');  
+
+    database(username);
+
+    res.redirect('/');
 });
 
 function database(username) {
@@ -79,7 +79,8 @@ function database(username) {
         console.log("SELECT * from resellers WHERE name = '" + username + "'");
         client.query("SELECT * from resellers WHERE name = '" + username + "'")
             .on('row', function (row) {
-                console.log(JSON.stringify(row) + "HERE!!!!!");
+                console.log(row);
+                console.log(JSON.stringify(row));
             });
     });
 }
