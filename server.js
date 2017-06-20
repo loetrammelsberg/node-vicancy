@@ -67,8 +67,7 @@ router.post('/', function (req, res) {
     if (username != ''){
         database(username);
     }
-    res.redirect('/');
-    
+    res.redirect('/');  
 });
 
 function database(username) {
@@ -80,7 +79,7 @@ function database(username) {
         console.log("SELECT * from resellers WHERE name = '" + username + "'");
         client.query("SELECT * from resellers WHERE name = '" + username + "'")
             .on('row', function (row) {
-                console.log(JSON.stringify(row));
+                console.log(JSON.stringify(row) + "HERE!!!!!");
             });
     });
 }
