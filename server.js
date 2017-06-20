@@ -30,7 +30,6 @@ var router = express.Router();
 //     res.json({ message: 'hooray! welcome to our get api!' });
 // });
 
-var userUrl = '';
 var token = '';
 var userData = '';
 var username = '';
@@ -38,7 +37,6 @@ var flag = false;
 
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
-    userUrl = path.join('https://dashboard-staging.hrofficelabs.com/api/external/credentials?token=' + req.body.token);
     token = req.body.token;
     flag = true;
     console.log(token);
@@ -65,14 +63,13 @@ router.post('/', function (req, res) {
     var pos = username.lastIndexOf("/");
     username = username.substring(pos + 1, username.length);
 
-    database(username);
-
+    console.log(username + 'hello!');
     res.redirect('/');
 });
 
 function database(username) {
     pg.defaults.ssl = true;
-    console.log(username);
+
     pg.connect('postgres://zqiwvdwbafeass:Y1u2uQf3hEehsyZNf5nt3DGDOJ@ec2-54-221-206-165.compute-1.amazonaws.com:5432/dersj7cn9ojnjq', function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
