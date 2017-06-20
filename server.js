@@ -71,7 +71,6 @@ function getUsername() {
             var username = body.userName;
             username = trimUsername(username);
             database(username);
-            console.log(username);
         }
 
     });
@@ -107,7 +106,7 @@ function selectUser(username, client) {
     client.query("SELECT * from resellers WHERE name = '" + username + "'")
         .on('row', function (row) {
             result = JSON.stringify(row);
-            console.log(result.id);
+            console.log(result[0].id);
         });
     return result;
 }
