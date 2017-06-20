@@ -42,11 +42,9 @@ router.post('/', function (req, res) {
     console.log(token);
     if (flag) {
         username = getUsername();
-        
-
     }
     token = '';
-
+    
     res.redirect('/');
 });
 
@@ -91,7 +89,7 @@ function database(username) {
         console.log("SELECT * from resellers WHERE name = '" + username + "'");
         client.query("SELECT * from resellers WHERE name = '" + username + "'")
             .on('row', function (row) {
-                console.log(row + "hello");
+                console.log(row == null);
                 console.log(JSON.stringify(row));
             });
     });
