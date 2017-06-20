@@ -92,7 +92,7 @@ function database(username) {
         rowResult = selectUser(username, client);
 
         if (rowResult == '') {
-            inserUser(username, client);
+            inserUser(username,err, client);
             rowResult = selectUser(username, client);
         }
     });
@@ -111,7 +111,7 @@ function selectUser(username, client) {
 
 function inserUser(username, client) {
     client.query("INSERT INTO resellers (name) VALUES ('" + username + "')");
-    if (err) throw err;
+     if (err) throw err;
 }
 // more routes for our API will happen here
 
