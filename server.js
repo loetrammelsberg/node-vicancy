@@ -34,7 +34,7 @@ var token = '';
 var userData = '';
 var username = '';
 var flag = false;
-
+var data = '';
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     token = req.body.token;
@@ -50,20 +50,22 @@ router.post('/', function (req, res) {
             }
 
         }
-        request.get(options, function (error, response, body) {
-            console.log('error:', error); // Print the error if one occurred 
-            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-            console.log('body:', body);
-            userData = JSON.parse(body);
-            username = userData.userName;
-            console.log(userData.userName);
-        });
+        data = request.get(options);
+        username = JSON.parse(data);
+        console.log(username);
+        // request.get(options, function (error, response, body) {
+        //     console.log('error:', error); // Print the error if one occurred 
+        //     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+        //     console.log('body:', body);
+        //     userData = JSON.parse(body);
+        //     username = userData.userName;
+        //     console.log(userData.userName);
+        // });
     }
     token = '';
     var pos = username.lastIndexOf("/");
     username = username.substring(pos + 1, username.length);
 
-    console.log(username + 'hello!');
     res.redirect('/');
 });
 
