@@ -80,6 +80,7 @@ function getUsername() {
 function trimUsername(username) {
     var pos = username.lastIndexOf("/");
     username = username.substring(pos + 1, username.length);
+    username = username.charAt(0).toUpperCase();
     return username;
 }
 
@@ -91,10 +92,10 @@ function database(username) {
         console.log('Connected to postgres! Getting schemas...');
         rowResult = selectUser(username, client);
 
-        if (rowResult == '') {
-            inserUser(username,err, client);
-            rowResult = selectUser(username, client);
-        }
+        // if (rowResult == '') {
+        //     inserUser(username, err, client);
+        //     rowResult = selectUser(username, client);
+        // }
     });
     console.log(rowResult);
 }
@@ -109,7 +110,7 @@ function selectUser(username, client) {
     return result;
 }
 
-function inserUser(username,err, client) {
+function inserUser(username, err, client) {
     client.query("INSERT INTO resellers (name) VALUES ('" + username + "')");
     if (err) throw err;
 }
