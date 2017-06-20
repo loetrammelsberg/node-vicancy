@@ -92,8 +92,8 @@ function database(username) {
         rowResult = selectUser(username, client);
         
         if (rowResult == '') {
-            inserUser(username);
-            rowResult = selectUser(username);
+            inserUser(username,client);
+            rowResult = selectUser(username,client);
         }
     });
     console.log(rowResult);
