@@ -29,28 +29,7 @@ var router = express.Router();
 // router.get('/', function (req, res) {
 //     res.json({ message: 'hooray! welcome to our get api!' });
 // });
-function getUsername(callback) {
-    var options = {
-        url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
-        method: "GET",
-        qs: { token: token },
-        headers: {
-            "Content-Type": "application/json",
-        }
 
-    }
-
-    request.get(options, function (error, response, body) {
-        console.log('error:', error); // Print the error if one occurred 
-        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-        console.log('body:', body);
-        if (!error && response.statusCode == 200) {
-            return callback(false, JSON.parse(body));
-        } else {
-            return callback(error, null);;
-        }
-    });
-}
 var token = '';
 var userData = '';
 var username = '';
@@ -62,19 +41,35 @@ router.post('/', function (req, res) {
     flag = true;
     console.log(token);
     if (flag) {
-        getUsername(function (err, data) {
-            if (err) return res.send(err);
-            username = data;
+        var options = {
+            url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
+            method: "GET",
+            qs: { token: token },
+            headers: {
+                "Content-Type": "application/json",
+            }
+
+        }
+
+        request.get(options, function (error, response, body) {
+            console.log('error:', error); // Print the error if one occurred 
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+            console.log('body:', body);
+            userData = JSON.parse(body);
+            username = userData.userName;
+            console.log(userData.userName);
         });
     }
     token = '';
-    var pos = username.lastIndexOf("/");
-    username = username.substring(pos + 1, username.length);
-    console.log(username + 'hello');
+    setTimeout(trimUsername, 3000);
+
     res.redirect('/');
 });
-
-
+function trimUsername(username){
+    var pos = username.lastIndexOf("/");
+    username = username.substring(pos + 1, username.length);
+    return username;
+}
 function database(username) {
     pg.defaults.ssl = true;
 
