@@ -8,7 +8,7 @@ var express = require('express');        // call express
 var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
-var request = require('request');
+var request = require('then-request');
 var pg = require('pg');
 
 app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
@@ -47,7 +47,8 @@ router.post('/', function (req, res) {
             qs: { token: token },
             headers: {
                 "Content-Type": "application/json",
-            }
+            },
+            json : true
 
         }
 
@@ -55,21 +56,19 @@ router.post('/', function (req, res) {
             console.log('error:', error); // Print the error if one occurred 
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
             console.log('body:', body);
-            userData = JSON.parse(body);
-            username = userData.userName;
+            
+            username = body.userName;
             console.log(userData.userName);
         });
     }
     token = '';
-    setTimeout(trimUsername(), 3000);
+  
     var pos = username.lastIndexOf("/");
     username = username.substring(pos + 1, username.length);
     console.log(username);
     res.redirect('/');
 });
-function trimUsername() {
 
-}
 function database(username) {
     pg.defaults.ssl = true;
 
