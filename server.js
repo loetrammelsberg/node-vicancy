@@ -110,7 +110,7 @@ function selectUser(username, client) {
 }
 
 function inserUser(username, client) {
-    client.query("INSERT INTO resellers (name,language) VALUES ('"+ username +"','nl')");
+    client.query("INSERT INTO resellers (name) VALUES ('"+ username +")");
 }
 // more routes for our API will happen here
 
