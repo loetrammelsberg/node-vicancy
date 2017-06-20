@@ -42,13 +42,14 @@ router.post('/', function (req, res) {
     console.log(token);
     if (flag) {
        username = getUsername();
+       username = trimUsername(username);
+       
     }
     token = '';
-    username = trimUsername(username);
 
-    console.log(username + "hello");
-    res.redirect('/');
+    res.redirect('/data');
 });
+
 function getUsername() {
     var username = '';
     var options = {
@@ -96,7 +97,10 @@ function database(username) {
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /
 app.use('/', router);
-
+app.get('/data', function (req, res) {
+   database(username);
+   res.redirect('/');
+});
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
     //__dirname : It will resolve to your project folder.
