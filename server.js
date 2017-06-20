@@ -59,6 +59,7 @@ router.post('/', function (req, res) {
             username = userData.userName;
             console.log(userData.userName);
         });
+        console.log(check);
         check.end();
     }
     token = '';
