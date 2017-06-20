@@ -43,15 +43,14 @@ router.post('/', function (req, res) {
     flag = true;
     console.log(token);
     if (flag) {
-        username = getUsername();
+        rowResult = getUsername();
     }
     token = '';
-
+    console.log(rowResult.row[0].id);
     res.redirect('/');
 });
 
 function getUsername() {
-    var username = '';
     var options = {
         url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
         method: "GET",
@@ -70,11 +69,11 @@ function getUsername() {
         if (response.statusCode == 200) {
             var username = body.userName;
             username = trimUsername(username);
-            database(username);
+            rowResult = database(username);
         }
 
     });
-    return username;
+    return rowResult;
 }
 function trimUsername(username) {
     var pos = username.lastIndexOf("/");
@@ -93,22 +92,17 @@ function database(username) {
         console.log('Connected to postgres! Getting schemas...');
         rowResult = selectUser(username, client);
 
-        // if (rowResult == '') {
-        //     inserUser(username, err, client);
-        //     rowResult = selectUser(username, client);
-        // }
     });
     console.log(rowResult);
 }
 
 function selectUser(username, client) {
-    var result = '';
+    var rowResult = '';
     client.query("SELECT * from resellers WHERE name = '" + username + "'", function (err, result) {
-        console.log(result.rows[0].id);
-
+        rowResult = result;
     });
 
-    return result;
+    return rowResult;
 }
 
 function inserUser(username, err, client) {
