@@ -46,7 +46,7 @@ router.post('/', function (req, res) {
         username = getUsername();
     }
     token = '';
-    
+
     res.redirect('/');
 });
 
@@ -93,11 +93,12 @@ function database(username) {
         client.query("SELECT * from resellers WHERE name = '" + username + "'")
             .on('row', function (row) {
                 rowResult = row;
-                if(rowResult == ''){
-                    console.log("HEY!");
-                }
+
                 console.log(JSON.stringify(row));
             });
+        if (rowResult == '') {
+            console.log("HEY!");
+        }
     });
 }
 // more routes for our API will happen here
