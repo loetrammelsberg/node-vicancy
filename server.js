@@ -61,8 +61,8 @@ router.post('/', function (req, res) {
         });
     }
     token = '';
-    setTimeout(trimUsername, 3000);
-
+    username = setTimeout(trimUsername(username), 3000);
+    console.log(username);
     res.redirect('/');
 });
 function trimUsername(username){
