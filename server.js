@@ -99,7 +99,7 @@ function database(username) {
         //     rowResult = selectUser(username, client);
         // }
     });
-    console.log(rowResult.id);
+    console.log(rowResult);
 }
 
 function selectUser(username, client) {
