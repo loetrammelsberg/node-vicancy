@@ -31,10 +31,12 @@ var router = express.Router();
 // });
 
 var token = '';
-var userData = '';
+
 var username = '';
 var flag = false;
 var data = '';
+
+var rowResult = '';
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     token = req.body.token;
@@ -80,6 +82,7 @@ function trimUsername(username) {
     username = username.substring(pos + 1, username.length);
     return username;
 }
+
 function database(username) {
     pg.defaults.ssl = true;
 
@@ -89,7 +92,10 @@ function database(username) {
         console.log("SELECT * from resellers WHERE name = '" + username + "'");
         client.query("SELECT * from resellers WHERE name = '" + username + "'")
             .on('row', function (row) {
-                console.log(row == null);
+                rowResult = row;
+                if(rowResult == ''){
+                    console.log("HEY!");
+                }
                 console.log(JSON.stringify(row));
             });
     });
