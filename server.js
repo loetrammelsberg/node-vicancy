@@ -104,7 +104,7 @@ function database(username) {
 function selectUser(username, client) {
     var result = '';
     client.query("SELECT * from resellers WHERE name = '" + username + "'", function (err, result) {
-        console.log(result[0].id);
+        console.log(result.rows[0].id);
 
     });
 
