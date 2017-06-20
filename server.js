@@ -90,10 +90,10 @@ function database(username) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
         rowResult = selectUser(username, client);
-        
+
         if (rowResult == '') {
-            inserUser(username,client);
-            rowResult = selectUser(username,client);
+            inserUser(username, client);
+            rowResult = selectUser(username, client);
         }
     });
     console.log(rowResult);
@@ -110,7 +110,8 @@ function selectUser(username, client) {
 }
 
 function inserUser(username, client) {
-    client.query("INSERT INTO resellers (name) VALUES ('"+ username +")");
+    client.query("INSERT INTO resellers (name) VALUES ('" + username + "')");
+    if (err) throw err;
 }
 // more routes for our API will happen here
 
