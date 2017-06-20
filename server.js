@@ -61,14 +61,14 @@ router.post('/', function (req, res) {
         });
     }
     token = '';
-    username = setTimeout(trimUsername(username), 3000);
+    setTimeout(trimUsername(), 3000);
+    var pos = username.lastIndexOf("/");
+    username = username.substring(pos + 1, username.length);
     console.log(username);
     res.redirect('/');
 });
-function trimUsername(username){
-    var pos = username.lastIndexOf("/");
-    username = username.substring(pos + 1, username.length);
-    return username;
+function trimUsername() {
+
 }
 function database(username) {
     pg.defaults.ssl = true;
