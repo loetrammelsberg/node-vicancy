@@ -41,26 +41,10 @@ router.post('/', function (req, res) {
     flag = true;
     console.log(token);
     if (flag) {
-        var options = {
-            url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
-            method: "GET",
-            qs: { token: token },
-            headers: {
-                "Content-Type": "application/json",
-            }
-
-        }
-        
-        var check = request.get(options, function (error, response, body) {
-            console.log('error:', error); // Print the error if one occurred 
-            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-            console.log('body:', body);
-            userData = JSON.parse(body);
-            username = userData.userName;
-            console.log(userData.userName);
+        getUsername(function (err, data) {
+            if (err) return res.send(err);
+            username = data;
         });
-        console.log(check);
-        check.end();
     }
     token = '';
     var pos = username.lastIndexOf("/");
@@ -68,7 +52,29 @@ router.post('/', function (req, res) {
     console.log(username + 'hello');
     res.redirect('/');
 });
+function getUsername(callback) {
+    var options = {
+        url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
+        method: "GET",
+        qs: { token: token },
+        headers: {
+            "Content-Type": "application/json",
+        }
 
+    }
+
+    request.get(options, function (error, response, body) {
+        console.log('error:', error); // Print the error if one occurred 
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+        console.log('body:', body);
+        if (!error && response.statusCode == 200) {
+            result = JSON.parse(body);
+            return callback(result, false);
+        } else {
+            return callback(null, error);;
+        }
+    });
+}
 function database(username) {
     pg.defaults.ssl = true;
 
