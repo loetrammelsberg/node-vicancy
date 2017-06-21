@@ -51,7 +51,7 @@ router.post('/', function (req, res) {
     if (flag) {
         getUsername(function () {
             //this will be run after findVid is finished.
-            res.redirect('/');
+            res.redirect('/api');
             // Rest of your code here.
 
         });
@@ -136,7 +136,7 @@ function inserUser(username, err, client) {
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /
 app.use('/', router);
-app.get('/', function (req, res) {
+app.get('/api', function (req, res) {
     console.log(id + 'hello');
     console.log(name);
     console.log(vToken);
