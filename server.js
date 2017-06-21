@@ -46,7 +46,7 @@ router.post('/', function (req, res) {
         rowResult = getUsername();
     }
     token = '';
-    console.log(rowResult);
+    console.log(rowResult.id);
     res.redirect('/');
 });
 
@@ -98,8 +98,7 @@ function database(username) {
 function selectUser(username, client) {
     var rowResult = '';
     client.query("SELECT * from resellers WHERE name = '" + username + "'", function (err, result) {
-        rowResult = result;
-        console.log(result.rows[0]);
+        rowResult = result.rows[0];
     });
     
     return rowResult;
