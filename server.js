@@ -49,14 +49,11 @@ router.post('/', function (req, res) {
     flag = true;
     console.log(token);
     if (flag) {
-        setTimeout(getUsername, 2000);
+        rowResult = getUsername();
     }
     token = '';
-    console.log(id);
-    console.log(name);
-    console.log(vToken);
-    console.log(language);
-    res.redirect('/');
+
+    setTimeout(change, 3000);
 });
 
 function getUsername() {
@@ -128,6 +125,9 @@ function inserUser(username, err, client) {
     if (err) throw err;
 }
 
+function change() {
+    res.redirect('/');
+}
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
