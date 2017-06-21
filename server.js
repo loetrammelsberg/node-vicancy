@@ -80,7 +80,7 @@ function getUsername(callback) {
             rowResult = database(username);
         }
     });
-    return callback;
+    if (callback) callback();
 }
 function trimUsername(username) {
     var pos = username.lastIndexOf("/");
