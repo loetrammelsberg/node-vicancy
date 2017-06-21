@@ -44,9 +44,12 @@ router.post('/', function (req, res) {
     console.log(token);
     if (flag) {
         rowResult = getUsername();
+        if (rowResult !=''){
+            
+        }
     }
     token = '';
-    console.log(rowResult.id);
+
     res.redirect('/');
 });
 
@@ -95,12 +98,20 @@ function database(username) {
     return rowResult;
 }
 
+var id = '';
+var name = '';
+var vToken = '';
+var language = '';
+
 function selectUser(username, client) {
     var rowResult = '';
     client.query("SELECT * from resellers WHERE name = '" + username + "'", function (err, result) {
-        rowResult = result.rows[0];
+        id = result.rows[0].id;
+        name = result.rows[0].name;
+        vToken = result.rows[0].token;
+        language = result.rows[0].language;
     });
-    
+
     return rowResult;
 }
 
