@@ -128,6 +128,14 @@ function inserUser(username, err, client) {
     client.query("INSERT INTO resellers (name) VALUES ('" + username + "')");
     if (err) throw err;
 }
+
+function wait(ms) {
+    var start = new Date().getTime();
+    var end = start;
+    while (end < start + ms) {
+        end = new Date().getTime();
+    }
+}
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
