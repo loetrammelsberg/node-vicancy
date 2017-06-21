@@ -140,7 +140,7 @@ function inserUser(username, err, client) {
 // all of our routes will be prefixed with /
 app.use('/', router);
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/widget.html'));
+    res.sendFile(path.join(__dirname + 'widget.html'));
 
     //__dirname : It will resolve to your project folder.
 });
