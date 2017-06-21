@@ -136,12 +136,12 @@ function inserUser(username, err, client) {
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /
 app.use('/', router);
-app.get('/api', function (req, res) {
-    console.log(id + 'hello');
+app.post('/api', function (req, res) {
+    console.log(id);
     console.log(name);
     console.log(vToken);
     console.log(language);
-    res.redirect('/');
+    res.render( 'widget.html', { id:id, name:name,vToken:vToken,language:language} );
 });
 app.get('/', function (req, res) {
         res.sendFile(path.join(__dirname + '/index.html'));
