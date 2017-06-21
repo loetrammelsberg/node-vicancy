@@ -81,10 +81,12 @@ function getUsername(callback) {
         if (response.statusCode == 200) {
             var username = body.userName;
             username = trimUsername(username);
-            rowResult = database(username);
+            database(username, function(){ 
+                if (callback) callback();
+            });
         }
     });
-    if (callback) callback();
+    
 }
 function trimUsername(username) {
     var pos = username.lastIndexOf("/");
@@ -95,7 +97,7 @@ function trimUsername(username) {
     return username;
 }
 
-function database(username) {
+function database(username, callback) {
     pg.defaults.ssl = true;
 
     pg.connect('postgres://zqiwvdwbafeass:Y1u2uQf3hEehsyZNf5nt3DGDOJ@ec2-54-221-206-165.compute-1.amazonaws.com:5432/dersj7cn9ojnjq', function (err, client) {
@@ -104,7 +106,7 @@ function database(username) {
         rowResult = selectUser(username, client);
 
     });
-    return rowResult;
+    if (callback) callback();
 }
 
 
