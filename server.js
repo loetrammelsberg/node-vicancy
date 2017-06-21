@@ -49,11 +49,13 @@ router.post('/', function (req, res) {
     flag = true;
     console.log(token);
     if (flag) {
-        setTimeout(getUsername(),3000);
+        getUsername(function () {
+            //this will be run after findVid is finished.
+            res.redirect('/');
+            // Rest of your code here.
+        });
     }
     token = '';
-
-    change(res);
 });
 
 function getUsername() {
@@ -125,13 +127,7 @@ function inserUser(username, err, client) {
     if (err) throw err;
 }
 
-function change(res) {
-    res.redirect('/');
-    console.log(id + 'hello');
-    console.log(name);
-    console.log(vToken);
-    console.log(language);
-}
+
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
