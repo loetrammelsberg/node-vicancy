@@ -14,6 +14,7 @@ var engines = require('consolidate');
 
 app.engine('html', engines.mustache);
 app.set('view engine', 'html');
+app.set('view', path.join(__dirname, '/View'));
 
 app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
 app.use(express.static(__dirname + '/Script')); //Store all JS and CSS in Scripts folder.
