@@ -50,9 +50,10 @@ router.post('/', function (req, res) {
     console.log(token);
     if (flag) {
         rowResult = getUsername();
+        wait(5000);
     }
     token = '';
-    wait(3000);
+    
     console.log(id);
     console.log(name);
     console.log(vToken);
