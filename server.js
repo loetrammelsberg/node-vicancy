@@ -10,11 +10,8 @@ var bodyParser = require('body-parser');
 var path = require("path");
 var request = require('request');
 var pg = require('pg');
-var engines = require('consolidate');
 
-app.engine('html', engines.mustache);
-app.set('view engine', 'html');
-app.set('view', path.join(__dirname, '/View'));
+app.engine('.html', require('ejs').__express);
 
 app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
 app.use(express.static(__dirname + '/Script')); //Store all JS and CSS in Scripts folder.
