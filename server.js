@@ -49,11 +49,11 @@ router.post('/', function (req, res) {
     flag = true;
     console.log(token);
     if (flag) {
-        rowResult = getUsername();
+        setTimeout(getUsername(),3000);
     }
     token = '';
 
-    setTimeout(change(res), 3000);
+    change(res);
 });
 
 function getUsername() {
