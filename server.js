@@ -52,7 +52,11 @@ router.post('/', function (req, res) {
         rowResult = getUsername();
     }
     token = '';
-
+    wait(3000);
+    console.log(id);
+    console.log(name);
+    console.log(vToken);
+    console.log(language);
     res.redirect('/');
 });
 
