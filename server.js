@@ -53,6 +53,10 @@ router.post('/', function (req, res) {
             //this will be run after findVid is finished.
             res.redirect('/');
             // Rest of your code here.
+            console.log(id) + 'hello';
+            console.log(name);
+            console.log(vToken);
+            console.log(language);
         });
     }
     token = '';
