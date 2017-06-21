@@ -12,8 +12,10 @@ var request = require('request');
 var pg = require('pg');
 
 app.engine('.html', require('ejs').__express);
+app.set('views', __dirname + '/View');
+app.set('view engine', 'html');
 
-app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
+// app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
 app.use(express.static(__dirname + '/Script')); //Store all JS and CSS in Scripts folder.
 app.use(express.static(__dirname + '/Public'));
 
