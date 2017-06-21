@@ -11,9 +11,9 @@ var path = require("path");
 var request = require('request');
 var pg = require('pg');
 
-app.engine('.html', require('ejs').__express);
+app.engine('.ejs', require('ejs').__express);
 app.set('views', __dirname + '/View');
-app.set('view engine', 'html');
+app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
 app.use(express.static(__dirname + '/Script')); //Store all JS and CSS in Scripts folder.
@@ -151,7 +151,7 @@ app.get('/api', function (req, res) {
     console.log(name);
     console.log(vToken);
     console.log(language);
-    res.render('widget.html', { id: id, name: name, vToken: vToken, language: language });
+    res.render('widget.ejs', { id: id, name: name, vToken: vToken, language: language });
 });
 
 app.get('/', function (req, res) {
