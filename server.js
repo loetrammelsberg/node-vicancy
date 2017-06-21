@@ -71,7 +71,6 @@ function getUsername() {
             username = trimUsername(username);
             rowResult = database(username);
         }
-        conole.log(rowResult);
     });
     return rowResult;
 }
