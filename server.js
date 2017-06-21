@@ -141,6 +141,7 @@ app.get('/api', function (req, res) {
     console.log(name);
     console.log(vToken);
     console.log(language);
+    res.redirect('/');
 });
 app.get('/', function (req, res) {
         res.sendFile(path.join(__dirname + '/index.html'));
