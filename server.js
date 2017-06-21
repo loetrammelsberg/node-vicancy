@@ -53,7 +53,7 @@ router.post('/', function (req, res) {
     }
     token = '';
 
-    setTimeout(change, 3000);
+    setTimeout(change(res), 3000);
 });
 
 function getUsername() {
@@ -125,8 +125,12 @@ function inserUser(username, err, client) {
     if (err) throw err;
 }
 
-function change() {
+function change(res) {
     res.redirect('/');
+    console.log(id);
+    console.log(name);
+    console.log(vToken);
+    console.log(language);
 }
 // more routes for our API will happen here
 
