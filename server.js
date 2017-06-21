@@ -53,10 +53,7 @@ router.post('/', function (req, res) {
             //this will be run after findVid is finished.
             res.redirect('/');
             // Rest of your code here.
-            console.log(id  + 'hello');
-            console.log(name);
-            console.log(vToken);
-            console.log(language);
+
         });
     }
     token = '';
@@ -81,12 +78,12 @@ function getUsername(callback) {
         if (response.statusCode == 200) {
             var username = body.userName;
             username = trimUsername(username);
-            database(username, function(){ 
+            database(username, function () {
                 if (callback) callback();
             });
         }
     });
-    
+
 }
 function trimUsername(username) {
     var pos = username.lastIndexOf("/");
@@ -139,11 +136,17 @@ function inserUser(username, err, client) {
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /
 app.use('/', router);
-
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
-    //__dirname : It will resolve to your project folder.
+    console.log(id + 'hello');
+    console.log(name);
+    console.log(vToken);
+    console.log(language);
 });
+app.get('/', function (req, res) {
+        res.sendFile(path.join(__dirname + '/index.html'));
+
+        //__dirname : It will resolve to your project folder.
+    });
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/get.html'));
