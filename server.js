@@ -99,6 +99,7 @@ function selectUser(username, client) {
     var rowResult = '';
     client.query("SELECT * from resellers WHERE name = '" + username + "'", function (err, result) {
         rowResult = result;
+        console.log(result);
     });
     
     return rowResult;
