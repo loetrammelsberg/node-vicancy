@@ -151,7 +151,7 @@ app.get('/api', function (req, res) {
     console.log(name);
     console.log(vToken);
     console.log(language);
-    res.render('widget.ejs', { id: id, name: name, vToken: vToken, language: language });
+    res.render('widget.html', { id: id, name: name, vToken: vToken, language: language });
 });
 
 app.get('/', function (req, res) {
