@@ -71,7 +71,7 @@ function getUsername() {
             username = trimUsername(username);
             rowResult = database(username);
         }
-
+        conole.log(rowResult);
     });
     return rowResult;
 }
@@ -93,7 +93,6 @@ function database(username) {
         rowResult = selectUser(username, client);
 
     });
-    console.log(rowResult);
 }
 
 function selectUser(username, client) {
@@ -101,7 +100,7 @@ function selectUser(username, client) {
     client.query("SELECT * from resellers WHERE name = '" + username + "'", function (err, result) {
         rowResult = result;
     });
-
+    
     return rowResult;
 }
 
