@@ -136,7 +136,7 @@ function inserUser(username, err, client) {
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /
 app.use('/', router);
-app.post('/api', function (req, res) {
+app.get('/api', function (req, res) {
     console.log(id);
     console.log(name);
     console.log(vToken);
