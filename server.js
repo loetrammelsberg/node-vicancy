@@ -50,12 +50,6 @@ router.post('/', function (req, res) {
     console.log(token);
     if (flag) {
         rowResult = getUsername();
-        if (rowResult != ''){
-            console.log(id);
-            console.log(name);
-            console.log(vToken);
-            console.log(language);
-        }
     }
     token = '';
 
@@ -116,6 +110,11 @@ function selectUser(username, client) {
         name = result.rows[0].name;
         vToken = result.rows[0].token;
         language = result.rows[0].language;
+
+        console.log(id);
+        console.log(name);
+        console.log(vToken);
+        console.log(language);
     });
 
     return rowResult;
