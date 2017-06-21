@@ -12,11 +12,13 @@ var request = require('request');
 var pg = require('pg');
 var engines = require('consolidate');
 
+app.engine('html', engines.mustache);
+app.set('view engine', 'html');
+
 app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
 app.use(express.static(__dirname + '/Script')); //Store all JS and CSS in Scripts folder.
 app.use(express.static(__dirname + '/Public'));
-app.engine('html', engines.mustache);
-app.set('view engine', 'html');
+
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
