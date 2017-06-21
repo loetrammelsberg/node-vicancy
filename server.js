@@ -141,13 +141,18 @@ app.get('/api', function (req, res) {
     console.log(name);
     console.log(vToken);
     console.log(language);
-    res.render( 'widget.html', { id:id, name:name,vToken:vToken,language:language} );
+    res.render('widget.html', { id: id, name: name, vToken: vToken, language: language });
 });
 app.get('/', function (req, res) {
-        res.sendFile(path.join(__dirname + '/index.html'));
+    res.sendFile(path.join(__dirname + '/widget.html'));
 
-        //__dirname : It will resolve to your project folder.
-    });
+    //__dirname : It will resolve to your project folder.
+});
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
+
+    //__dirname : It will resolve to your project folder.
+});
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/get.html'));
