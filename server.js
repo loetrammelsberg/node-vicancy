@@ -11,7 +11,7 @@ var path = require("path");
 var request = require('request');
 var pg = require('pg');
 
-// app.engine('.html', require('ejs').__express);
+app.engine('.html', require('ejs').__express);
 app.set('views', __dirname + '/View');
 app.set('view engine', 'html');
 
