@@ -127,7 +127,7 @@ function inserUser(username, err, client) {
 
 function change(res) {
     res.redirect('/');
-    console.log(id);
+    console.log(id + 'hello');
     console.log(name);
     console.log(vToken);
     console.log(language);
