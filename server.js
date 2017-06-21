@@ -37,6 +37,12 @@ var flag = false;
 var data = '';
 
 var rowResult = '';
+
+var id = '';
+var name = '';
+var vToken = '';
+var language = '';
+
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     token = req.body.token;
@@ -44,8 +50,11 @@ router.post('/', function (req, res) {
     console.log(token);
     if (flag) {
         rowResult = getUsername();
-        if (rowResult !=''){
-            
+        if (rowResult != ''){
+            console.log(id);
+            console.log(name);
+            console.log(vToken);
+            console.log(language);
         }
     }
     token = '';
@@ -98,10 +107,7 @@ function database(username) {
     return rowResult;
 }
 
-var id = '';
-var name = '';
-var vToken = '';
-var language = '';
+
 
 function selectUser(username, client) {
     var rowResult = '';
