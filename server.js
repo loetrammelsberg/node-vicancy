@@ -58,7 +58,7 @@ router.post('/', function (req, res) {
     token = '';
 });
 
-function getUsername() {
+function getUsername(callback) {
     var options = {
         url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
         method: "GET",
@@ -80,7 +80,7 @@ function getUsername() {
             rowResult = database(username);
         }
     });
-    return rowResult;
+    return callback;
 }
 function trimUsername(username) {
     var pos = username.lastIndexOf("/");
