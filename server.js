@@ -49,11 +49,9 @@ router.post('/', function (req, res) {
     flag = true;
     console.log(token);
     if (flag) {
-        rowResult = getUsername();
-        wait(5000);
+        setTimeout(getUsername, 2000);
     }
     token = '';
-    
     console.log(id);
     console.log(name);
     console.log(vToken);
@@ -130,13 +128,6 @@ function inserUser(username, err, client) {
     if (err) throw err;
 }
 
-function wait(ms) {
-    var start = new Date().getTime();
-    var end = start;
-    while (end < start + ms) {
-        end = new Date().getTime();
-    }
-}
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
