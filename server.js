@@ -92,6 +92,7 @@ function database(username) {
         rowResult = selectUser(username, client);
 
     });
+    return rowResult;
 }
 
 function selectUser(username, client) {
