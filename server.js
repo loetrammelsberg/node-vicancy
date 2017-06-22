@@ -123,7 +123,9 @@ function selectUser(username, client) {
         email = result.rows[0].email;
         vToken = result.rows[0].token;
         language = result.rows[0].language;
-
+        if(language == null){
+            language = 'en';
+        }
         console.log(id);
         console.log(name);
         console.log(email);
