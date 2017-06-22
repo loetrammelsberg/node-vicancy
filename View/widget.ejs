@@ -11,16 +11,20 @@
 
     <link rel="stylesheet" href="style.css">
     <script>
-        function load() {
-            vicancy.open({ clientId: "<%=id%>", clientName: "<%=name%>", clientEmail: "<%=email%>", clientLanguage: "<%=language%>", apiToken: "<%= vToken %>" }); return false;
+        window.onload = function() {
+            localStorage.setItem("name","<%=name%>");
+            localStorage.setItem("id","<%=id%>");
+            localStorage.setItem("email","<%=email%>");
+            localStorage.setItem("language","<%=language%>");
+            localStorage.setItem("vToken","<%= vToken %>");
         }
     </script>
 </head>
 
-<body onload="load()">
-    <!--<a href='#' onclick='vicancy.open({clientId: "<%=id%>", clientName: "<%=name%>", clientEmail: "<%=email%>", clientLanguage: "<%=language%>", apiToken:"<%= vToken %>"}); return false;'>-->
+<body>
+    <a href='app.ejs' target='_blank'>
          <img src="Appstore-banner.png">
-    <!--</a>-->
+    </a>
     <script async src="//vicancy.herokuapp.com/assets/widget-api.js" type="text/javascript"></script>
 </body>
 
