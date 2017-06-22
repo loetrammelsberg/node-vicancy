@@ -125,6 +125,7 @@ function selectUser(username, client) {
 
         console.log(id);
         console.log(name);
+        console.log(email);
         console.log(vToken);
         console.log(language);
     });
@@ -153,7 +154,7 @@ app.get('/api', function (req, res) {
     console.log(name);
     console.log(vToken);
     console.log(language);
-    res.render('widget.ejs', { id: id, name: name, vToken: vToken, language: language });
+    res.render('widget.ejs', { id: id, name: name, vToken: vToken,email:email, language: language });
 });
 
 app.get('/', function (req, res) {
