@@ -10,15 +10,17 @@
 
 
     <link rel="stylesheet" href="style.css">
-    <script> 
-    
+    <script>
+        function load() {
+            vicancy.open({ clientId: "<%=id%>", clientName: "<%=name%>", clientEmail: "<%=email%>", clientLanguage: "<%=language%>", apiToken: "<%= vToken %>" }); return false;
+        }
     </script>
 </head>
 
 <body>
-    <a href='#' onclick='vicancy.open({clientId: "<%=id%>", clientName: "<%=name%>", clientEmail: "<%=email%>", clientLanguage: "<%=language%>", apiToken:"<%= vToken %>"}); return false;'>
+    <!--<a href='#' onclick='vicancy.open({clientId: "<%=id%>", clientName: "<%=name%>", clientEmail: "<%=email%>", clientLanguage: "<%=language%>", apiToken:"<%= vToken %>"}); return false;'>-->
          <img src="Appstore-banner.png">
-    </a>
+    <!--</a>-->
     <script async src="//vicancy.herokuapp.com/assets/widget-api.js" type="text/javascript"></script>
 </body>
 
