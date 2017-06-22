@@ -45,6 +45,7 @@ var rowResult = '';
 
 var id = '';
 var name = '';
+var email = '';
 var vToken = '';
 var language = '';
 
@@ -115,9 +116,10 @@ function database(username, callback) {
 
 function selectUser(username, client) {
     var rowResult = '';
-    client.query("SELECT * from resellers WHERE name = '" + username + "'", function (err, result) {
-        id = result.rows[0].id;
+    client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = 'Vicancy' AND clients.name = '24people_patrick'", function (err, result) {
+        id = result.rows[0].external_id;
         name = result.rows[0].name;
+        email = result.rows[0].email;
         vToken = result.rows[0].token;
         language = result.rows[0].language;
 
