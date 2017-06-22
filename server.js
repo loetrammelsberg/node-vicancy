@@ -49,6 +49,7 @@ var email = '';
 var vToken = '';
 var language = '';
 
+
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     token = req.body.token;
