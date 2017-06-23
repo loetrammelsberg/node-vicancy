@@ -11,20 +11,20 @@
 
     <link rel="stylesheet" href="style.css">
     <script>
-        window.onload = function() {
-            localStorage.setItem("name","<%=name%>");
-            localStorage.setItem("id","<%=id%>");
-            localStorage.setItem("email","<%=email%>");
-            localStorage.setItem("language","<%=language%>");
-            localStorage.setItem("vToken","<%= vToken %>");
+        window.onload = function () {
+            localStorage.setItem("name", "<%=name%>");
+            localStorage.setItem("id", "<%=id%>");
+            localStorage.setItem("email", "<%=email%>");
+            localStorage.setItem("language", "<%=language%>");
+            localStorage.setItem("vToken", "<%= vToken %>");
         }
     </script>
 </head>
 
 <body>
-    <a href='app.ejs' target='_blank'  >
-         <img src="Appstore-banner.png">
-    </a>
+
+    <img src="Appstore-banner.png" href='app.ejs' target='_blank'>
+
     <script async src="//vicancy.herokuapp.com/assets/widget-api.js" type="text/javascript"></script>
 </body>
 
