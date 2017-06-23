@@ -101,10 +101,11 @@ function trimUsername(username) {
     return username;
 }
 
+
 function database(username, callback) {
     pg.defaults.ssl = true;
 
-    pg.connect('postgres://zqiwvdwbafeass:Y1u2uQf3hEehsyZNf5nt3DGDOJ@ec2-54-221-206-165.compute-1.amazonaws.com:5432/dersj7cn9ojnjq', function (err, client) {
+    pg.connect('postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei', function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
         rowResult = selectUser(username, client);
@@ -117,7 +118,11 @@ function database(username, callback) {
 
 function selectUser(username, client) {
     var rowResult = '';
-    client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = 'Vicancy' AND clients.name = '24people_patrick'", function (err, result) {
+    var reseller = 'HROffice';
+    if(username == 'Vicancy'){
+        username = 'Start People';
+    }
+    client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '"+ reseller +"' AND clients.name = '"+ username +"'", function (err, result) {
         id = result.rows[0].external_id;
         name = result.rows[0].name;
         email = result.rows[0].email;
