@@ -166,8 +166,15 @@ app.get('/', function (req, res) {
     //__dirname : It will resolve to your project folder.
 });
 
-app.get('/api', function (req, res) {
+app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/app.ejs'));
+    res.header('Content-Type', 'text/text/html');
+    //__dirname : It will resolve to your project folder.
+});
+
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + '/widget.ejs'));
+    res.header('Content-Type', 'text/text/html');
     //__dirname : It will resolve to your project folder.
 });
 
