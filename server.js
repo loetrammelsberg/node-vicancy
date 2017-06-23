@@ -108,15 +108,13 @@ function database(username, callback) {
     pg.connect('postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei', function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
-        selectUser(username, client, function () {
-            if (callback) callback();
-        });
+        selectUser(username, client);
     });
 }
 
 
 
-function selectUser(username, client, callback) {
+function selectUser(username, client) {
     var reseller = 'HROffice';
     if (username == 'Vicancy') {
         username = 'Start People';
@@ -135,8 +133,6 @@ function selectUser(username, client, callback) {
         console.log(vToken);
         console.log(language);
     });
-
-    if (id != '') callback();
 }
 
 function inserUser(username, err, client) {
