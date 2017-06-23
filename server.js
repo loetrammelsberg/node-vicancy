@@ -165,7 +165,7 @@ app.get('/app', function (req, res) {
 });
 
 app.get('/check', function (req, res) {
-    res.redirect('vicancy.open({ clientId: localStorage.getItem(<%=id%>), clientName: localStorage.getItem(<%=name%>), clientEmail: localStorage.getItem(<%=email%>), clientLanguage: localStorage.getItem(<%=language%>), apiToken: localStorage.getItem(<%=vToken%>) }); return false;');
+    res.redirect(vicancy.open({ clientId:id, clientName:name, clientEmail: email, clientLanguage: language, apiToken: vToken }));
 
     //__dirname : It will resolve to your project folder.
 });
