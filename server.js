@@ -165,10 +165,6 @@ app.get('/app', function (req, res) {
 });
 
 app.get('/api', function (req, res) {
-    console.log(id);
-    console.log(name);
-    console.log(vToken);
-    console.log(language);
     res.render('widget.ejs', { id: id, name: name, vToken: vToken, email: email, language: language });
 });
 
