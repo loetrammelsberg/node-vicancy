@@ -108,10 +108,10 @@ function database(username, callback) {
     pg.connect('postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei', function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
-        rowResult = selectUser(username, client);
-
+        selectUser(username, client, function () {
+            if (callback) callback();
+        });
     });
-    if (callback) callback();
 }
 
 
