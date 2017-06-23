@@ -10,11 +10,19 @@
 
 
     <link rel="stylesheet" href="style.css">
- 
+    <script>
+        window.onload = function () {
+            localStorage.setItem("name","<%=name%>");
+            localStorage.setItem("id","<%=id%>");
+            localStorage.setItem("email","<%=email%>");
+            localStorage.setItem("language","<%=language%>");
+            localStorage.setItem("vToken","<%= vToken %>");
+        }
+    </script>
 </head>
 
 <body>
-    <a href='#' onclick='vicancy.open({clientId: "<%=id%>", clientName: "<%=name%>", clientEmail: "<%=email%>", clientLanguage: "<%=language%>", apiToken:"<%= vToken %>"}); return false;'>
+    <a href='#' onclick='vicancy.open({ clientId: localStorage.getItem("id"), clientName: localStorage.getItem("name"), clientEmail: localStorage.getItem("email"), clientLanguage: localStorage.getItem("language"), apiToken: localStorage.getItem("vToken") }); return false;'>
          <img src="Appstore-banner.png" >
     </a>
 
