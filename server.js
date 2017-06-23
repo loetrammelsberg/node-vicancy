@@ -131,11 +131,6 @@ function selectUser(username, client) {
         if (language == null) {
             language = 'nl';
         }
-        console.log(id);
-        console.log(name);
-        console.log(email);
-        console.log(vToken);
-        console.log(language);
     });
 
     return rowResult;
