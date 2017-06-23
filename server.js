@@ -152,11 +152,6 @@ function inserUser(username, err, client) {
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /
 app.use('/', router);
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/widget.ejs'));
-
-    //__dirname : It will resolve to your project folder.
-});
 
 app.get('/app', function (req, res) {
     res.render(path.join(__dirname + '/View/app.ejs'));
