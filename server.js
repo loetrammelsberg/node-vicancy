@@ -117,7 +117,6 @@ function database(username, callback) {
 
 
 function selectUser(username, client, callback) {
-    var rowResult = '';
     var reseller = 'HROffice';
     if (username == 'Vicancy') {
         username = 'Start People';
@@ -131,9 +130,13 @@ function selectUser(username, client, callback) {
         if (language == null) {
             language = 'nl';
         }
+        console.log(id);
+        console.log(name);
+        console.log(vToken);
+        console.log(language);
     });
 
-    if (callback) callback();
+    if (id != '') callback();
 }
 
 function inserUser(username, err, client) {
