@@ -123,7 +123,7 @@ function selectUser(username, client) {
         email = result.rows[0].email;
         vToken = result.rows[0].token;
         language = result.rows[0].language;
-        if(language == null){
+        if (language == null) {
             language = 'en';
         }
         console.log(id);
@@ -148,33 +148,28 @@ function inserUser(username, err, client) {
 // all of our routes will be prefixed with /
 app.use('/', router);
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/widget.html'));
+    res.sendFile(path.join(__dirname + '/widget.ejs'));
 
     //__dirname : It will resolve to your project folder.
 });
+
+app.get('/app', function (req, res) {
+   res.render(path.join(__dirname + '/View/app.ejs'));
+
+    //__dirname : It will resolve to your project folder.
+});
+
 app.get('/api', function (req, res) {
     console.log(id);
     console.log(name);
     console.log(vToken);
     console.log(language);
-    res.render('widget.ejs', { id: id, name: name, vToken: vToken,email:email, language: language });
+    res.render('widget.ejs', { id: id, name: name, vToken: vToken, email: email, language: language });
 });
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 
-    //__dirname : It will resolve to your project folder.
-});
-
-app.get('/', function (req, res) {
-    res.render(path.join(__dirname + '/app.ejs'));
-    
-    //__dirname : It will resolve to your project folder.
-});
-
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/widget.ejs'));
-    res.header('Content-Type', 'text/text/html');
     //__dirname : It will resolve to your project folder.
 });
 
