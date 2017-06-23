@@ -119,10 +119,10 @@ function database(username, callback) {
 function selectUser(username, client) {
     var rowResult = '';
     var reseller = 'HROffice';
-    if(username == 'Vicancy'){
+    if (username == 'Vicancy') {
         username = 'Start People';
     }
-    client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '"+ reseller +"' AND clients.name = '"+ username +"'", function (err, result) {
+    client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
         id = result.rows[0].external_id;
         name = result.rows[0].name;
         email = result.rows[0].email;
@@ -159,11 +159,16 @@ app.get('/', function (req, res) {
 });
 
 app.get('/app', function (req, res) {
-   res.render(path.join(__dirname + '/View/app.ejs'));
+    res.render(path.join(__dirname + '/View/app.ejs'));
 
     //__dirname : It will resolve to your project folder.
 });
 
+app.get('/check', function (req, res) {
+    res.redirect('vicancy.open({ clientId: localStorage.getItem(<%=id%>), clientName: localStorage.getItem(<%=name%>), clientEmail: localStorage.getItem(<%=email%>), clientLanguage: localStorage.getItem(<%=language%>), apiToken: localStorage.getItem(<%=vToken%>) }); return false;');
+
+    //__dirname : It will resolve to your project folder.
+});
 app.get('/api', function (req, res) {
     console.log(id);
     console.log(name);
