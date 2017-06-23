@@ -129,7 +129,7 @@ function selectUser(username, client) {
         vToken = result.rows[0].token;
         language = result.rows[0].language;
         if (language == null) {
-            language = 'en';
+            language = 'nl';
         }
         console.log(id);
         console.log(name);
