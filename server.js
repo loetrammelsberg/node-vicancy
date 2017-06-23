@@ -60,7 +60,7 @@ router.post('/', function (req, res) {
             //this will be run after findVid is finished.
             setTimeout(function () {
                 res.redirect('/api');
-            },2000);
+            },1000);
             // Rest of your code here.
 
         });
