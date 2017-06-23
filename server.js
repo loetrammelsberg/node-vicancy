@@ -164,11 +164,6 @@ app.get('/app', function (req, res) {
     //__dirname : It will resolve to your project folder.
 });
 
-app.get('/check', function (req, res) {
-    res.redirect(vicancy.open({ clientId:id, clientName:name, clientEmail: email, clientLanguage: language, apiToken: vToken }));
-
-    //__dirname : It will resolve to your project folder.
-});
 app.get('/api', function (req, res) {
     console.log(id);
     console.log(name);
