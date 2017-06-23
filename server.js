@@ -166,7 +166,7 @@ app.get('/', function (req, res) {
     //__dirname : It will resolve to your project folder.
 });
 
-app.get('/api', function (req, res) {
+app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/app.ejs'));
     //__dirname : It will resolve to your project folder.
 });
