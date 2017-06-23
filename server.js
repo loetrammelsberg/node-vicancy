@@ -116,7 +116,7 @@ function database(username, callback) {
 
 
 
-function selectUser(username, client) {
+function selectUser(username, client, callback) {
     var rowResult = '';
     var reseller = 'HROffice';
     if (username == 'Vicancy') {
@@ -133,7 +133,7 @@ function selectUser(username, client) {
         }
     });
 
-    return rowResult;
+    if (callback) callback();
 }
 
 function inserUser(username, err, client) {
