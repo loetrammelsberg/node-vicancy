@@ -1,3 +1,7 @@
+
+head, title, link, meta, style, script {
+	display: none;
+}
 img {
   position: absolute;
   top: 50%;
