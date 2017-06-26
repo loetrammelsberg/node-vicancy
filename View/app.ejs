@@ -11,19 +11,13 @@
 
     <link rel="stylesheet" href="style.css">
     <script>
-        $(document).ready(function () {
-            var referrer = document.referrer;
-            console.log(referrer);
-        });
-        // function load() {
-        //     vicancy.open({ clientId: localStorage.getItem("id"), clientName: localStorage.getItem("name"), clientEmail: localStorage.getItem("email"), clientLanguage: localStorage.getItem("language"), apiToken: localStorage.getItem("vToken") }); return false;
-        // }
+        function load() {
+            vicancy.open({ clientId: localStorage.getItem("id"), clientName: localStorage.getItem("name"), clientEmail: localStorage.getItem("email"), clientLanguage: localStorage.getItem("language"), apiToken: localStorage.getItem("vToken") }); return false;
+        }
     </script>
 </head>
 
-<body >
-    <!--onload="load()"-->
-    <!--<iframe src="<%=referrer%>" height="100%" width="100%"></iframe>-->
+<body onload="load()">
     <script async src="//vicancy.herokuapp.com/assets/widget-api.js" type="text/javascript"></script>
 </body>
 
