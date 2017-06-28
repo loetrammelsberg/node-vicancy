@@ -158,36 +158,33 @@ function insertUser(username, reseller) {
     pg.connect(con, function (err, client, done) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
-        client.query("SELECT resellers.token FROM Resellers where resellers.name = '"+ reseller +"';", function (err, result) {
-            resellerToken = result.rows[0].token;
-            console.log(result.rows[0].token);
-             console.log(resellerToken + 'heyyy!');
-        });
-    });
-    console.log(resellerToken + 'yooooo!');
+        client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
    
-    var options = {
-        url: 'http://app.vicancy.com/api/v1/client/auth',
-        method: "POST",
-        qs: {
-            api_token: resellerToken,
-            client: {
-                id: '1000',
-                name: username,
-                email: '',
-                language: 'nl'
+
+            var options = {
+                url: 'http://app.vicancy.com/api/v1/client/auth',
+                method: "POST",
+                qs: {
+                    api_token: result.rows[0].token,
+                    client: {
+                        id: '1000',
+                        name: username,
+                        email: '',
+                        language: 'nl'
+                    }
+                },
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
             }
-        },
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
-    }
-    request.post(options, function (error, response, body) {
-        console.log('error:', error); // Print the error if one occurred 
-        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-        console.log('body:', body);
-        console.log('hello');
+            request.post(options, function (error, response, body) {
+                console.log('error:', error); // Print the error if one occurred 
+                console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+                console.log('body:', body);
+                console.log('hello');
+            });
+        });
     });
 }
 
