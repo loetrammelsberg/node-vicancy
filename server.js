@@ -153,9 +153,6 @@ function selectUser(username, client) {
 
 function inserUser(username, err, client) {
     var resellerToken = '';
-    client.query("SELECT resellers.token FROM Resellers WHERE resellers.name ('" + username + "')"), function (err, result) {
-        resellerToken = result.rows[0].token;
-    };
     var options = {
         url: 'http://app.vicancy.com/api/v1/client/auth',
         method: "POST",
