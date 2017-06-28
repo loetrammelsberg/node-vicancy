@@ -9,8 +9,10 @@ var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
 var request = require('request');
-var pg = require('pg');
 
+//Database
+var pg = require('pg');
+var con = 'postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei';
 app.engine('.ejs', require('ejs').__express);
 app.set('views', __dirname + '/View');
 app.set('view engine', 'ejs');
@@ -48,7 +50,6 @@ var name = '';
 var email = '';
 var vToken = '';
 var language = '';
-
 
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
@@ -106,8 +107,8 @@ function trimUsername(username) {
 
 function database(username, callback) {
     pg.defaults.ssl = true;
-
-    pg.connect('postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei', function (err, client) {
+    var pool = new Pool();
+    pg.connect(con, function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
         rowResult = selectUser(username, client);
@@ -136,7 +137,7 @@ function selectUser(username, client) {
                 language = 'nl';
             }
         }
-        pg.end();
+
 
         if (rowResult == '') {
             insertUser(username, reseller);
@@ -155,7 +156,7 @@ function selectUser(username, client) {
 function insertUser(username, reseller) {
 
     var resellerToken = '';
-    pg.connect('postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei', function (err, client) {
+    pg.connect(con, function (err, client) {
         client.query("SELECT resellers.token FROM resellers WHERE resellers.name = ('" + reseller + "')"), function (err, result) {
             if (err) throw err;
             console.log(result.rows[0] + "INSERT USER!");
@@ -163,32 +164,31 @@ function insertUser(username, reseller) {
 
         };
     });
-        var options = {
-            url: 'http://app.vicancy.com/api/v1/client/auth',
-            method: "POST",
-            qs: {
-                api_token: resellerToken,
-                client: {
-                    id: '1000',
-                    name: username,
-                    email: '',
-                    language: 'nl'
-                }
-            },
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
+    var options = {
+        url: 'http://app.vicancy.com/api/v1/client/auth',
+        method: "POST",
+        qs: {
+            api_token: resellerToken,
+            client: {
+                id: '1000',
+                name: username,
+                email: '',
+                language: 'nl'
             }
+        },
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
         }
-
-        request.post(options, function (error, response, body) {
-            console.log('error:', error); // Print the error if one occurred 
-            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-            console.log('body:', body);
-            console.log('hello');
-        });
-        pg.end();
     }
+
+    request.post(options, function (error, response, body) {
+        console.log('error:', error); // Print the error if one occurred 
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+        console.log('body:', body);
+        console.log('hello');
+    });
+}
 
 
 // more routes for our API will happen here
@@ -196,38 +196,38 @@ function insertUser(username, reseller) {
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /
 app.use('/', router);
-    app.get('/', function (req, res) {
-        res.sendFile(path.join(__dirname + '/widget.ejs'));
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + '/widget.ejs'));
 
-        //__dirname : It will resolve to your project folder.
-    });
+    //__dirname : It will resolve to your project folder.
+});
 
-    app.get('/app', function (req, res) {
-        res.render(path.join(__dirname + '/View/app.ejs'));
+app.get('/app', function (req, res) {
+    res.render(path.join(__dirname + '/View/app.ejs'));
 
-        //__dirname : It will resolve to your project folder.
-    });
+    //__dirname : It will resolve to your project folder.
+});
 
-    app.get('/api', function (req, res) {
-        console.log(id);
-        console.log(name);
-        console.log(vToken);
-        console.log(language);
-        res.render('widget.ejs', { id: id, name: name, vToken: vToken, email: email, language: language });
-    });
+app.get('/api', function (req, res) {
+    console.log(id);
+    console.log(name);
+    console.log(vToken);
+    console.log(language);
+    res.render('widget.ejs', { id: id, name: name, vToken: vToken, email: email, language: language });
+});
 
-    app.get('/', function (req, res) {
-        res.sendFile(path.join(__dirname + '/index.html'));
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + '/index.html'));
 
-        //__dirname : It will resolve to your project folder.
-    });
+    //__dirname : It will resolve to your project folder.
+});
 
-    app.get('/', function (req, res) {
-        res.sendFile(path.join(__dirname + '/style.css'));
-        //__dirname : It will resolve to your project folder.
-    });
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + '/style.css'));
+    //__dirname : It will resolve to your project folder.
+});
 
-    // START THE SERVER
-    // =============================================================================
-    app.listen(port);
-    console.log('Magic happens on port ' + port);
+// START THE SERVER
+// =============================================================================
+app.listen(port);
+console.log('Magic happens on port ' + port);
