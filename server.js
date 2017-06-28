@@ -137,7 +137,7 @@ function selectUser(username, client) {
             }
         }
         pg.end();
-        
+
         if (rowResultid == '') {
             insertUser(username, reseller);
         }
@@ -187,7 +187,6 @@ function insertUser(username, reseller) {
             console.log('body:', body);
             console.log('hello');
         });
-
         pg.end();
     }
 
