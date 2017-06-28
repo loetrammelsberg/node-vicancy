@@ -163,7 +163,7 @@ function insertUser(username, reseller) {
         });
     });
 
-    console.log('heyyy!');
+    console.log(resellerToken+ 'heyyy!');
 
     var options = {
         url: 'http://app.vicancy.com/api/v1/client/auth',
