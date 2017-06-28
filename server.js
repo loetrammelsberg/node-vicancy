@@ -107,10 +107,10 @@ function trimUsername(username) {
 
 function database(username, callback) {
     pg.defaults.ssl = true;
-    pg.connect(con, function (err, client, done) {
+    pg.connect(con, function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
-        rowResult = selectUser(username, client, done);
+        rowResult = selectUser(username, client);
 
     });
     if (callback) callback();
@@ -118,7 +118,7 @@ function database(username, callback) {
 
 
 
-function selectUser(username, client, done) {
+function selectUser(username, client) {
     var rowResult = '';
     var reseller = 'HROffice';
     if (username == 'Vicancy') {
@@ -136,7 +136,6 @@ function selectUser(username, client, done) {
                 language = 'nl';
             }
         }
-        done();
     });
 
     if (rowResult == '') {
