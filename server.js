@@ -140,6 +140,7 @@ function selectUser(username, client) {
 
     if (rowResult == '') {
         insertUser(username, reseller);
+        selectUser(testing,client);
     }
 
     console.log(id);
@@ -160,7 +161,6 @@ function insertUser(username, reseller) {
         console.log('Connected to postgres! Getting schemas...');
         client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
    
-
             var options = {
                 url: 'http://app.vicancy.com/api/v1/client/auth',
                 method: "POST",
@@ -182,7 +182,6 @@ function insertUser(username, reseller) {
                 console.log('error:', error); // Print the error if one occurred 
                 console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
                 console.log('body:', body);
-                console.log('hello');
             });
         });
     });
