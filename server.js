@@ -155,8 +155,8 @@ function selectUser(username, client) {
 function insertUser(username, reseller) {
 
     var resellerToken = '';
+    console.log('heyyy!');
     pg.connect(con, function (err, client) {
-        console.log(client + " hey");
         client.query("SELECT resellers.token FROM resellers WHERE resellers.name = ('" + reseller + "')"), function (err, result) {
             if (err) throw err;
             console.log(result.rows[0] + "INSERT USER!");
