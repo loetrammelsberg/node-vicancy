@@ -160,11 +160,11 @@ function insertUser(username, reseller) {
         console.log('Connected to postgres! Getting schemas...');
         client.query("SELECT resellers.token FROM Resellers where resellers.name = '"+ reseller +"';", function (err, result) {
             resellerToken = result.rows[0].token;
+             console.log(resellerToken + 'heyyy!');
         });
     });
 
-    console.log(resellerToken + 'heyyy!');
-
+   
     var options = {
         url: 'http://app.vicancy.com/api/v1/client/auth',
         method: "POST",
