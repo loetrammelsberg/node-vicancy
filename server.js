@@ -107,10 +107,10 @@ function trimUsername(username) {
 
 function database(username, callback) {
     pg.defaults.ssl = true;
-    pg.connect(con, function (err, client) {
+    pg.connect(con, function (err, client,done) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
-        rowResult = selectUser(username, client);
+        rowResult = selectUser(username, client,done);
 
     });
     if (callback) callback();
