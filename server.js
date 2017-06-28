@@ -60,7 +60,7 @@ router.post('/', function (req, res) {
             //this will be run after findVid is finished.
             setTimeout(function () {
                 res.redirect('/api');
-            },900);
+            }, 900);
             // Rest of your code here.
 
         });
@@ -122,7 +122,7 @@ function selectUser(username, client) {
     var rowResult = '';
     var reseller = 'HROffice';
     if (username == 'Vicancy') {
-        username = 'Start People';
+        username = 'testing';
     }
     client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
         id = result.rows[0].external_id;
@@ -132,6 +132,9 @@ function selectUser(username, client) {
         language = result.rows[0].language;
         if (language == null) {
             language = 'nl';
+        }
+        if (result.rows[0] == '') {
+            inserUser(username, err, client);
         }
         console.log(id);
         console.log(name);
@@ -144,8 +147,34 @@ function selectUser(username, client) {
 }
 
 function inserUser(username, err, client) {
-    client.query("INSERT INTO resellers (name) VALUES ('" + username + "')");
-    if (err) throw err;
+    var resellerToken = '';
+    client.query("SELECT resellers.token FROM Resellers WHERE resellers.name ('" + username + "')"), function (err, result) {
+        resellerToken = result.rows[0].token;
+    };
+    var options = {
+        url: 'http://app.vicancy.com/api/v1/client/auth',
+        method: "POST",
+        qs: {
+            api_token: resellerToken,
+            client: {
+                id: '1000',
+                name: username,
+                email: '',
+                language: 'nl'
+            }
+        },
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        json: true
+    }
+
+    request.get(options, function (error, response, body) {
+        console.log('error:', error); // Print the error if one occurred 
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+        console.log('body:', body);
+    });
 }
 
 
