@@ -107,10 +107,10 @@ function trimUsername(username) {
 
 function database(username, callback) {
     pg.defaults.ssl = true;
-    pg.connect(con, function (err, client,done) {
+    pg.connect(con, function (err, client, done) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
-        rowResult = selectUser(username, client,done);
+        rowResult = selectUser(username, client, done);
 
     });
     if (callback) callback();
@@ -118,71 +118,29 @@ function database(username, callback) {
 
 
 
-function selectUser(username, client) {
+function selectUser(username, client, done) {
     var rowResult = '';
-    const results = [];
     var reseller = 'HROffice';
     if (username == 'Vicancy') {
-        username = 'Start People';
+        username = 'testing';
     }
-    const query = client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'");
-    query.on('row', (row) => {
-        results.push(row);
-    });
-    query.on('end', () => {
-        done();
-        return res.json(results);
-    });
-
-    console.log(results);
-    // client.query(, function (err, result) {
-    //     if (typeof result.rows[0] != 'undefined') {
-    //         rowResult = result.rows[0];
-    //         id = result.rows[0].external_id;
-    //         name = result.rows[0].name;
-    //         email = result.rows[0].email;
-    //         vToken = result.rows[0].token;
-    //         language = result.rows[0].language;
-    //         if (language == null) {
-    //             language = 'nl';
-    //         }
-    //     }
-
-
-    if (rowResult == '') {
-        var resellerToken = '';
-        pg.connect(con, function (err, client) {
-            client.query("SELECT resellers.token FROM resellers WHERE resellers.name = ('" + reseller + "')"), function (err, result) {
-                if (err) throw err;
-                console.log(result.rows[0] + "INSERT USER!");
-                resellerToken = result.rows[0].token;
-
-            };
-        });
-
-        var options = {
-            url: 'http://app.vicancy.com/api/v1/client/auth',
-            method: "POST",
-            qs: {
-                api_token: resellerToken,
-                client: {
-                    id: '1000',
-                    name: username,
-                    email: '',
-                    language: 'nl'
-                }
-            },
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
+    client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
+        if (typeof result.rows[0] != 'undefined') {
+            rowResult = result.rows[0];
+            id = result.rows[0].external_id;
+            name = result.rows[0].name;
+            email = result.rows[0].email;
+            vToken = result.rows[0].token;
+            language = result.rows[0].language;
+            if (language == null) {
+                language = 'nl';
             }
         }
-        request.post(options, function (error, response, body) {
-            console.log('error:', error); // Print the error if one occurred 
-            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-            console.log('body:', body);
-            console.log('hello');
-        });
+        done();
+    });
+
+    if (rowResult == '') {
+        insertUser(username, reseller);
     }
 
     console.log(id);
@@ -191,15 +149,46 @@ function selectUser(username, client) {
     console.log(vToken);
     console.log(language);
 
+
     return rowResult;
 }
 
-
-
-
 function insertUser(username, reseller) {
 
+    var resellerToken = '';
+    pg.connect(con, function (err, client, done) {
+        if (err) throw err;
+        console.log('Connected to postgres! Getting schemas...');
+        client.query("SELECT resellers.token FROM Resellers where resellers.name = '"+ resller +"';", function (err, result) {
+            console.log(result);
+        });
+    });
 
+    console.log('heyyy!');
+
+    var options = {
+        url: 'http://app.vicancy.com/api/v1/client/auth',
+        method: "POST",
+        qs: {
+            api_token: resellerToken,
+            client: {
+                id: '1000',
+                name: username,
+                email: '',
+                language: 'nl'
+            }
+        },
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        }
+    }
+    request.post(options, function (error, response, body) {
+        console.log('error:', error); // Print the error if one occurred 
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+        console.log('body:', body);
+        console.log('hello');
+    });
 }
 
 
