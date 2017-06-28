@@ -125,8 +125,6 @@ function selectUser(username, client) {
         username = 'testing';
     }
     client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
-        console.log(username);
-        console.log(result.rows[0]);
         if (typeof result.rows[0] == 'undefined') {
             inserUser(username, reseller, err, client);
         } else {
@@ -154,8 +152,9 @@ function selectUser(username, client) {
 function inserUser(username,reseller, err, client) {
     var resellerToken = '';
     client.query("SELECT resellers.token FROM resellers WHERE resellers.name = ('" + reseller + "')"), function (err, result) {
+        console.log(result.rows[0] + "INSERT USER!");
         resellerToken = result.rows[0].token;
-        console.log(result.rows[0].token + " CURRENT TOKEN!");
+        
     };
     
     var options = {
