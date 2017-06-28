@@ -138,7 +138,7 @@ function selectUser(username, client) {
         }
         pg.end();
 
-        if (rowResultid == '') {
+        if (rowResult == '') {
             insertUser(username, reseller);
         }
 
