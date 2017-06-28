@@ -125,6 +125,7 @@ function selectUser(username, client) {
         username = 'testing';
     }
     client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
+        console.log(username);
         console.log(result.rows[0]);
         if (typeof result.rows[0] == 'undefined') {
             inserUser(username, err, client);
@@ -178,7 +179,7 @@ function inserUser(username, err, client) {
         console.log('error:', error); // Print the error if one occurred 
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
         console.log('body:', body);
-         console.log('hello');
+        console.log('hello');
     });
 }
 
