@@ -140,7 +140,7 @@ function selectUser(username, client) {
 
     if (rowResult == '') {
         insertUser(username, reseller);
-        selectUser(testing,client);
+        selectUser(username,client);
     }
 
     console.log(id);
