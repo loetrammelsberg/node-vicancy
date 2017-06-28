@@ -158,7 +158,7 @@ function insertUser(username, reseller) {
     pg.connect(con, function (err, client, done) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
-        client.query("SELECT resellers.token FROM Resellers where resellers.name = '"+ resller +"';", function (err, result) {
+        client.query("SELECT resellers.token FROM Resellers where resellers.name = '"+ reseller +"';", function (err, result) {
             console.log(result);
         });
     });
