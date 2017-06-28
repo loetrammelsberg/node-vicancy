@@ -159,7 +159,7 @@ function insertUser(username, reseller) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
         client.query("SELECT resellers.token FROM Resellers where resellers.name = '"+ reseller +"';", function (err, result) {
-            resellerToken = result.row[0].token;
+            resellerToken = result.rows[0].token;
         });
     });
 
