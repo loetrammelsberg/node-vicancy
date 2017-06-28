@@ -128,7 +128,7 @@ function selectUser(username, client) {
         console.log(username);
         console.log(result.rows[0]);
         if (typeof result.rows[0] == 'undefined') {
-            inserUser(username, err, client);
+            inserUser(username, reseller, err, client);
         } else {
             id = result.rows[0].external_id;
             name = result.rows[0].name;
@@ -151,8 +151,11 @@ function selectUser(username, client) {
     return rowResult;
 }
 
-function inserUser(username, err, client) {
+function inserUser(username,reseller, err, client) {
     var resellerToken = '';
+    client.query("SELECT resellers.token FROM Resellers WHERE resellers.name ('" + reseller + "')"), function (err, result) {
+        resellerToken = result.rows[0].token;
+    };
     var options = {
         url: 'http://app.vicancy.com/api/v1/client/auth',
         method: "POST",
