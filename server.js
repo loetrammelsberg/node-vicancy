@@ -164,7 +164,10 @@ function insertUser(username, reseller) {
             var options = {
                 url: 'http://app.vicancy.com/api/v1/client/auth',
                 method: "POST",
-                qs: {
+                 headers: {
+                    "Content-Type": "application/json"
+                },
+                body: {
                     api_token: result.rows[0].token,
                     client: {
                         id: '1000',
@@ -173,10 +176,7 @@ function insertUser(username, reseller) {
                         language: 'nl'
                     }
                 },
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                }
+                json: true
             }
             request.post(options, function (error, response, body) {
                 console.log('error:', error); // Print the error if one occurred 
