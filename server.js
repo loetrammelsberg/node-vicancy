@@ -107,7 +107,6 @@ function trimUsername(username) {
 
 function database(username, callback) {
     pg.defaults.ssl = true;
-    var pool = new Pool();
     pg.connect(con, function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
