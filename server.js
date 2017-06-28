@@ -153,7 +153,7 @@ function selectUser(username, client) {
 
 function inserUser(username,reseller, err, client) {
     var resellerToken = '';
-    client.query("SELECT resellers.token FROM Resellers WHERE resellers.name ('" + reseller + "')"), function (err, result) {
+    client.query("SELECT resellers.token FROM resellers WHERE resellers.name = ('" + reseller + "')"), function (err, result) {
         resellerToken = result.rows[0].token;
     };
     var options = {
@@ -171,8 +171,7 @@ function inserUser(username,reseller, err, client) {
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json"
-        },
-        json: true
+        }
     }
 
     request.post(options, function (error, response, body) {
