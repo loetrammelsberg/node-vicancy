@@ -106,41 +106,40 @@ function trimUsername(username) {
 
 
 function database(username, callback) {
-    pg.defaults.ssl = true;
-    pg.connect(con, function (err, client) {
-        if (err) throw err;
-        console.log('Connected to postgres! Getting schemas...');
-        rowResult = selectUser(username, client);
-
-    });
+    rowResult = selectUser(username);
     if (callback) callback();
 }
 
 
 
-function selectUser(username, client) {
+function selectUser(username) {
     var rowResult = '';
     var reseller = 'HROffice';
     if (username == 'Vicancy') {
         username = 'testing';
     }
-    client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
-        if (typeof result.rows[0] != 'undefined') {
-            rowResult = result.rows[0];
-            id = result.rows[0].external_id;
-            name = result.rows[0].name;
-            email = result.rows[0].email;
-            vToken = result.rows[0].token;
-            language = result.rows[0].language;
-            if (language == null) {
-                language = 'nl';
+    pg.defaults.ssl = true;
+    pg.connect(con, function (err, client) {
+        if (err) throw err;
+        console.log('Connected to postgres! Getting schemas...');
+        client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
+            if (typeof result.rows[0] != 'undefined') {
+                rowResult = result.rows[0];
+                id = result.rows[0].external_id;
+                name = result.rows[0].name;
+                email = result.rows[0].email;
+                vToken = result.rows[0].token;
+                language = result.rows[0].language;
+                if (language == null) {
+                    language = 'nl';
+                }
             }
-        }
+        });
     });
+
 
     if (rowResult == '') {
         insertUser(username, reseller);
-        selectUser(username,client);
     }
 
     console.log(id);
@@ -160,11 +159,11 @@ function insertUser(username, reseller) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
         client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
-   
+
             var options = {
                 url: 'http://app.vicancy.com/api/v1/client/auth',
                 method: "POST",
-                 headers: {
+                headers: {
                     "Content-Type": "application/json"
                 },
                 body: {
@@ -182,6 +181,9 @@ function insertUser(username, reseller) {
                 console.log('error:', error); // Print the error if one occurred 
                 console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
                 console.log('body:', body);
+                if (response.statusCode == 200) {
+                    selectUser(username);
+                }
             });
         });
     });
