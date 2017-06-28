@@ -126,7 +126,7 @@ function selectUser(username, client) {
     }
     client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
         console.log(result.rows[0]);
-        if (result.rows[0] == 'undefined') {
+        if (typeof result.rows[0] == 'undefined') {
             inserUser(username, err, client);
         } else {
             id = result.rows[0].external_id;
