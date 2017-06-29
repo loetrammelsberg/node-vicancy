@@ -196,7 +196,7 @@ var randomItem = require("random-item");
 function externalid(empty) {
     var check = true;
     var text = '?autogen? ';
-    while (check) {
+    // while (check) {
 
         var str = "abcdefghijklmnoprxtuvwxyz1234567890";
         var patt1 = /\w/g;
@@ -210,10 +210,10 @@ function externalid(empty) {
             if (err) throw err;
             console.log('Connected to postgres! Getting schemas...');
             client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
-                check = typeof result.rows[0] != 'undefined';
+                console.log(typeof result.rows[0] == 'undefined');
             });
         });
-    }
+    // }
     return text;
 }
 // more routes for our API will happen here
