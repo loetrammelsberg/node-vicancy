@@ -138,7 +138,7 @@ function selectUser(username) {
         });
     });
 
-    console.log(rowResult + "hello");
+    console.log(id == '');
     if (rowResult == '') {
         setTimeout(function () {
             insertUser(username, reseller);
