@@ -139,7 +139,10 @@ function selectUser(username) {
 
 
     if (rowResult == '') {
-        insertUser(username, reseller);
+        setTimeout(function () {
+            insertUser(username, reseller);
+        }, 900);
+        
     }
 
     console.log(id);
@@ -156,7 +159,7 @@ function insertUser(username, reseller) {
 
     var resellerToken = '';
     var empty = '';
-    var external_id =  externalid(empty);
+    var external_id = externalid(empty);
     pg.connect(con, function (err, client, done) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
@@ -199,21 +202,21 @@ function externalid(empty) {
     console.log("checking");
     // while (check) {
 
-        var str = "abcdefghijklmnoprxtuvwxyz1234567890";
-        var patt1 = /\w/g;
-        var result = str.match(patt1);
-        
-        for (var i = 0; i < 8; i++) {
-            text += randomItem(result)
-        }
+    var str = "abcdefghijklmnoprxtuvwxyz1234567890";
+    var patt1 = /\w/g;
+    var result = str.match(patt1);
 
-        pg.connect(con, function (err, client, done) {
-            if (err) throw err;
-            console.log('Connected to postgres! Getting schemas...');
-            client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
-                console.log(result.rows[0]);
-            });
+    for (var i = 0; i < 8; i++) {
+        text += randomItem(result)
+    }
+
+    pg.connect(con, function (err, client, done) {
+        if (err) throw err;
+        console.log('Connected to postgres! Getting schemas...');
+        client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
+            console.log(result);
         });
+    });
     // }
     return text;
 }
