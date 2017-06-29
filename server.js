@@ -91,14 +91,14 @@ function getUsername(callback) {
             var username = body.userName;
             username = trimUsername(username);
             var reseller = 'HROffice';
-            setTimeout(function () {
-                var result = selectUser(username, reseller);
-                console.log(result);
-            }, 500);
+
+            var result = selectUser(username, reseller);
+            console.log(result);
+
         }
     });
 
-    
+
 
     // console.log(id == '');
     // if (rowResult == '') {
@@ -116,9 +116,9 @@ function trimUsername(username) {
 }
 
 
-function selectUser(username,reseller) {
+function selectUser(username, reseller) {
     var rowResult = '';
-    
+
     if (username == 'Vicancy') {
         username = 'Start People';
     }
