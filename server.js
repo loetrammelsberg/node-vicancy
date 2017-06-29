@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var path = require("path");
 var request = require('request');
 var wait = require('wait.for');
+var randomItem = require("random-item");
 
 
 //Database
@@ -127,7 +128,7 @@ function selectUser(username, reseller) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
         client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
-            console.log(result.rows[0] != null);
+            console.log(result.rows[0]);
 
             id = result.rows[0].external_id;
             name = result.rows[0].name;
@@ -216,13 +217,8 @@ function insertUser(username, reseller) {
         });
     });
 }
-var randomItem = require("random-item");
 
-function externalid(empty) {
 
-    // }
-    return text;
-}
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
