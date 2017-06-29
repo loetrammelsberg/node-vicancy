@@ -156,7 +156,7 @@ function insertUser(username, reseller) {
 
     var resellerToken = '';
     var empty = '';
-    var external_id =  external_id(empty);
+    var external_id =  externalid(empty);
     pg.connect(con, function (err, client, done) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
@@ -193,7 +193,7 @@ function insertUser(username, reseller) {
 }
 var randomItem = require("random-item");
 
-function external_id(empty) {
+function externalid(empty) {
     var check = true;
     var text = '?autogen? ';
     while (check) {
