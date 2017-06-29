@@ -116,7 +116,7 @@ function selectUser(username) {
     var rowResult = '';
     var reseller = 'HROffice';
     if (username == 'Vicancy') {
-        username = 'testing';
+        username = 'Start People';
     }
     pg.defaults.ssl = true;
     pg.connect(con, function (err, client) {
@@ -164,7 +164,7 @@ function insertUser(username, reseller) {
     var text = '?autogen? ';
     console.log("checking");
     while (check) {
-
+        
         var str = "abcdefghijklmnoprxtuvwxyz1234567890";
         var patt1 = /\w/g;
         var result = str.match(patt1);
@@ -179,7 +179,7 @@ function insertUser(username, reseller) {
             client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
                 console.log(result);
                 check = false;
-                console.logo(check);
+                
             });
         });
 
