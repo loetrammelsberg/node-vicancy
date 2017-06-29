@@ -202,7 +202,7 @@ function externalid(empty) {
         var patt1 = /\w/g;
         var result = str.match(patt1);
         
-        for (i = 0; i < 8; i++) {
+        for (var i = 0; i < 8; i++) {
             text += randomItem(result)
         }
 
