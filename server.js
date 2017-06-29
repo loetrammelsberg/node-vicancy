@@ -90,11 +90,16 @@ function getUsername(callback) {
         if (response.statusCode == 200) {
             var username = body.userName;
             username = trimUsername(username);
-            database(username, function () {
-                if (callback) callback();
-            });
+            setTimeout(function () {
+                selectUser(username);
+            }, 900);
         }
     });
+
+    console.log(id == '');
+    if (rowResult == '') {
+        insertUser(username, reseller);
+    }
 
 }
 function trimUsername(username) {
@@ -107,37 +112,13 @@ function trimUsername(username) {
 }
 
 
-function database(username, callback) {
-    rowResult = selectUser(username);
-    if (callback) callback();
-}
-
-
-
 function selectUser(username) {
     var rowResult = '';
     var reseller = 'HROffice';
     if (username == 'Vicancy') {
         username = 'Start People';
     }
-    wait.for(databaseSelectUser,username,reseller);
-
-    console.log(id == '');
-    if (id == '') {
-        insertUser(username, reseller);
-    }
-    console.log(id);
-    console.log(name);
-    console.log(email);
-    console.log(vToken);
-    console.log(language);
-
-
-    return rowResult;
-}
-
-function databaseSelectUser(username,reseller){
-        pg.defaults.ssl = true;
+    pg.defaults.ssl = true;
     pg.connect(con, function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
@@ -155,7 +136,18 @@ function databaseSelectUser(username,reseller){
             }
         });
     });
+
+
+    console.log(id);
+    console.log(name);
+    console.log(email);
+    console.log(vToken);
+    console.log(language);
+
+
+    return rowResult;
 }
+
 function insertUser(username, reseller) {
 
     var resellerToken = '';
@@ -165,7 +157,7 @@ function insertUser(username, reseller) {
     var text = '?autogen? ';
     console.log("checking");
     while (check) {
-        
+
         var str = "abcdefghijklmnoprxtuvwxyz1234567890";
         var patt1 = /\w/g;
         var result = str.match(patt1);
@@ -180,7 +172,7 @@ function insertUser(username, reseller) {
             client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
                 console.log(result);
                 check = false;
-                
+
             });
         });
 
