@@ -92,7 +92,7 @@ function getUsername(callback) {
             username = trimUsername(username);
             setTimeout(function () {
                 selectUser(username);
-            }, 900);
+            }, 500);
         }
     });
 
