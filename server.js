@@ -126,7 +126,6 @@ function selectUser(username) {
     if (id == '') {
         insertUser(username, reseller);
     }
-
     console.log(id);
     console.log(name);
     console.log(email);
