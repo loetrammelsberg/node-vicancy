@@ -9,13 +9,8 @@ var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
 var request = require('request');
-var wait = require('wait.for');
-var randomItem = require("random-item");
-
-
-//Database
 var pg = require('pg');
-var con = 'postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei';
+
 app.engine('.ejs', require('ejs').__express);
 app.set('views', __dirname + '/View');
 app.set('view engine', 'ejs');
@@ -54,6 +49,7 @@ var email = '';
 var vToken = '';
 var language = '';
 
+
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     token = req.body.token;
@@ -64,7 +60,7 @@ router.post('/', function (req, res) {
             //this will be run after findVid is finished.
             setTimeout(function () {
                 res.redirect('/api');
-            }, 900);
+            },900);
             // Rest of your code here.
 
         });
@@ -91,15 +87,12 @@ function getUsername(callback) {
         if (response.statusCode == 200) {
             var username = body.userName;
             username = trimUsername(username);
-            var reseller = 'HROffice';
-
-            var result = selectUser(username, reseller);
-            console.log(result);
-
+            database(username, function () {
+                if (callback) callback();
+            });
         }
     });
 
-    return callback;
 }
 function trimUsername(username) {
     var pos = username.lastIndexOf("/");
@@ -111,105 +104,48 @@ function trimUsername(username) {
 }
 
 
-function selectUser(username, reseller) {
-    var rowResult = '';
+function database(username, callback) {
+    pg.defaults.ssl = true;
 
+    pg.connect('postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei', function (err, client) {
+        if (err) throw err;
+        console.log('Connected to postgres! Getting schemas...');
+        rowResult = selectUser(username, client);
+
+    });
+    if (callback) callback();
+}
+
+
+
+function selectUser(username, client) {
+    var rowResult = '';
+    var reseller = 'HROffice';
     if (username == 'Vicancy') {
         username = 'Start People';
     }
-    pg.defaults.ssl = true;
-    pg.connect(con, function (err, client) {
-        if (err) throw err;
-        console.log('Connected to postgres! Getting schemas...');
-        client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
-            console.log(result.rows[0]);
-            rowResult = result.rows[0].external_id;
-            id = result.rows[0].external_id;
-            name = result.rows[0].name;
-            email = result.rows[0].email;
-            vToken = result.rows[0].token;
-            language = result.rows[0].language;
-            if (language == null) {
-                language = 'nl';
-
-            }
-        });
+    client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
+        id = result.rows[0].external_id;
+        name = result.rows[0].name;
+        email = result.rows[0].email;
+        vToken = result.rows[0].token;
+        language = result.rows[0].language;
+        if (language == null) {
+            language = 'nl';
+        }
+        console.log(id);
+        console.log(name);
+        console.log(email);
+        console.log(vToken);
+        console.log(language);
     });
-
-
-    console.log(id);
-    console.log(name);
-    console.log(email);
-    console.log(vToken);
-    console.log(language);
-
 
     return rowResult;
 }
 
-function insertUser(username, reseller) {
-
-    var resellerToken = '';
-    var empty = '';
-
-    var check = true;
-    var text = '?autogen? ';
-    console.log("checking");
-    while (check) {
-
-        var str = "abcdefghijklmnoprxtuvwxyz1234567890";
-        var patt1 = /\w/g;
-        var result = str.match(patt1);
-
-        for (var i = 0; i < 8; i++) {
-            text += randomItem(result)
-        }
-
-        pg.connect(con, function (err, client, done) {
-            if (err) throw err;
-            console.log('Connected to postgres! Getting schemas...');
-            client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
-                console.log(result);
-                check = false;
-
-            });
-        });
-
-    }
-    console.log("out of checking");
-    pg.connect(con, function (err, client, done) {
-        if (err) throw err;
-        console.log('Connected to postgres! Getting schemas...');
-        client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
-
-            var options = {
-                url: 'http://app.vicancy.com/api/v1/client/auth',
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: {
-                    api_token: result.rows[0].token,
-                    client: {
-                        id: text,
-                        name: username,
-                        email: '',
-                        language: 'nl'
-                    }
-                },
-                json: true
-            }
-            request.post(options, function (error, response, body) {
-                console.log('error:', error); // Print the error if one occurred 
-                console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-                console.log('body:', body);
-                if (response.statusCode == 200) {
-                    console.log('selecting user again   ');
-                    selectUser(username);
-                }
-            });
-        });
-    });
+function inserUser(username, err, client) {
+    client.query("INSERT INTO resellers (name) VALUES ('" + username + "')");
+    if (err) throw err;
 }
 
 
