@@ -92,8 +92,9 @@ function getUsername(callback) {
             });
         }
     });
-
+    console.log(id + "hello");
 }
+
 function trimUsername(username) {
     var pos = username.lastIndexOf("/");
     username = username.substring(pos + 1, username.length);
@@ -110,7 +111,7 @@ function database(username, callback) {
     pg.connect('postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei', function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
-        rowResult = selectUser(username, client);
+        selectUser(username, client);
         
     });
     if (callback) callback();
@@ -119,13 +120,11 @@ function database(username, callback) {
 
 
 function selectUser(username, client) {
-    var rowResults = '';
     var reseller = 'HROffice';
     if (username == 'Vicancy') {
         username = 'Start People';
     }
     client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
-        rowResults = result.rows[0].external_id;
         id = result.rows[0].external_id;
         name = result.rows[0].name;
         email = result.rows[0].email;
@@ -140,8 +139,6 @@ function selectUser(username, client) {
         console.log(vToken);
         console.log(language);
     });
-    console.log(rowResults + "hello!!!!!!!!!!");
-    return rowResults;
 }
 
 function inserUser(username, err, client) {
