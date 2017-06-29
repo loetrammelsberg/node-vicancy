@@ -196,6 +196,7 @@ var randomItem = require("random-item");
 function externalid(empty) {
     var check = true;
     var text = '?autogen? ';
+    console.log("checking");
     // while (check) {
 
         var str = "abcdefghijklmnoprxtuvwxyz1234567890";
