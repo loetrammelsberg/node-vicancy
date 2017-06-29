@@ -178,7 +178,7 @@ function insertUser(username, reseller) {
             console.log('Connected to postgres! Getting schemas...');
             client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
                 console.log(result);
-                check = (result.rows != []);
+                check = false;
             });
         });
 
