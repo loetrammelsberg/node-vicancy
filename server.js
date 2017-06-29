@@ -142,7 +142,7 @@ function selectUser(username) {
         setTimeout(function () {
             insertUser(username, reseller);
         }, 900);
-        
+
     }
 
     console.log(id);
@@ -159,7 +159,28 @@ function insertUser(username, reseller) {
 
     var resellerToken = '';
     var empty = '';
-    var external_id = externalid(empty);
+
+    var check = true;
+    var text = '?autogen? ';
+    console.log("checking");
+    while (check) {
+
+        var str = "abcdefghijklmnoprxtuvwxyz1234567890";
+        var patt1 = /\w/g;
+        var result = str.match(patt1);
+
+        for (var i = 0; i < 8; i++) {
+            text += randomItem(result)
+        }
+
+        pg.connect(con, function (err, client, done) {
+            if (err) throw err;
+            console.log('Connected to postgres! Getting schemas...');
+            client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
+                check = (result.rows[0] != []);
+            });
+        });
+    }
     pg.connect(con, function (err, client, done) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
@@ -174,7 +195,7 @@ function insertUser(username, reseller) {
                 body: {
                     api_token: result.rows[0].token,
                     client: {
-                        id: external_id,
+                        id: text,
                         name: username,
                         email: '',
                         language: 'nl'
@@ -197,26 +218,7 @@ function insertUser(username, reseller) {
 var randomItem = require("random-item");
 
 function externalid(empty) {
-    var check = true;
-    var text = '?autogen? ';
-    console.log("checking");
-    // while (check) {
 
-    var str = "abcdefghijklmnoprxtuvwxyz1234567890";
-    var patt1 = /\w/g;
-    var result = str.match(patt1);
-
-    for (var i = 0; i < 8; i++) {
-        text += randomItem(result)
-    }
-
-    pg.connect(con, function (err, client, done) {
-        if (err) throw err;
-        console.log('Connected to postgres! Getting schemas...');
-        client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
-            console.log(result.rowCount + "row count!");
-        });
-    });
     // }
     return text;
 }
