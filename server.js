@@ -111,7 +111,7 @@ function database(username, callback) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
         rowResult = selectUser(username, client);
-
+        console.log(rowResult + "hello");
     });
     if (callback) callback();
 }
