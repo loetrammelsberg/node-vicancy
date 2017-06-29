@@ -211,7 +211,7 @@ function externalid(empty) {
             if (err) throw err;
             console.log('Connected to postgres! Getting schemas...');
             client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
-                console.log(typeof result.rows[0] == 'undefined');
+                console.log(result.rows[0]);
             });
         });
     // }
