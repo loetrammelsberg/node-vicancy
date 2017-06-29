@@ -155,6 +155,7 @@ function selectUser(username) {
 function insertUser(username, reseller) {
 
     var resellerToken = '';
+    var external_id =  external_id();
     pg.connect(con, function (err, client, done) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
@@ -169,7 +170,7 @@ function insertUser(username, reseller) {
                 body: {
                     api_token: result.rows[0].token,
                     client: {
-                        id: external_id(),
+                        id: external_id,
                         name: username,
                         email: '',
                         language: 'nl'
@@ -203,7 +204,7 @@ function external_id() {
         for (i = 0; i < 8; i++) {
             text += randomItem(result)
         }
-        
+
         pg.connect(con, function (err, client, done) {
             if (err) throw err;
             console.log('Connected to postgres! Getting schemas...');
