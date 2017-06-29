@@ -169,7 +169,7 @@ function insertUser(username, reseller) {
                 body: {
                     api_token: result.rows[0].token,
                     client: {
-                        id: '1000',
+                        id: external_id(),
                         name: username,
                         email: '',
                         language: 'nl'
@@ -182,15 +182,24 @@ function insertUser(username, reseller) {
                 console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
                 console.log('body:', body);
                 if (response.statusCode == 200) {
-                    console.log('selecting user again ');
+                    console.log('selecting user again   ');
                     selectUser(username);
                 }
             });
         });
     });
 }
+var randomItem = require("random-item");
 
-
+function external_id() {
+    var str = "abcdefghijklmnoprxtuvwxyz1234567890";
+    var patt1 = /\w/g;
+    var result = str.match(patt1);
+    var text = '?autogen? ';
+    for (i = 0; i < 8; i++) {
+        text += randomItem(result)
+    }
+}
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
