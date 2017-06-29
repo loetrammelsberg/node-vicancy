@@ -90,13 +90,15 @@ function getUsername(callback) {
         if (response.statusCode == 200) {
             var username = body.userName;
             username = trimUsername(username);
+            var reseller = 'HROffice';
             setTimeout(function () {
-                selectUser(username);
+                result = selectUser(username, reseller);
+                console.log(result);
             }, 500);
         }
     });
 
-    var reseller = 'HROffice';
+    
 
     // console.log(id == '');
     // if (rowResult == '') {
@@ -114,7 +116,7 @@ function trimUsername(username) {
 }
 
 
-function selectUser(username) {
+function selectUser(username,reseller) {
     var rowResult = '';
     
     if (username == 'Vicancy') {
@@ -127,7 +129,7 @@ function selectUser(username) {
         client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
             console.log(result.rows[0] != null);
             if (result.rows[0] != null) {
-                rowResult = result.rows[0];
+                rowResult = result.rows[0].external_id;
                 id = result.rows[0].external_id;
                 name = result.rows[0].name;
                 email = result.rows[0].email;
