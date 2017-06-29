@@ -179,6 +179,7 @@ function insertUser(username, reseller) {
             client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
                 console.log(result);
                 check = false;
+                console.logo(check);
             });
         });
 
