@@ -96,6 +96,8 @@ function getUsername(callback) {
         }
     });
 
+    var reseller = 'HROffice';
+
     console.log(id == '');
     if (rowResult == '') {
         insertUser(username, reseller);
@@ -114,7 +116,7 @@ function trimUsername(username) {
 
 function selectUser(username) {
     var rowResult = '';
-    var reseller = 'HROffice';
+    
     if (username == 'Vicancy') {
         username = 'Start People';
     }
@@ -123,7 +125,8 @@ function selectUser(username) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
         client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
-            if (typeof result.rows[0] != 'undefined') {
+            console.log(result.rows[0] != null);
+            if (result.rows[0] != null) {
                 rowResult = result.rows[0];
                 id = result.rows[0].external_id;
                 name = result.rows[0].name;
