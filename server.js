@@ -98,10 +98,10 @@ function getUsername(callback) {
 
     var reseller = 'HROffice';
 
-    console.log(id == '');
-    if (rowResult == '') {
-        insertUser(username, reseller);
-    }
+    // console.log(id == '');
+    // if (rowResult == '') {
+    //     insertUser(username, reseller);
+    // }
 
 }
 function trimUsername(username) {
