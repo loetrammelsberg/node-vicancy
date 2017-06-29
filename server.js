@@ -192,13 +192,27 @@ function insertUser(username, reseller) {
 var randomItem = require("random-item");
 
 function external_id() {
-    var str = "abcdefghijklmnoprxtuvwxyz1234567890";
-    var patt1 = /\w/g;
-    var result = str.match(patt1);
+    var check = true;
     var text = '?autogen? ';
-    for (i = 0; i < 8; i++) {
-        text += randomItem(result)
+    while (check) {
+
+        var str = "abcdefghijklmnoprxtuvwxyz1234567890";
+        var patt1 = /\w/g;
+        var result = str.match(patt1);
+        
+        for (i = 0; i < 8; i++) {
+            text += randomItem(result)
+        }
+        
+        pg.connect(con, function (err, client, done) {
+            if (err) throw err;
+            console.log('Connected to postgres! Getting schemas...');
+            client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
+                check = typeof result.rows[0] != 'undefined';
+            });
+        });
     }
+    return text;
 }
 // more routes for our API will happen here
 
