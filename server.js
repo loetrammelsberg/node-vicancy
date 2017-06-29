@@ -140,7 +140,7 @@ function selectUser(username, client) {
         console.log(vToken);
         console.log(language);
     });
-    console.log(rowResults + "hello");
+    console.log(rowResults + "hello!!!!!!!!!!");
     return rowResults;
 }
 
