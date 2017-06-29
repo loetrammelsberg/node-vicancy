@@ -99,7 +99,7 @@ function getUsername(callback) {
         }
     });
 
-
+    return callback;
 
     // console.log(id == '');
     // if (rowResult == '') {
