@@ -182,6 +182,7 @@ function insertUser(username, reseller) {
                 console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
                 console.log('body:', body);
                 if (response.statusCode == 200) {
+                    console.log('selecting user again ');
                     selectUser(username);
                 }
             });
