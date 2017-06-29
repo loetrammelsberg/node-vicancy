@@ -119,7 +119,7 @@ function database(username, callback) {
 
 
 function selectUser(username, client) {
-    var rowResult = '';
+    var rowResults = '';
     var reseller = 'HROffice';
     if (username == 'Vicancy') {
         username = 'Start People';
@@ -140,8 +140,8 @@ function selectUser(username, client) {
         console.log(vToken);
         console.log(language);
     });
-
-    return rowResult;
+    
+    return rowResults;
 }
 
 function inserUser(username, err, client) {
