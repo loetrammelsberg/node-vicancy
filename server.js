@@ -9,6 +9,8 @@ var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
 var request = require('request');
+var wait = require('wait.for');
+
 
 //Database
 var pg = require('pg');
@@ -118,12 +120,29 @@ function selectUser(username) {
     if (username == 'Vicancy') {
         username = 'Start People';
     }
-    pg.defaults.ssl = true;
+    wait.for(databaseSelectUser,username,reseller);
+
+    console.log(id == '');
+    if (id == '') {
+        insertUser(username, reseller);
+    }
+
+    console.log(id);
+    console.log(name);
+    console.log(email);
+    console.log(vToken);
+    console.log(language);
+
+
+    return rowResult;
+}
+
+function databaseSelectUser(username,reseller){
+        pg.defaults.ssl = true;
     pg.connect(con, function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
         client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
-            console.log(result.rows[0]);
             if (typeof result.rows[0] != 'undefined') {
                 rowResult = result.rows[0];
                 id = result.rows[0].external_id;
@@ -137,25 +156,7 @@ function selectUser(username) {
             }
         });
     });
-
-    console.log(id == '');
-    if (rowResult == '') {
-        setTimeout(function () {
-            insertUser(username, reseller);
-        }, 900);
-
-    }
-
-    console.log(id);
-    console.log(name);
-    console.log(email);
-    console.log(vToken);
-    console.log(language);
-
-
-    return rowResult;
 }
-
 function insertUser(username, reseller) {
 
     var resellerToken = '';
