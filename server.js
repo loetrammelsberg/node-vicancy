@@ -92,7 +92,7 @@ function getUsername(callback) {
             username = trimUsername(username);
             var reseller = 'HROffice';
             setTimeout(function () {
-                result = selectUser(username, reseller);
+                var result = selectUser(username, reseller);
                 console.log(result);
             }, 500);
         }
