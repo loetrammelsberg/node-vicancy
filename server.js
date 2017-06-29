@@ -180,6 +180,7 @@ function insertUser(username, reseller) {
                 check = (result.rows[0] != []);
             });
         });
+        console.log(check);
     }
     pg.connect(con, function (err, client, done) {
         if (err) throw err;
