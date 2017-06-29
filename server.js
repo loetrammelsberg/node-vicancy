@@ -183,6 +183,7 @@ function insertUser(username, reseller) {
         });
 
     }
+    console.log("out of checking");
     pg.connect(con, function (err, client, done) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
