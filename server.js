@@ -59,15 +59,15 @@ router.post('/', function (req, res) {
     console.log(token);
     var result = ''
     if (flag) {
-        startProcess()
-        // getUsername(function () {
-        //     //this will be run after findVid is finished.
-        //     setTimeout(function () {
-        //         res.redirect('/api');
-        //     },900);
-        //     // Rest of your code here.
 
-        // });
+        getUsername(function () {
+            //this will be run after findVid is finished.
+            setTimeout(function () {
+                res.redirect('/api');
+            },900);
+            // Rest of your code here.
+
+        });
     }
     token = '';
     res.redirect('/api');
@@ -100,10 +100,11 @@ function getUsername(callback) {
             username = body.userName;
             username = trimUsername(username);
             console.log(username);
+            console.log(callback);
             if (callback) callback(username);
-            // database(username, function () {
-            //     if (callback) callback();
-            // });
+            database(username, function () {
+                if (callback) callback();
+            });
         }
     });
 
