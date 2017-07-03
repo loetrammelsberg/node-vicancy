@@ -99,13 +99,13 @@ function getUsername(callback) {
             username = body.userName;
             username = trimUsername(username);
             console.log(username);
-            
+            callback(username);
             // database(username, function () {
             //     if (callback) callback();
             // });
         }
     });
-    callback(username);
+    
 }
 
 function trimUsername(username) {
