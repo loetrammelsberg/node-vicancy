@@ -61,7 +61,7 @@ router.post('/', function (req, res) {
     if (flag) {
         Sync(function () {
             result = getUsername.sync(null);
-            
+            console.log('hey');
         })
         // getUsername(function () {
         //     //this will be run after findVid is finished.
@@ -73,7 +73,7 @@ router.post('/', function (req, res) {
         // });
     }
     token = '';
-    console.log('hey');
+    
     res.redirect('/api');
 });
 
