@@ -57,7 +57,7 @@ router.post('/', function (req, res) {
     token = req.body.token;
     flag = true;
     console.log(token);
-    var reuslt = ''
+    var result = ''
     if (flag) {
         Sync(function () {
             result = getUsername.Sync(null);
@@ -96,7 +96,7 @@ function getUsername(callback) {
             var username = body.userName;
             username = trimUsername(username);
             Sync(function () {
-              var reuslt=  selectUser.Sync(null, username);
+              var reuslt =  selectUser.Sync(null, username);
               console.log(result + "it return!");
               callback(result);
             })
