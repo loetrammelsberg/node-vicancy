@@ -59,10 +59,7 @@ router.post('/', function (req, res) {
     console.log(token);
     var result = ''
     if (flag) {
-        Sync(function () {
-            result = getUsername.sync(null);
-            res.redirect('/api');
-        })
+        startProcess()
         // getUsername(function () {
         //     //this will be run after findVid is finished.
         //     setTimeout(function () {
@@ -76,7 +73,12 @@ router.post('/', function (req, res) {
 
 
 });
-
+function startProcess(){
+   Sync(function () {
+        var result = getUsername.sync(null);
+        console.log(result);
+   })
+}
 function getUsername(callback) {
     var options = {
         url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
@@ -95,13 +97,7 @@ function getUsername(callback) {
         if (response.statusCode == 200) {
             var username = body.userName;
             username = trimUsername(username);
-            Sync(function () {
-                var reuslt = selectUser.sync(null, username, callback);
-                console.log(result + "it return!");
-                
-                callback(result);
-                return result;
-            })
+            callback(username);
             // database(username, function () {
             //     if (callback) callback();
             // });
