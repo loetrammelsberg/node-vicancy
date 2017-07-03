@@ -98,7 +98,9 @@ function getUsername(callback) {
             Sync(function () {
                 var reuslt = selectUser.sync(null, username, callback);
                 console.log(result + "it return!");
+                
                 callback(result);
+                return result;
             })
             // database(username, function () {
             //     if (callback) callback();
