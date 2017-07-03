@@ -73,11 +73,11 @@ router.post('/', function (req, res) {
 
 
 });
-function startProcess(){
-   Sync(function () {
+function startProcess() {
+    Sync(function () {
         var result = getUsername.sync(null);
         console.log(result + "hello");
-   })
+    })
 }
 function getUsername(callback) {
     var options = {
@@ -99,13 +99,13 @@ function getUsername(callback) {
             username = body.userName;
             username = trimUsername(username);
             console.log(username);
-            callback(username);
+            if(callback) callback(username);
             // database(username, function () {
             //     if (callback) callback();
             // });
         }
     });
-    
+
 }
 
 function trimUsername(username) {
