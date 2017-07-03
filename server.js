@@ -101,7 +101,7 @@ function getUsername(callback) {
             console.log(username);
             console.log(callback);
             if (callback) callback(username);
-            database(username, function () {
+            selectUser(username, function () {
                 if (callback) callback();
             });
         }
