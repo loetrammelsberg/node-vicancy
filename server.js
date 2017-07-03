@@ -148,6 +148,7 @@ function selectUser(username, callback) {
 
     });
     callback(user);
+    return user;
 }
 
 
