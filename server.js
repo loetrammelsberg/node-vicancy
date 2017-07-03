@@ -97,6 +97,7 @@ function getUsername(callback) {
         if (response.statusCode == 200) {
             var username = body.userName;
             username = trimUsername(username);
+            console.log(username);
             callback(username);
             // database(username, function () {
             //     if (callback) callback();
