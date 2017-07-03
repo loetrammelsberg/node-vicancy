@@ -90,20 +90,22 @@ function getUsername(callback) {
         json: true
 
     }
+    var username = '';
     request.get(options, function (error, response, body) {
         console.log('error:', error); // Print the error if one occurred 
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
         console.log('body:', body);
         if (response.statusCode == 200) {
-            var username = body.userName;
+            username = body.userName;
             username = trimUsername(username);
             console.log(username);
-            callback(username);
+            
             // database(username, function () {
             //     if (callback) callback();
             // });
         }
     });
+    callback(username);
 }
 
 function trimUsername(username) {
