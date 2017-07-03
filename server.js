@@ -76,7 +76,7 @@ router.post('/', function (req, res) {
 function startProcess(){
    Sync(function () {
         var result = getUsername.sync(null);
-        console.log(result);
+        console.log(result + "hello");
    })
 }
 function getUsername(callback) {
