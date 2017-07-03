@@ -70,7 +70,6 @@ router.post('/', function (req, res) {
         });
     }
     token = '';
-    res.redirect('/api');
 
 });
 function startProcess() {
