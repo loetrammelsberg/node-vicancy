@@ -61,7 +61,7 @@ router.post('/', function (req, res) {
     if (flag) {
         Sync(function () {
             result = getUsername.sync(null);
-            console.log('hey');
+            res.redirect('/api');
         })
         // getUsername(function () {
         //     //this will be run after findVid is finished.
@@ -73,8 +73,8 @@ router.post('/', function (req, res) {
         // });
     }
     token = '';
-    
-    res.redirect('/api');
+
+
 });
 
 function getUsername(callback) {
@@ -96,9 +96,9 @@ function getUsername(callback) {
             var username = body.userName;
             username = trimUsername(username);
             Sync(function () {
-              var reuslt =  selectUser.sync(null, username);
-              console.log(result + "it return!");
-              callback(result);
+                var reuslt = selectUser.sync(null, username);
+                console.log(result + "it return!");
+                callback(result);
             })
             // database(username, function () {
             //     if (callback) callback();
@@ -129,7 +129,7 @@ function selectUser(username, callback) {
             username = 'Start People';
         }
         client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
-            
+
             id = result.rows[0].external_id;
             name = result.rows[0].name;
             email = result.rows[0].email;
@@ -147,7 +147,7 @@ function selectUser(username, callback) {
         });
 
     });
-    if (callback) callback(user);
+    callback(user);
 }
 
 
