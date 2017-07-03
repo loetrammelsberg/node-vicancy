@@ -96,7 +96,7 @@ function getUsername(callback) {
             var username = body.userName;
             username = trimUsername(username);
             Sync(function () {
-                var reuslt = selectUser.sync(null, username);
+                var reuslt = selectUser.sync(null, username, callback);
                 console.log(result + "it return!");
                 callback(result);
             })
