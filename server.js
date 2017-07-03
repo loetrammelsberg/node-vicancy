@@ -70,7 +70,7 @@ router.post('/', function (req, res) {
         // });
     }
     token = '';
-
+    res.redirect('/api');
 
 });
 function startProcess() {
@@ -78,6 +78,7 @@ function startProcess() {
         var result = getUsername.sync(null);
         console.log(result + "hello");
     })
+    
 }
 function getUsername(callback) {
     var options = {
@@ -99,7 +100,7 @@ function getUsername(callback) {
             username = body.userName;
             username = trimUsername(username);
             console.log(username);
-            if(callback) callback(username);
+            if (callback) callback(username);
             // database(username, function () {
             //     if (callback) callback();
             // });
