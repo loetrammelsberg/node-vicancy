@@ -88,6 +88,7 @@ function getUsername(token, callback) {
             //selectCilent(username, function () {
             Sync(function () {
                 var result = selectCilent.sync(null, username);
+                console.log(result + "hihi");
                 callback(null, result);
             })
 
