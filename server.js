@@ -140,7 +140,7 @@ function selectCilent(username, callback) {
         });
 
     });
-    console.log(result);
+    console.log(result + "heyhey");
     callback(null, result);
 }
 
