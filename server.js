@@ -83,7 +83,7 @@ function getUsername(token,callback) {
             var username = body.userName;
             username = trimUsername(username);
             //selectCilent(username, function () {
-                callback(username);
+                callback(null, username);
             //});
         }
     });
