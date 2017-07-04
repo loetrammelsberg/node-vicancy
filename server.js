@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var path = require("path");
 var request = require('request');
 var pg = require('pg');
+var Sync = require("sync");
 
 app.engine('.ejs', require('ejs').__express);
 app.set('views', __dirname + '/View');
@@ -60,7 +61,7 @@ router.post('/', function (req, res) {
             //this will be run after findVid is finished.
             setTimeout(function () {
                 res.redirect('/api');
-            },900);
+            }, 900);
             // Rest of your code here.
 
         });
@@ -105,43 +106,37 @@ function trimUsername(username) {
 
 
 function database(username, callback) {
-    pg.defaults.ssl = true;
+    var reseller = 'HROffice';
 
+    pg.defaults.ssl = true;
+    
     pg.connect('postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei', function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
-        rowResult = selectUser(username, client);
+        if (username == 'Vicancy') {
+            username = 'Start People';
+        }
+        client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
+            id = result.rows[0].external_id;
+            name = result.rows[0].name;
+            email = result.rows[0].email;
+            vToken = result.rows[0].token;
+            language = result.rows[0].language;
+            if (language == null) {
+                language = 'nl';
+            }
+            console.log(id);
+            console.log(name);
+            console.log(email);
+            console.log(vToken);
+            console.log(language);
+        });
 
     });
     if (callback) callback();
 }
 
 
-
-function selectUser(username, client) {
-    var rowResult = '';
-    var reseller = 'HROffice';
-    if (username == 'Vicancy') {
-        username = 'Start People';
-    }
-    client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
-        id = result.rows[0].external_id;
-        name = result.rows[0].name;
-        email = result.rows[0].email;
-        vToken = result.rows[0].token;
-        language = result.rows[0].language;
-        if (language == null) {
-            language = 'nl';
-        }
-        console.log(id);
-        console.log(name);
-        console.log(email);
-        console.log(vToken);
-        console.log(language);
-    });
-
-    return rowResult;
-}
 
 function inserUser(username, err, client) {
     client.query("INSERT INTO resellers (name) VALUES ('" + username + "')");
