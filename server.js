@@ -59,9 +59,9 @@ router.post('/', function (req, res) {
        Sync(function(){
            result = getUsername.sync(null,token);
            
-           
+           console.log(result + "testing");
        });
-       console.log(result + "testing");
+       
     token = '';
 });
 
@@ -135,6 +135,7 @@ function selectCilent(username, callback) {
         });
 
     });
+    console.log(result);
     callback(null,result);
 }
 
