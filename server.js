@@ -91,7 +91,7 @@ function getUsername(token, callback) {
                 setTimeout(function () {
                     console.log(result + 'hihi');
                     callback(null, result);
-                }, 500)
+                }, 600)
                 
             })
 
