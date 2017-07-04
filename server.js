@@ -87,6 +87,7 @@ function getUsername(callback, token) {
     });
 
 }
+
 function trimUsername(username) {
     var pos = username.lastIndexOf("/");
     username = username.substring(pos + 1, username.length);
