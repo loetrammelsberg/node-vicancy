@@ -58,9 +58,8 @@ router.post('/', function (req, res) {
     //console.log(token);
     Sync(function () {
         result = getUsername.sync(null, token);
-        setTimeout(function () {
-            console.log(result + '500 ms');
-        }, 500)
+
+        console.log(result + '500 ms');
 
     });
     token = '';
@@ -88,10 +87,8 @@ function getUsername(token, callback) {
             //selectCilent(username, function () {
             Sync(function () {
                 var result = selectCilent.sync(null, username);
-                setTimeout(function () {
-                    console.log(result + 'hihi');
-                    callback(null, result);
-                }, 500)
+                callback(null, result);
+
 
             })
 
@@ -138,7 +135,6 @@ function selectCilent(username, callback) {
             console.log(vToken);
             console.log(language);
 
-            console.log(result + 'heyhey');
             callback(null, result);
         });
 
