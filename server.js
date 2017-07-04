@@ -127,7 +127,7 @@ function selectCilent(username, callback) {
             if (language == null) {
                 language = 'nl';
             }
-            result = result.rows[0];
+            result = id;
             console.log(id);
             console.log(name);
             console.log(email);
