@@ -56,14 +56,15 @@ router.post('/', function (req, res) {
     var token = req.body.token;
     //console.log(token);
        Sync(function(){
-           var name = getUsername.sync(null,token);
-           var result = selectCilent.sync(null, name);
-           console.log(result+"testing");
+           var result = getUsername.sync(null,token);
+           console.log(result);
+           
        });
     token = '';
 });
 
 function getUsername(token,callback) {
+
     var options = {
         url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
         method: "GET",
@@ -82,7 +83,11 @@ function getUsername(token,callback) {
             var username = body.userName;
             username = trimUsername(username);
             //selectCilent(username, function () {
-                callback(null, username);
+                Sync(function(){
+                    var result = selectCilent.sync(null, username);
+                    callback(null, result);
+                })
+                
             //});
         }
     });
