@@ -36,7 +36,7 @@ var router = express.Router();
 //     res.json({ message: 'hooray! welcome to our get api!' });
 // });
 
-var token = '';
+// var token = '';
 
 var username = '';
 var flag = false;
@@ -53,16 +53,16 @@ var language = '';
 
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
-    token = req.body.token;
+    var token = req.body.token;
     console.log(token);
        Sync(function(){
-           var name = getUsername.sync(null);
+           var name = getUsername.sync(null,token);
            console.log(name+"testing");
        });
     token = '';
 });
 
-function getUsername(callback) {
+function getUsername(callback, token) {
     var options = {
         url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
         method: "GET",
