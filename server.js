@@ -109,7 +109,7 @@ function trimUsername(username) {
 
 function selectCilent(username, callback) {
     var reseller = 'HROffice';
-    var result = '';
+    var results = '';
     pg.defaults.ssl = true;
 
     pg.connect('postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei', function (err, client) {
@@ -120,7 +120,8 @@ function selectCilent(username, callback) {
         }
         client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
             if (result.rows.length == 0) {
-                callback(null, result);
+                console.log("hello hello")
+                callback(null, results);
             } else {
                 id = result.rows[0].external_id;
                 name = result.rows[0].name;
@@ -130,13 +131,13 @@ function selectCilent(username, callback) {
                 if (language == null) {
                     language = 'nl';
                 }
-                result = id;
+                results = id;
                 console.log(id);
                 console.log(name);
                 console.log(email);
                 console.log(vToken);
                 console.log(language);
-                 callback(null, result);
+                 callback(null, results);
             }
 
 
