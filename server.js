@@ -60,7 +60,7 @@ router.post('/', function (req, res) {
         result = getUsername.sync(null, token);
         setTimeout(function () {
             console.log(result+ '500 ms');
-        }, 500)
+        }, 900)
 
     });
     token = '';
