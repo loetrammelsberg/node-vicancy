@@ -64,8 +64,6 @@ router.post('/', function (req, res) {
 });
 
 function getUsername(token,callback) {
-    console.log(token);
-    console.log(callback);
     var options = {
         url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
         method: "GET",
