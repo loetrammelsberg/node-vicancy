@@ -59,8 +59,8 @@ router.post('/', function (req, res) {
     Sync(function () {
         result = getUsername.sync(null, token);
         setTimeout(function () {
-            console.log(result+ '500 ms');
-        }, 900)
+            console.log(result + '500 ms');
+        }, 500)
 
     });
     token = '';
@@ -88,8 +88,11 @@ function getUsername(token, callback) {
             //selectCilent(username, function () {
             Sync(function () {
                 var result = selectCilent.sync(null, username);
-                console.log(result + "hihi");
-                callback(null, result);
+                setTimeout(function () {
+                    console.log(result + 'hihi');
+                    callback(null, result);
+                }, 500)
+                
             })
 
             //});
