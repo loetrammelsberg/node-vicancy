@@ -65,7 +65,7 @@ router.post('/', function (req, res) {
             // Rest of your code here.
 
         });
-        console.log(name);
+        console.log(name + "testing");
     }
     token = '';
 });
