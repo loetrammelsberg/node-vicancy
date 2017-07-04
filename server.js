@@ -58,8 +58,11 @@ router.post('/', function (req, res) {
     //console.log(token);
     Sync(function () {
         result = getUsername.sync(null, token);
-        if (result == '') {
-            console.log('HELLO');
+        if (result == 0) {
+            var newUser = selectCilent(result);
+            if(newUser != 0){
+                res.redirect('/api');
+            }
         } else {
             res.redirect('/api');
         }
@@ -89,7 +92,7 @@ function getUsername(token, callback) {
             Sync(function () {
                 var result = selectCilent.sync(null, username);
                 callback(null, result);
-
+            
 
             })
         }
@@ -119,9 +122,12 @@ function selectCilent(username, callback) {
             username = 'testing';
         }
         client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
+            
             if (result.rows.length == 0) {
-                console.log("hello hello")
-                callback(null, results);
+                Sync(function () {
+                    results = insertUser.sync(null,username,reseller);
+                    callback(null,results);
+                })
             } else {
                 id = result.rows[0].external_id;
                 name = result.rows[0].name;
@@ -131,31 +137,99 @@ function selectCilent(username, callback) {
                 if (language == null) {
                     language = 'nl';
                 }
-                results = id;
+                results = result.rows.length;
                 console.log(id);
                 console.log(name);
                 console.log(email);
                 console.log(vToken);
                 console.log(language);
-                 callback(null, results);
+                callback(null, results);
             }
 
 
-           
+
         });
 
     });
 
 }
 
+function insertUser(username, reseller, callback) {
+    var resellerToken = '';
+    Sync(function () {
+        resellerToken = generateToken.sync(null);
 
+    })
 
-function inserUser(username, err, client) {
-    client.query("INSERT INTO resellers (name) VALUES ('" + username + "')");
-    if (err) throw err;
+    console.log("out of checking");
+    pg.connect(con, function (err, client, done) {
+        if (err) throw err;
+        console.log('Connected to postgres! Getting schemas...');
+        client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
+
+            var options = {
+                url: 'http://app.vicancy.com/api/v1/client/auth',
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: {
+                    api_token: result.rows[0].token,
+                    client: {
+                        id: resellerToken,
+                        name: username,
+                        email: '',
+                        language: 'nl'
+                    }
+                },
+                json: true
+            }
+            request.post(options, function (error, response, body) {
+                console.log('error:', error); // Print the error if one occurred 
+                console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+                console.log('body:', body);
+                if (response.statusCode == 200) {
+                    callback(null, username);
+                }
+            });
+        });
+    });
 }
 
+function generateToken(callback) {
+    var resellerToken = '';
+    var check = true;
+    var text = '?autogen? ';
+    console.log("checking");
+    while (check) {
 
+        var str = "abcdefghijklmnoprxtuvwxyz1234567890";
+        var patt1 = /\w/g;
+        var result = str.match(patt1);
+
+        for (var i = 0; i < 8; i++) {
+            text += randomItem(result)
+        }
+
+        check = checkToken(null, text);
+    }
+
+    callback(null, text);
+}
+
+function checkToken(resellerToken, callback) {
+    pg.connect(con, function (err, client, done) {
+        if (err) throw err;
+        console.log('Connected to postgres! Getting schemas...');
+        client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + resellerToken + "';", function (err, result) {
+            if (result.rows.length == 0) {
+                callback(null, false);
+            } else {
+                callback(null, true);
+            }
+        });
+    });
+}
 // more routes for our API will happen here
 
 // REGISTER OUR ROUTES -------------------------------
