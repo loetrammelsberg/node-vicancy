@@ -58,9 +58,11 @@ router.post('/', function (req, res) {
     //console.log(token);
     Sync(function () {
         result = getUsername.sync(null, token);
-
-        console.log(result + '500 ms');
-
+        if (result == '') {
+            console.log('HELLO');
+        } else {
+            res.redirect('/api');
+        }
     });
     token = '';
 });
@@ -84,15 +86,12 @@ function getUsername(token, callback) {
         if (response.statusCode == 200) {
             var username = body.userName;
             username = trimUsername(username);
-            //selectCilent(username, function () {
             Sync(function () {
                 var result = selectCilent.sync(null, username);
                 callback(null, result);
 
 
             })
-
-            //});
         }
     });
 
