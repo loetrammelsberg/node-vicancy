@@ -56,20 +56,17 @@ router.post('/', function (req, res) {
     var token = req.body.token;
     var result = '';
     //console.log(token);
-       Sync(function(){
-           result = getUsername.sync(null,token);
-           
-           
-       });
-        Sync(function(){
-          console.log(result);
-           
-       });
-       
+    Sync(function () {
+        result = getUsername.sync(null, token);
+        setTimeout(function () {
+            console.log(result+ '500 ms');
+        }, 500)
+
+    });
     token = '';
 });
 
-function getUsername(token,callback) {
+function getUsername(token, callback) {
 
     var options = {
         url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
@@ -89,11 +86,11 @@ function getUsername(token,callback) {
             var username = body.userName;
             username = trimUsername(username);
             //selectCilent(username, function () {
-                Sync(function(){
-                    var result = selectCilent.sync(null, username);
-                    callback(null, result);
-                })
-                
+            Sync(function () {
+                var result = selectCilent.sync(null, username);
+                callback(null, result);
+            })
+
             //});
         }
     });
@@ -114,7 +111,7 @@ function selectCilent(username, callback) {
     var reseller = 'HROffice';
     var result = '';
     pg.defaults.ssl = true;
-    
+
     pg.connect('postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei', function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
@@ -140,7 +137,7 @@ function selectCilent(username, callback) {
 
     });
     console.log(result);
-    callback(null,result);
+    callback(null, result);
 }
 
 
