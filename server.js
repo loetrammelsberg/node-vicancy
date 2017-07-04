@@ -57,7 +57,8 @@ router.post('/', function (req, res) {
     //console.log(token);
        Sync(function(){
            var name = getUsername.sync(null,token);
-           console.log(name+"testing");
+           var result = selectCilent.sync(null, name);
+           console.log(result+"testing");
        });
     token = '';
 });
@@ -102,7 +103,7 @@ function trimUsername(username) {
 
 function selectCilent(username, callback) {
     var reseller = 'HROffice';
-
+    var result = '';
     pg.defaults.ssl = true;
     
     pg.connect('postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei', function (err, client) {
@@ -120,6 +121,7 @@ function selectCilent(username, callback) {
             if (language == null) {
                 language = 'nl';
             }
+            result = result.rows[0];
             console.log(id);
             console.log(name);
             console.log(email);
@@ -128,7 +130,7 @@ function selectCilent(username, callback) {
         });
 
     });
-    if (callback) callback();
+    callback(null,result);
 }
 
 
