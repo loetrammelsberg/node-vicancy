@@ -57,15 +57,18 @@ router.post('/', function (req, res) {
     flag = true;
     console.log(token);
     if (flag) {
-       var name = getUsername(function () {
-            //this will be run after findVid is finished.
-            setTimeout(function () {
-                res.redirect('/api');
-            }, 900);
-            // Rest of your code here.
+       Sync(function(){
+           var name = getUsername.sync(null);
+           console.log(name+"testing");
+       });
+    //    getUsername(function () {
+    //         //this will be run after findVid is finished.
+    //         setTimeout(function () {
+    //             res.redirect('/api');
+    //         }, 900);
+    //         // Rest of your code here.
 
-        });
-        console.log(name + "testing");
+    //     });
     }
     token = '';
 });
@@ -88,9 +91,9 @@ function getUsername(callback) {
         if (response.statusCode == 200) {
             var username = body.userName;
             username = trimUsername(username);
-            selectCilent(username, function () {
-                return username;
-            });
+            //selectCilent(username, function () {
+                callback(username);
+            //});
         }
     });
 
