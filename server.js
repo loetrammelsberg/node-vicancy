@@ -57,7 +57,7 @@ router.post('/', function (req, res) {
     flag = true;
     console.log(token);
     if (flag) {
-        getUsername(function () {
+       var name = getUsername(function () {
             //this will be run after findVid is finished.
             setTimeout(function () {
                 res.redirect('/api');
@@ -65,6 +65,7 @@ router.post('/', function (req, res) {
             // Rest of your code here.
 
         });
+        console.log(name);
     }
     token = '';
 });
@@ -78,7 +79,6 @@ function getUsername(callback) {
             "Content-Type": "application/json",
         },
         json: true
-
     }
 
     request.get(options, function (error, response, body) {
@@ -88,8 +88,8 @@ function getUsername(callback) {
         if (response.statusCode == 200) {
             var username = body.userName;
             username = trimUsername(username);
-            database(username, function () {
-                if (callback) callback();
+            selectCilent(username, function () {
+                return username;
             });
         }
     });
@@ -105,7 +105,7 @@ function trimUsername(username) {
 }
 
 
-function database(username, callback) {
+function selectCilent(username, callback) {
     var reseller = 'HROffice';
 
     pg.defaults.ssl = true;
