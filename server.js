@@ -137,13 +137,13 @@ function selectCilent(username, callback) {
             console.log(email);
             console.log(vToken);
             console.log(language);
+
+            console.log(result + 'heyhey');
+            callback(null, result);
         });
 
     });
-    setTimeout(function () {
-        console.log(result + 'heyhey');
-        callback(null, result);
-    }, 500)
+
 }
 
 
