@@ -54,12 +54,14 @@ var language = '';
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     var token = req.body.token;
+    var result = '';
     //console.log(token);
        Sync(function(){
-           var result = getUsername.sync(null,token);
-           console.log(result);
+           result = getUsername.sync(null,token);
+           
            
        });
+       console.log(result + "testing");
     token = '';
 });
 
