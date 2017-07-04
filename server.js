@@ -91,8 +91,8 @@ function getUsername(token, callback) {
                 setTimeout(function () {
                     console.log(result + 'hihi');
                     callback(null, result);
-                }, 600)
-                
+                }, 500)
+
             })
 
             //});
@@ -140,8 +140,10 @@ function selectCilent(username, callback) {
         });
 
     });
-    console.log(result + "heyhey");
-    callback(null, result);
+    setTimeout(function () {
+        console.log(result + 'heyhey');
+        callback(null, result);
+    }, 500)
 }
 
 
