@@ -54,22 +54,11 @@ var language = '';
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
     token = req.body.token;
-    flag = true;
     console.log(token);
-    if (flag) {
        Sync(function(){
            var name = getUsername.sync(null);
            console.log(name+"testing");
        });
-    //    getUsername(function () {
-    //         //this will be run after findVid is finished.
-    //         setTimeout(function () {
-    //             res.redirect('/api');
-    //         }, 900);
-    //         // Rest of your code here.
-
-    //     });
-    }
     token = '';
 });
 
