@@ -119,23 +119,28 @@ function selectCilent(username, callback) {
             username = 'testing';
         }
         client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
-            console.log(result.rows.length + "hihi");
-            // id = result.rows[0].external_id;
-            // name = result.rows[0].name;
-            // email = result.rows[0].email;
-            // vToken = result.rows[0].token;
-            // language = result.rows[0].language;
-            // if (language == null) {
-            //     language = 'nl';
-            // }
-            // result = id;
-            // console.log(id);
-            // console.log(name);
-            // console.log(email);
-            // console.log(vToken);
-            // console.log(language);
+            if (result.rows.length == 0) {
+                callback(null, result);
+            } else {
+                id = result.rows[0].external_id;
+                name = result.rows[0].name;
+                email = result.rows[0].email;
+                vToken = result.rows[0].token;
+                language = result.rows[0].language;
+                if (language == null) {
+                    language = 'nl';
+                }
+                result = id;
+                console.log(id);
+                console.log(name);
+                console.log(email);
+                console.log(vToken);
+                console.log(language);
+                 callback(null, result);
+            }
 
-            callback(null, result);
+
+           
         });
 
     });
