@@ -59,7 +59,11 @@ router.post('/', function (req, res) {
        Sync(function(){
            result = getUsername.sync(null,token);
            
-           console.log(result + "testing");
+           
+       });
+        Sync(function(){
+          console.log(result);
+           
        });
        
     token = '';
