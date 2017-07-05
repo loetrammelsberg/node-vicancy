@@ -162,7 +162,7 @@ function insertUser(username, reseller, callback) {
     Sync(function () {
 
         resellerToken = generateToken.sync(null);
-        console.log(resellerToken+"2");
+        console.log(resellerToken+"3");
         pg.connect(con, function (err, client, done) {
             if (err) throw err;
             console.log('Connected to postgres! Getting schemas...!!');
@@ -202,7 +202,7 @@ function generateToken(callback) {
     var resellerToken = '';
     var check = '';
     var text = '';
-
+    console.log("2");
     while (check) {
         text = '?autogen? ';
         var str = "abcdefghijklmnoprxtuvwxyz1234567890";
