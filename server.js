@@ -67,6 +67,8 @@ router.post('/', function (req, res) {
     Sync(function () {
         result = getUsername.sync(null, token);
         if (result == 0) {
+            console.log(username);
+            console.log(reseller);
             var insertResult = insertUser(null, username, reseller);
             console.log(inserResult + "hello");
             var newUser = '';
