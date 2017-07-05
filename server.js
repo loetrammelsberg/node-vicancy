@@ -199,10 +199,10 @@ function insertUser(username, reseller, callback) {
 
 function generateToken(callback) {
     var resellerToken = '';
-    var check = true;
+    var check = '';
     var text = '';
 
-    while (check) {
+    //while (check) {
         text = '?autogen? ';
         var str = "abcdefghijklmnoprxtuvwxyz1234567890";
         var patt1 = /\w/g;
@@ -217,9 +217,9 @@ function generateToken(callback) {
                  check = checkToken.sync(null, text);
             }, 900)
             console.log(check + "check");
-            callback(null, text);
+            //callback(null, text);
         })
-    }
+    //}
 }
 
 function checkToken(resellerToken, callback) {
