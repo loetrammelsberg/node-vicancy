@@ -165,7 +165,7 @@ function insertUser(username, reseller, callback) {
     console.log(resellerToken + "1");
     Sync(function () {
         resellerToken = generateToken.sync(null);
-        var results = insertDatabase(resellerToken);
+        var results = insertDatabase.sync(null,username,resellerToken);
         if(results == 200){
             callback(null,results)
         }
@@ -202,7 +202,7 @@ function generateToken(callback) {
 
 }
 
-function insertDatabase(resellerToken, callback) {
+function insertDatabase(username, resellerToken, callback) {
 
     client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
 
