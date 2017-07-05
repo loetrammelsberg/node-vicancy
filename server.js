@@ -214,9 +214,7 @@ function generateToken(callback) {
         }
         Sync(function () {
             console.log(text);
-
             check = checkToken.sync(null, text);
-
             console.log(check + "check");
             //callback(null, text);
         })
