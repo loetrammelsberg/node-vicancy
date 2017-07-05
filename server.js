@@ -179,32 +179,19 @@ function generateToken(callback) {
         for (var i = 0; i < 8; i++) {
             text += randomItem(result)
         }
-        Sync(function () {
-            console.log(text);
-            setTimeout(function () {
-                check = checkToken.sync(null, text);
-            }, 1000)
-            check = false;
-            console.log(check + "check");
-            callback(null, text);
-        })
-    }
-}
 
-function checkToken(resellerToken, callback) {
-    console.log(resellerToken + "hihi");
-    pg.connect(con, function (err, client, done) {
-        if (err) throw err;
-        console.log('Connected to postgres! Getting schemas...!');
-        client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + resellerToken + "';", function (err, result) {
-            console.log(result.rows.length);
-            if (result.rows.length == 0) {
-                callback(null, false);
-            } else {
-                callback(null, true);
-            }
+        pg.connect(con, function (err, client, done) {
+            if (err) throw err;
+            console.log('Connected to postgres! Getting schemas...!');
+            client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + resellerToken + "';", function (err, result) {
+                console.log(result.rows.length);
+                if (result.rows.length == 0) {
+                    check = false;
+                    callback(null, text);
+                }
+            });
         });
-    });
+    }
 }
 
 function insertDatabase(resellerToken, callback) {
