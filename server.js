@@ -150,9 +150,6 @@ function selectCilent(username, callback) {
                 console.log(language);
                 callback(null, result.rows.length);
             }
-
-
-
         });
 
     });
@@ -162,8 +159,8 @@ function selectCilent(username, callback) {
 function insertUser(username, reseller, callback) {
     var resellerToken = '';
     Sync(function () {
-
-
+        resellerToken = generateToken.sync(null);
+    })
         console.log(resellerToken + "heyhey");
 
         pg.connect(con, function (err, client, done) {
@@ -198,8 +195,7 @@ function insertUser(username, reseller, callback) {
                 });
             });
         });
-    })
-}
+    }
 
 function generateToken(callback) {
     var resellerToken = '';
