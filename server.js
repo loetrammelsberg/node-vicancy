@@ -11,6 +11,7 @@ var path = require("path");
 var request = require('request');
 var pg = require('pg');
 var con = 'postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei';
+pg.defaults.ssl = true;
 var client = new pg.Client(con);
 client.connect();
 
@@ -183,7 +184,7 @@ function generateToken(callback) {
             text += randomItem(result)
         }
         console.log(text);
-        pg.defaults.ssl = true;
+        
         pg.connect(con, function (err, client, done) {
             if (err) throw err;
             console.log('Connected to postgres! Getting schemas...!');
