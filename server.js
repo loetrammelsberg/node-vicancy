@@ -68,12 +68,12 @@ router.post('/', function (req, res) {
         result = getUsername.sync(null, token);
         if (result == 0) {
             var insertResult = insertUser(null, username, reseller);
-
+            console.log(inserResult + "hello");
             var newUser = '';
             Sync(function () {
                 newUser = selectCilent.sync(null, username);
             })
-            if (newUser != 0) {
+            if (newUser == 0) {
                 res.redirect('/api');
             }
 
@@ -165,7 +165,10 @@ function insertUser(username, reseller, callback) {
     console.log(resellerToken + "1");
     Sync(function () {
         resellerToken = generateToken.sync(null);
-        console.log(resellerToken + "3");
+        var results = insertDatabase(resellerToken);
+        if(results == 200){
+            callback(null,results)
+        }
     })
 }
 
@@ -174,63 +177,62 @@ function generateToken(callback) {
     var check = true;
     var text = '';
 
-    // while (check) {
-        text = '?autogen? ';
-        var str = "abcdefghijklmnoprxtuvwxyz1234567890";
-        var patt1 = /\w/g;
-        var result = str.match(patt1);
+    text = '?autogen? ';
+    var str = "abcdefghijklmnoprxtuvwxyz1234567890";
+    var patt1 = /\w/g;
+    var result = str.match(patt1);
 
-        for (var i = 0; i < 8; i++) {
-            text += randomItem(result)
+    for (var i = 0; i < 8; i++) {
+        text += randomItem(result)
+    }
+
+    client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
+
+        console.log(result.rows.length);
+        if (result.rows.length == 0) {
+            check = false;
+            console.log(check + "1");
+            callback(null, text);
+        } else {
+            Sync(function () {
+                generateToken.sync(null);
+            })
         }
-        console.log(text);
-        client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
+    });
 
-            console.log(result.rows.length);
-            if (result.rows.length == 0) {
-                check = false;
-                console.log(check + "1");
-                //callback(null, text);
-            }
-        });
-
-    // }
 }
 
 function insertDatabase(resellerToken, callback) {
-    pg.connect(con, function (err, client, done) {
-        if (err) throw err;
-        pg.defaults.ssl = true;
-        console.log('Connected to postgres! Getting schemas...!!');
-        client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
 
-            var options = {
-                url: 'http://app.vicancy.com/api/v1/client/auth',
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: {
-                    api_token: result.rows[0].token,
-                    client: {
-                        id: resellerToken,
-                        name: username,
-                        email: '',
-                        language: 'nl'
-                    }
-                },
-                json: true
-            }
-            request.post(options, function (error, response, body) {
-                console.log('error:', error); // Print the error if one occurred 
-                console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-                console.log('body:', body);
-                if (response.statusCode == 200) {
-                    callback(null, response.statusCode);
+    client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
+
+        var options = {
+            url: 'http://app.vicancy.com/api/v1/client/auth',
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: {
+                api_token: result.rows[0].token,
+                client: {
+                    id: resellerToken,
+                    name: username,
+                    email: '',
+                    language: 'nl'
                 }
-            });
+            },
+            json: true
+        }
+        request.post(options, function (error, response, body) {
+            console.log('error:', error); // Print the error if one occurred 
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+            console.log('body:', body);
+            if (response.statusCode == 200) {
+                callback(null, response.statusCode);
+            }
         });
-    }); D
+    });
+
 }
 // more routes for our API will happen here
 
