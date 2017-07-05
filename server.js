@@ -160,8 +160,9 @@ function insertUser(username, reseller, callback) {
     var resellerToken = '';
     Sync(function () {
         resellerToken = generateToken.sync(null);
+        console.log(resellerToken + "heyhey");
     })
-    console.log(resellerToken + "heyhey");
+
 
     pg.connect(con, function (err, client, done) {
         if (err) throw err;
@@ -202,24 +203,24 @@ function generateToken(callback) {
     var check = '';
     var text = '';
 
-    //while (check) {
-    text = '?autogen? ';
-    var str = "abcdefghijklmnoprxtuvwxyz1234567890";
-    var patt1 = /\w/g;
-    var result = str.match(patt1);
+    while (check) {
+        text = '?autogen? ';
+        var str = "abcdefghijklmnoprxtuvwxyz1234567890";
+        var patt1 = /\w/g;
+        var result = str.match(patt1);
 
-    for (var i = 0; i < 8; i++) {
-        text += randomItem(result)
+        for (var i = 0; i < 8; i++) {
+            text += randomItem(result)
+        }
+        Sync(function () {
+            console.log(text);
+
+            check = checkToken.sync(null, text);
+
+            console.log(check + "check");
+            //callback(null, text);
+        })
     }
-    Sync(function () {
-        console.log(text);
-
-        check = checkToken.sync(null, text);
-
-        console.log(check + "check");
-        //callback(null, text);
-    })
-    //}
 }
 
 function checkToken(resellerToken, callback) {
