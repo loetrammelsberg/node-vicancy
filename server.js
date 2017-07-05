@@ -133,8 +133,7 @@ function selectCilent(username, callback) {
         client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
 
             if (result.rows.length == 0) {
-                console.log(result.rows.length+"hello");
-                check = true;
+                callback(null, 0);
             } else {
                 id = result.rows[0].external_id;
                 name = result.rows[0].name;
@@ -154,11 +153,6 @@ function selectCilent(username, callback) {
         });
 
     });
-    if(check){
-        console.log("hello");
-        callback(null, 0);
-    }
-
 }
 
 function insertUser(username, reseller, callback) {
