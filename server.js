@@ -21,7 +21,7 @@ app.use(express.static(__dirname + '/View')); //Store all HTML files in view fol
 app.use(express.static(__dirname + '/Script')); //Store all JS and CSS in Scripts folder.
 app.use(express.static(__dirname + '/Public'));
 
-
+var con = 'postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei';
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -124,7 +124,7 @@ function selectCilent(username, callback) {
 
     pg.defaults.ssl = true;
 
-    pg.connect('postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei', function (err, client) {
+    pg.connect(con, function (err, client) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
         if (username == 'Vicancy') {
