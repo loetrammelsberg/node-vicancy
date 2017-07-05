@@ -9,8 +9,17 @@ var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
 var request = require('request');
-var pg = require('pg');
-var pg1 = require('pg');
+var pg = require('pg').Pool;
+
+var pool = new pg({
+    user: 'qsxeiddqmzyjtl',
+    password: 'Yr6gsDFcIw3QIlJH9tVSJ7f9xt',
+    host: 'ec2-54-246-96-114.eu-west-1.compute.amazonaws.com',
+    database: 'd1fu206la3ndei',
+    max: 10, // max number of clients in pool
+    idleTimeoutMillis: 1000, // close & remove clients which have been idle > 1 second
+});
+
 var Sync = require("sync");
 var randomItem = require('random-item');
 
@@ -123,9 +132,9 @@ function trimUsername(username) {
 function selectCilent(username, callback) {
     reseller = 'HROffice';
     var check = false;
-    pg.defaults.ssl = true;
+    pool.defaults.ssl = true;
 
-    pg.connect(con, function (err, client, done) {
+    pool.connect(function (err, client, done) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
         if (username == 'Vicancy') {
@@ -182,15 +191,16 @@ function generateToken(callback) {
             text += randomItem(result)
         }
         console.log(text);
-        pg1.defaults.ssl = true;
-        pg1.connect(con, function (err, client, done) {
+        pool.defaults.ssl = true;
+        pool.connect(con, function (err, client, done) {
             if (err) throw err;
             console.log('Connected to postgres! Getting schemas...!');
             client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
-                
+
                 console.log(result.rows.length);
                 if (result.rows.length == 0) {
                     check = false;
+                    done();
                     callback(null, text);
                 }
             });
