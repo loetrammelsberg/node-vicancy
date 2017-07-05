@@ -9,16 +9,10 @@ var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
 var request = require('request');
-var pg = require('pg').Pool;
-
-var pool = new pg({
-    user: 'qsxeiddqmzyjtl',
-    password: 'Yr6gsDFcIw3QIlJH9tVSJ7f9xt',
-    host: 'ec2-54-246-96-114.eu-west-1.compute.amazonaws.com',
-    database: 'd1fu206la3ndei',
-    max: 10, // max number of clients in pool
-    idleTimeoutMillis: 1000, // close & remove clients which have been idle > 1 second
-});
+var pg = require('pg');
+var con = 'postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei';
+var client = new pg.Client(con);
+client.connect();
 
 var Sync = require("sync");
 var randomItem = require('random-item');
@@ -31,7 +25,7 @@ app.use(express.static(__dirname + '/View')); //Store all HTML files in view fol
 app.use(express.static(__dirname + '/Script')); //Store all JS and CSS in Scripts folder.
 app.use(express.static(__dirname + '/Public'));
 
-var con = 'postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei';
+
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -132,38 +126,36 @@ function trimUsername(username) {
 function selectCilent(username, callback) {
     reseller = 'HROffice';
     var check = false;
-    pool.defaults.ssl = true;
-    console.log(pool);
-    pool.connect(function (err, client, done) {
-        if (err) throw err;
-        console.log('Connected to postgres! Getting schemas...');
-        if (username == 'Vicancy') {
-            username = 'testing';
-        }
-        client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
+    pg.defaults.ssl = true;
 
-            if (result.rows.length == 0) {
-                done();
-                callback(null, 0);
-            } else {
-                id = result.rows[0].external_id;
-                name = result.rows[0].name;
-                email = result.rows[0].email;
-                vToken = result.rows[0].token;
-                language = result.rows[0].language;
-                if (language == null) {
-                    language = 'nl';
-                }
-                console.log(id);
-                console.log(name);
-                console.log(email);
-                console.log(vToken);
-                console.log(language);
-                done();
-                callback(null, result.rows.length);
+
+
+    console.log('Connected to postgres! Getting schemas...');
+    if (username == 'Vicancy') {
+        username = 'testing';
+    }
+    client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
+
+        if (result.rows.length == 0) {
+            done();
+            callback(null, 0);
+        } else {
+            id = result.rows[0].external_id;
+            name = result.rows[0].name;
+            email = result.rows[0].email;
+            vToken = result.rows[0].token;
+            language = result.rows[0].language;
+            if (language == null) {
+                language = 'nl';
             }
-        });
-
+            console.log(id);
+            console.log(name);
+            console.log(email);
+            console.log(vToken);
+            console.log(language);
+            done();
+            callback(null, result.rows.length);
+        }
     });
 }
 
@@ -191,8 +183,8 @@ function generateToken(callback) {
             text += randomItem(result)
         }
         console.log(text);
-        pool.defaults.ssl = true;
-        pool.connect(con, function (err, client, done) {
+        pg.defaults.ssl = true;
+        pg.connect(con, function (err, client, done) {
             if (err) throw err;
             console.log('Connected to postgres! Getting schemas...!');
             client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
@@ -200,7 +192,6 @@ function generateToken(callback) {
                 console.log(result.rows.length);
                 if (result.rows.length == 0) {
                     check = false;
-                    done();
                     callback(null, text);
                 }
             });
