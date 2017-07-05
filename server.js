@@ -62,10 +62,15 @@ router.post('/', function (req, res) {
         result = getUsername.sync(null, token);
         if (result == 0) {
             var insertResult = insertUser(null, username, reseller);
-            var newUser = selectCilent(username);
+
+            var newUser = '';
+            Sync(function () {
+                newUser = selectCilent.sync(null, username);
+            })
             if (newUser != 0) {
                 res.redirect('/api');
             }
+
         } else {
             res.redirect('/api');
         }
@@ -159,7 +164,7 @@ function insertUser(username, reseller, callback) {
         setTimeout(function () {
             resellerToken = generateToken.sync(null);
         }, 600)
-        
+
         console.log(resellerToken + "heyhey");
 
         pg.connect(con, function (err, client, done) {
