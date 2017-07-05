@@ -159,8 +159,9 @@ function selectCilent(username, callback) {
 function insertUser(username, reseller, callback) {
     var resellerToken = '';
     Sync(function () {
+        console.log("heyhey");
         resellerToken = generateToken.sync(null);
-        console.log(resellerToken + "heyhey");
+        
     })
 
 
@@ -216,7 +217,7 @@ function generateToken(callback) {
             console.log(text);
             check = checkToken.sync(null, text);
             console.log(check + "check");
-            //callback(null, text);
+            callback(null, text);
         })
     }
 }
