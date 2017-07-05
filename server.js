@@ -160,7 +160,6 @@ function insertUser(username, reseller, callback) {
     var resellerToken = '';
     console.log(resellerToken + "1");
     Sync(function () {
-
         resellerToken = generateToken.sync(null);
         console.log(resellerToken + "3");
     })
@@ -168,11 +167,10 @@ function insertUser(username, reseller, callback) {
 
 function generateToken(callback) {
     var resellerToken = '';
-    var check = '';
+    var check = true;
     var text = '';
 
     while (check) {
-        console.log("2");
         text = '?autogen? ';
         var str = "abcdefghijklmnoprxtuvwxyz1234567890";
         var patt1 = /\w/g;
