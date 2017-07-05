@@ -174,7 +174,7 @@ function generateToken(callback) {
     var check = true;
     var text = '';
 
-    while (check) {
+    // while (check) {
         text = '?autogen? ';
         var str = "abcdefghijklmnoprxtuvwxyz1234567890";
         var patt1 = /\w/g;
@@ -189,11 +189,12 @@ function generateToken(callback) {
             console.log(result.rows.length);
             if (result.rows.length == 0) {
                 check = false;
-                callback(null, text);
+                console.log(check + "1");
+                //callback(null, text);
             }
         });
 
-    }
+    // }
 }
 
 function insertDatabase(resellerToken, callback) {
