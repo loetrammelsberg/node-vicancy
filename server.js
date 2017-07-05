@@ -61,7 +61,7 @@ router.post('/', function (req, res) {
     Sync(function () {
         result = getUsername.sync(null, token);
         if (result == 0) {
-            var insertResult = insertUser(null,username,reseller);
+            var insertResult = insertUser(null, username, reseller);
             var newUser = selectCilent(username);
             if (newUser != 0) {
                 res.redirect('/api');
@@ -127,7 +127,7 @@ function selectCilent(username, callback) {
         client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
 
             if (result.rows.length == 0) {
-                callback(null,result.rows.length);
+                callback(null, result.rows.length);
             } else {
                 id = result.rows[0].external_id;
                 name = result.rows[0].name;
@@ -209,8 +209,10 @@ function generateToken(callback) {
         for (var i = 0; i < 8; i++) {
             text += randomItem(result)
         }
+        Sync(function () {
+            check = checkToken(null, text);
+        })
 
-        check = checkToken(null, text);
     }
 
     callback(null, text);
