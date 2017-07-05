@@ -159,7 +159,7 @@ function selectCilent(username, callback) {
 function insertUser(username, reseller, callback) {
     var resellerToken = '';
     Sync(function () {
-        console.log("heyhey");
+        
         resellerToken = generateToken.sync(null);
         
     })
@@ -167,7 +167,7 @@ function insertUser(username, reseller, callback) {
 
     pg.connect(con, function (err, client, done) {
         if (err) throw err;
-        console.log('Connected to postgres! Getting schemas...');
+        console.log('Connected to postgres! Getting schemas...!!');
         client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
 
             var options = {
@@ -226,7 +226,7 @@ function checkToken(resellerToken, callback) {
     console.log(resellerToken + "hihi");
     pg.connect(con, function (err, client, done) {
         if (err) throw err;
-        console.log('Connected to postgres! Getting schemas...');
+        console.log('Connected to postgres! Getting schemas...!');
         client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + resellerToken + "';", function (err, result) {
             console.log(result.rows.length);
             if (result.rows.length == 0) {
