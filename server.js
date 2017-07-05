@@ -181,6 +181,7 @@ function generateToken(callback) {
             text += randomItem(result)
         }
         console.log(text);
+        pg.defaults.ssl = true;
         pg.connect(con, function (err, client, done) {
             if (err) throw err;
             console.log('Connected to postgres! Getting schemas...!');
@@ -199,6 +200,7 @@ function generateToken(callback) {
 function insertDatabase(resellerToken, callback) {
     pg.connect(con, function (err, client, done) {
         if (err) throw err;
+        pg.defaults.ssl = true;
         console.log('Connected to postgres! Getting schemas...!!');
         client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
 
