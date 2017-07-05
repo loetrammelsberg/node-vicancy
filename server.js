@@ -78,7 +78,6 @@ router.post('/', function (req, res) {
             if (newUser == 0) {
                 res.redirect('/api');
             }
-
         } else {
             res.redirect('/api');
         }
@@ -170,8 +169,9 @@ function insertUser(username, reseller, callback) {
     Sync(function () {
         resellerToken = generateToken.sync(null);
         var results = insertDatabase.sync(null, username, reseller, resellerToken);
+        console.log(results);
         if (results == 200) {
-            callback(null, results)
+            callback(null, results);
         }
     })
 }
