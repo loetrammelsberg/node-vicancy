@@ -184,7 +184,7 @@ function generateToken(callback) {
             setTimeout(function () {
                 check = checkToken.sync(null, text);
             }, 1000)
-
+            check = false;
             console.log(check + "check");
             callback(null, text);
         })
