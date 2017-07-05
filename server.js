@@ -50,6 +50,8 @@ var email = '';
 var vToken = '';
 var language = '';
 
+var reseller = '';
+var username = '';
 
 // test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
@@ -59,8 +61,9 @@ router.post('/', function (req, res) {
     Sync(function () {
         result = getUsername.sync(null, token);
         if (result == 0) {
-            var newUser = selectCilent(result);
-            if(newUser != 0){
+            var insertResult = insertUser(null,username,reseller);
+            var newUser = selectCilent(username);
+            if (newUser != 0) {
                 res.redirect('/api');
             }
         } else {
@@ -87,12 +90,12 @@ function getUsername(token, callback) {
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
         console.log('body:', body);
         if (response.statusCode == 200) {
-            var username = body.userName;
+            username = body.userName;
             username = trimUsername(username);
             Sync(function () {
                 var result = selectCilent.sync(null, username);
                 callback(null, result);
-            
+
 
             })
         }
@@ -111,8 +114,8 @@ function trimUsername(username) {
 
 
 function selectCilent(username, callback) {
-    var reseller = 'HROffice';
-    var results = '';
+    reseller = 'HROffice';
+
     pg.defaults.ssl = true;
 
     pg.connect('postgres://qsxeiddqmzyjtl:Yr6gsDFcIw3QIlJH9tVSJ7f9xt@ec2-54-246-96-114.eu-west-1.compute.amazonaws.com:5432/d1fu206la3ndei', function (err, client) {
@@ -122,12 +125,9 @@ function selectCilent(username, callback) {
             username = 'testing';
         }
         client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
-            
+
             if (result.rows.length == 0) {
-                Sync(function () {
-                    results = insertUser.sync(null,username,reseller);
-                    callback(null,results);
-                })
+                callback(null,result.rows.length);
             } else {
                 id = result.rows[0].external_id;
                 name = result.rows[0].name;
@@ -137,13 +137,12 @@ function selectCilent(username, callback) {
                 if (language == null) {
                     language = 'nl';
                 }
-                results = result.rows.length;
                 console.log(id);
                 console.log(name);
                 console.log(email);
                 console.log(vToken);
                 console.log(language);
-                callback(null, results);
+                callback(null, result.rows.length);
             }
 
 
@@ -189,7 +188,7 @@ function insertUser(username, reseller, callback) {
                 console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
                 console.log('body:', body);
                 if (response.statusCode == 200) {
-                    callback(null, username);
+                    callback(null, response.statusCode);
                 }
             });
         });
@@ -222,6 +221,7 @@ function checkToken(resellerToken, callback) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
         client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + resellerToken + "';", function (err, result) {
+            console.log(result.rows.length);
             if (result.rows.length == 0) {
                 callback(null, false);
             } else {
