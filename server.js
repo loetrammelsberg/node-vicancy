@@ -211,11 +211,13 @@ function generateToken(callback) {
         }
         Sync(function () {
             check = checkToken(null, text);
+            console.log(check);
+            callback(null, text);
         })
 
     }
 
-    callback(null, text);
+    
 }
 
 function checkToken(resellerToken, callback) {
