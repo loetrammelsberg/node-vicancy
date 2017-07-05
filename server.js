@@ -162,6 +162,7 @@ function selectCilent(username, callback) {
 
 function insertUser(username, reseller, callback) {
     var resellerToken = '';
+    console.log(username+reseller);
     console.log(resellerToken + "1");
     Sync(function () {
         resellerToken = generateToken.sync(null);
@@ -200,7 +201,7 @@ function generateToken(callback) {
 }
 
 function insertDatabase(username,reseller, resellerToken, callback) {
-    console.log(username);
+    
     client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
 
         var options = {
