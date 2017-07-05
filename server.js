@@ -67,10 +67,8 @@ router.post('/', function (req, res) {
     Sync(function () {
         result = getUsername.sync(null, token);
         if (result == 0) {
-            console.log(username);
-            console.log(reseller);
             var insertResult = insertUser.sync(null, username, reseller);
-            console.log(inserResult + "hello");
+            console.log(insertResult);
             var newUser = '';
             Sync(function () {
                 newUser = selectCilent.sync(null, username);
@@ -169,7 +167,7 @@ function insertUser(username, reseller, callback) {
     Sync(function () {
         resellerToken = generateToken.sync(null);
         var results = insertDatabase.sync(null, username, reseller, resellerToken);
-        console.log(results);
+        
         if (results == 200) {
             callback(null, results);
         }
