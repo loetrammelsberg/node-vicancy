@@ -67,6 +67,7 @@ router.post('/', function (req, res) {
     Sync(function () {
         result = getUsername.sync(null, token);
         if (result == 0) {
+            console.log(username);
             var insertResult = insertUser(null, username, reseller);
             console.log(inserResult + "hello");
             var newUser = '';
@@ -187,11 +188,8 @@ function generateToken(callback) {
     }
 
     client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
-
-        console.log(result.rows.length);
         if (result.rows.length == 0) {
             check = false;
-            console.log(check + "1");
             callback(null, text);
         } else {
             Sync(function () {
