@@ -158,10 +158,11 @@ function selectCilent(username, callback) {
 
 function insertUser(username, reseller, callback) {
     var resellerToken = '';
+    console.log(resellerToken+"1");
     Sync(function () {
 
         resellerToken = generateToken.sync(null);
-        console.log(resellerToken+"hello");
+        console.log(resellerToken+"2");
         pg.connect(con, function (err, client, done) {
             if (err) throw err;
             console.log('Connected to postgres! Getting schemas...!!');
