@@ -218,6 +218,7 @@ function generateToken(callback) {
             text += randomItem(result)
         }
         Sync(function () {
+            console.log(text);
             check = checkToken(null, text);
             console.log(check);
             callback(null, text);
