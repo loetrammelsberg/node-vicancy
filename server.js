@@ -128,12 +128,6 @@ function selectCilent(username, callback) {
     var check = false;
     pg.defaults.ssl = true;
 
-
-
-    console.log('Connected to postgres! Getting schemas...');
-    if (username == 'Vicancy') {
-        username = 'testing';
-    }
     client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
 
         if (result.rows.length == 0) {
@@ -161,9 +155,6 @@ function selectCilent(username, callback) {
 
 function insertUser(username, reseller, callback) {
     var resellerToken = '';
-    if (username == 'Vicancy') {
-        username = 'testing';
-    }
     Sync(function () {
         resellerToken = generateToken.sync(null);
         var results = insertDatabase.sync(null, username, reseller, resellerToken);
