@@ -138,7 +138,7 @@ function selectCilent(username, callback) {
     client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
 
         if (result.rows.length == 0) {
-            done();
+          
             callback(null, 0);
         } else {
             id = result.rows[0].external_id;
@@ -154,7 +154,7 @@ function selectCilent(username, callback) {
             console.log(email);
             console.log(vToken);
             console.log(language);
-            done();
+         
             callback(null, result.rows.length);
         }
     });
