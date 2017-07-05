@@ -221,6 +221,7 @@ function generateToken(callback) {
 }
 
 function checkToken(resellerToken, callback) {
+    console.log(resellerToken+"hihi");
     pg.connect(con, function (err, client, done) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
