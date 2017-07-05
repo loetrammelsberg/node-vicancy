@@ -121,7 +121,7 @@ function trimUsername(username) {
 
 function selectCilent(username, callback) {
     reseller = 'HROffice';
-
+    var check = false;
     pg.defaults.ssl = true;
 
     pg.connect(con, function (err, client) {
@@ -133,7 +133,7 @@ function selectCilent(username, callback) {
         client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
 
             if (result.rows.length == 0) {
-                callback(null, result.rows.length);
+                check = true;
             } else {
                 id = result.rows[0].external_id;
                 name = result.rows[0].name;
@@ -153,6 +153,9 @@ function selectCilent(username, callback) {
         });
 
     });
+    if(check){
+        callback(null, result.rows.length);
+    }
 
 }
 
