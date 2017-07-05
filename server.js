@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var path = require("path");
 var request = require('request');
 var pg = require('pg');
+var pg1 = require('pg');
 var Sync = require("sync");
 var randomItem = require('random-item');
 
@@ -181,8 +182,8 @@ function generateToken(callback) {
             text += randomItem(result)
         }
         console.log(text);
-        pg.defaults.ssl = true;
-        pg.connect(con, function (err, client, done) {
+        pg1.defaults.ssl = true;
+        pg1.connect(con, function (err, client, done) {
             if (err) throw err;
             console.log('Connected to postgres! Getting schemas...!');
             client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
