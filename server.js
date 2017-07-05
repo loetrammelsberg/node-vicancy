@@ -67,7 +67,6 @@ router.post('/', function (req, res) {
     Sync(function () {
         result = getUsername.sync(null, token);
         if (result == 0) {
-            console.log(username);
             var insertResult = insertUser(null, username, reseller);
             console.log(inserResult + "hello");
             var newUser = '';
@@ -166,7 +165,7 @@ function insertUser(username, reseller, callback) {
     console.log(resellerToken + "1");
     Sync(function () {
         resellerToken = generateToken.sync(null);
-        var results = insertDatabase.sync(null,username,resellerToken);
+        var results = insertDatabase.sync(null,username,reseller,resellerToken);
         if(results == 200){
             callback(null,results)
         }
@@ -200,8 +199,8 @@ function generateToken(callback) {
 
 }
 
-function insertDatabase(username, resellerToken, callback) {
-
+function insertDatabase(username,reseller, resellerToken, callback) {
+    console.log(username);
     client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
 
         var options = {
