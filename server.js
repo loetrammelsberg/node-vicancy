@@ -209,6 +209,7 @@ function generateToken(callback) {
     var text = '?autogen? ';
 
     while (check) {
+        text = '';
         console.log("checking");
         var str = "abcdefghijklmnoprxtuvwxyz1234567890";
         var patt1 = /\w/g;
@@ -219,8 +220,8 @@ function generateToken(callback) {
         }
         Sync(function () {
             console.log(text);
-            check = checkToken(null, text);
-            console.log(check);
+            check = checkToken.sync(null, text);
+            console.log(check+"check");
             callback(null, text);
         })
 
