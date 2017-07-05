@@ -154,6 +154,7 @@ function selectCilent(username, callback) {
 
     });
     if(check){
+        console.log("hello");
         callback(null, 0);
     }
 
