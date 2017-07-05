@@ -162,9 +162,7 @@ function selectCilent(username, callback) {
 function insertUser(username, reseller, callback) {
     var resellerToken = '';
     Sync(function () {
-        setTimeout(function () {
-            resellerToken = generateToken.sync(null);
-        }, 600)
+
 
         console.log(resellerToken + "heyhey");
 
@@ -206,11 +204,10 @@ function insertUser(username, reseller, callback) {
 function generateToken(callback) {
     var resellerToken = '';
     var check = true;
-    var text = '?autogen? ';
+    var text = '';
 
     while (check) {
-        text = '';
-        console.log("checking");
+        text = '?autogen? ';
         var str = "abcdefghijklmnoprxtuvwxyz1234567890";
         var patt1 = /\w/g;
         var result = str.match(patt1);
@@ -220,14 +217,13 @@ function generateToken(callback) {
         }
         Sync(function () {
             console.log(text);
-            check = checkToken.sync(null, text);
-            console.log(check+"check");
+            setTimeout(function () {
+                 check = checkToken.sync(null, text);
+            }, 500)
+            console.log(check + "check");
             callback(null, text);
         })
-
     }
-
-
 }
 
 function checkToken(resellerToken, callback) {
