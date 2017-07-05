@@ -154,7 +154,7 @@ function selectCilent(username, callback) {
 
     });
     if(check){
-        callback(null, result.rows.length);
+        callback(null, 0);
     }
 
 }
