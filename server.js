@@ -163,38 +163,6 @@ function insertUser(username, reseller, callback) {
 
         resellerToken = generateToken.sync(null);
         console.log(resellerToken+"3");
-        pg.connect(con, function (err, client, done) {
-            if (err) throw err;
-            console.log('Connected to postgres! Getting schemas...!!');
-            client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
-
-                var options = {
-                    url: 'http://app.vicancy.com/api/v1/client/auth',
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: {
-                        api_token: result.rows[0].token,
-                        client: {
-                            id: resellerToken,
-                            name: username,
-                            email: '',
-                            language: 'nl'
-                        }
-                    },
-                    json: true
-                }
-                request.post(options, function (error, response, body) {
-                    console.log('error:', error); // Print the error if one occurred 
-                    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-                    console.log('body:', body);
-                    if (response.statusCode == 200) {
-                        callback(null, response.statusCode);
-                    }
-                });
-            });
-        });
     })
 }
 
@@ -235,6 +203,41 @@ function checkToken(resellerToken, callback) {
             }
         });
     });
+}
+
+function insertDatabase(resellerToken,callback){
+            pg.connect(con, function (err, client, done) {
+            if (err) throw err;
+            console.log('Connected to postgres! Getting schemas...!!');
+            client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
+
+                var options = {
+                    url: 'http://app.vicancy.com/api/v1/client/auth',
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: {
+                        api_token: result.rows[0].token,
+                        client: {
+                            id: resellerToken,
+                            name: username,
+                            email: '',
+                            language: 'nl'
+                        }
+                    },
+                    json: true
+                }
+                request.post(options, function (error, response, body) {
+                    console.log('error:', error); // Print the error if one occurred 
+                    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+                    console.log('body:', body);
+                    if (response.statusCode == 200) {
+                        callback(null, response.statusCode);
+                    }
+                });
+            });
+        });D
 }
 // more routes for our API will happen here
 
