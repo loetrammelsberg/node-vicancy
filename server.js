@@ -157,7 +157,7 @@ function insertUser(username, reseller, callback) {
     var resellerToken = '';
     Sync(function () {
         resellerToken = generateToken.sync(null);
-
+        console.log(resellerToken);
     })
 
     console.log("out of checking");
