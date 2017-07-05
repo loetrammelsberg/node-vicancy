@@ -133,7 +133,7 @@ function selectCilent(username, callback) {
     reseller = 'HROffice';
     var check = false;
     pool.defaults.ssl = true;
-
+    console.log(pool);
     pool.connect(function (err, client, done) {
         if (err) throw err;
         console.log('Connected to postgres! Getting schemas...');
