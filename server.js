@@ -4,29 +4,27 @@
 // =============================================================================
 'use strict';
 // call the packages we need
-var express = require('express');        
-var app = express();            
+var express = require('express');        // call express
+var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var path = require("path");
 var request = require('request');
 var pg = require('pg');
-var Sync = require("sync");
-var randomItem = require('random-item');
-
-
 var con = 'postgres://oggxknkdqkcztl:cb9aa05de2e9d2d01ea65709a44ddb78e249227746d22e948da516c3a826d369@ec2-54-75-236-116.eu-west-1.compute.amazonaws.com:5432/d8bicmm27e3gv8';
 pg.defaults.ssl = true;
 var client = new pg.Client(con);
 client.connect();
 
+var Sync = require("sync");
+var randomItem = require('random-item');
 
-app.engine('.ejs', require('ejs').__express); //ejs Effective JavaScript, conbine HTML with JS 
-app.set('views', __dirname + '/View'); //Store all ejs file in View
+app.engine('.ejs', require('ejs').__express);
+app.set('views', __dirname + '/View');
 app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/View')); //Store all HTML files in view folder.
 app.use(express.static(__dirname + '/Script')); //Store all JS and CSS in Scripts folder.
-app.use(express.static(__dirname + '/Public')); //Store all assets in Public folder
+app.use(express.static(__dirname + '/Public'));
 
 
 // configure app to use bodyParser()
@@ -34,12 +32,20 @@ app.use(express.static(__dirname + '/Public')); //Store all assets in Public fol
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080;        // set our port 
+var port = process.env.PORT || 8080;        // set our port
 
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router();
+// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
+// router.get('/', function (req, res) {
+//     res.json({ message: 'hooray! welcome to our get api!' });
+// });
 
+// var token = '';
+
+var username = '';
+var flag = false;
 var data = '';
 
 var rowResult = '';
@@ -53,43 +59,36 @@ var language = '';
 var reseller = '';
 var username = '';
 
-/**
- * @desc expose web service via POST request to HRAppstore to recieve token from it (Take note: Token can only be use once!)
- */
+// test route to make sure everything is working (accessed at POST http://localhost:8080/api)
 router.post('/', function (req, res) {
-    var token = req.body.token; //get token from request body
+    var token = req.body.token;
     var result = '';
-    Sync(function () { //Synchronise the code. 
-        result = getUsername.sync(null, token); //return if client exist in database
-        if (result == 0) {// if client do not exist, insert new user 
+    //console.log(token);
+    Sync(function () {
+        result = getUsername.sync(null, token);
+        if (result == 0) {
             var insertResult = insertUser.sync(null, username, reseller);
             console.log(insertResult);
             var newUser = '';
             Sync(function () {
-                newUser = selectCilent.sync(null, username); // return if user is successful added
+                newUser = selectCilent.sync(null, username);
             })
-            if (newUser == 0) { // if user is successfull added redirect to /api -> widget.ejs
+            if (newUser == 0) {
                 res.redirect('/api');
             }
-        } else { //if client exist redirect to /api -> widget.ejs
-            res.redirect('/api'); 
+        } else {
+            res.redirect('/api');
         }
     });
     token = '';
 });
 
-/**
- * GET Username from HR Appstore
- * @function
- * @param {string} token - token from HRAppstore (To get it you need to expose your web service using post request. see above code)
- * @param {string} callback - once the task is complete it will return to the caller (In this case on line 66 if no line are added or remove)
- */
 function getUsername(token, callback) {
 
     var options = {
-        url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials', //HRappstore URL
-        method: "GET", //using GET Request
-        qs: { token: token }, //token is require 
+        url: 'https://dashboard-staging.hrofficelabs.com/api/external/credentials',
+        method: "GET",
+        qs: { token: token },
         headers: {
             "Content-Type": "application/json",
         },
@@ -114,12 +113,6 @@ function getUsername(token, callback) {
 
 }
 
-/**
- * Trim the username  
- * @function
- * @param {string} username - Username syntax by HRAppstore example: "openid-staging.hrofficelabs.com/user/vicancy"
- * @returns {string} - Return a trimmed username example: vicancy  
- */
 function trimUsername(username) {
     var pos = username.lastIndexOf("/");
     username = username.substring(pos + 1, username.length);
@@ -129,25 +122,24 @@ function trimUsername(username) {
     return username;
 }
 
-/**
- * Select client from Vicancy database using the username
- * @function
- * @param {string} username - Username syntax by HRAppstore example: "openid-staging.hrofficelabs.com/user/vicancy"
- * @returns {string} - Return a trimmed username example: vicancy  
- */
+
 function selectCilent(username, callback) {
-    reseller = 'HROffice'; //this have to change if you need switch between platforms cause this is used to retrieve the right information from the database
-    pg.defaults.ssl = true; // To allow SSL connection to Heroku database 
+    reseller = 'HROffice';
+    var check = false;
+    pg.defaults.ssl = true;
+
+
 
     console.log('Connected to postgres! Getting schemas...');
-    if (username == 'Vicancy') { // REMOVE/COMMENT THIS CODE IF PRODUCTION STARTS!!!
-        username = 'Start People'; // This is for testing if we could retrieve out the data from the data base.
+    if (username == 'Vicancy') {
+        username = 'Start People';
     }
     client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
 
-        if (result.rows.length == 0) { //When there are no rows return means there are no client in the database
-            callback(null, 0); //return to the main caller
-        } else { // else set variables  
+        if (result.rows.length == 0) {
+
+            callback(null, 0);
+        } else {
             id = result.rows[0].external_id;
             name = result.rows[0].name;
             email = result.rows[0].email;
@@ -167,13 +159,6 @@ function selectCilent(username, callback) {
     });
 }
 
-/**
- * Controller for creating new token and insert new user into database
- * @function
- * @param {string} username - Trimmed Username from HRAppstore 
- * @param {string} reseller - Name of the platform 
- * @param {string} callback - return the result of inserting new user
- */
 function insertUser(username, reseller, callback) {
     var resellerToken = '';
 
@@ -187,11 +172,6 @@ function insertUser(username, reseller, callback) {
     })
 }
 
-/**
- * Generate Random Token for external_id
- * @function
- * @param {string} callback - return the a random token
- */
 function generateToken(callback) {
     var resellerToken = '';
     var check = true;
@@ -206,12 +186,11 @@ function generateToken(callback) {
         text += randomItem(result)
     }
 
-    //check if the random token exist in the database
     client.query("SELECT clients.external_id FROM clients where clients.external_id = '" + text + "';", function (err, result) {
         if (result.rows.length == 0) {
             check = false;
             callback(null, text);
-        } else { //if it exist the generate token again
+        } else {
             Sync(function () {
                 generateToken.sync(null);
             })
@@ -220,20 +199,12 @@ function generateToken(callback) {
 
 }
 
-/**
- * Insert new user into database
- * @function
- * @param {string} username - Trimmed Username from HRAppstore 
- * @param {string} reseller - Name of the platform 
- * @param {string} resellerToken - Random generated token
- * @param {string} callback - return the result of inserting new user
- */
 function insertDatabase(username, reseller, resellerToken, callback) {
 
     client.query("SELECT resellers.token FROM Resellers where resellers.name = '" + reseller + "';", function (err, result) {
 
         var options = {
-            url: 'http://app.vicancy.com/api/v1/client/auth', //insert user using POST request vis this URL
+            url: 'http://app.vicancy.com/api/v1/client/auth',
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -277,7 +248,7 @@ app.get('/app', function (req, res) {
     //__dirname : It will resolve to your project folder.
 });
 
-app.get('/api', function (req, res) {//this where we show the vicancy logo for the user to click and it will be redirected to /app
+app.get('/api', function (req, res) {
     console.log(id);
     console.log(name);
     console.log(vToken);
