@@ -20,5 +20,8 @@
     "request": "^2.81.0",
     "sync": "^0.2.5",
     "then-request": "^3.0.0"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.5.3"
   }
 }
