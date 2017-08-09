@@ -14,7 +14,7 @@ var Sync = require("sync");
 var randomItem = require('random-item');
 
 
-var con = 'postgres://oggxknkdqkcztl:cb9aa05de2e9d2d01ea65709a44ddb78e249227746d22e948da516c3a826d369@ec2-54-75-236-116.eu-west-1.compute.amazonaws.com:5432/d8bicmm27e3gv8';
+var con = process.env.DATABASE_URL+'?ssl=true';
 pg.defaults.ssl = true;
 var client = new pg.Client(con);
 client.connect();
