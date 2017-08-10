@@ -140,9 +140,9 @@ function selectCilent(username, callback) {
     pg.defaults.ssl = true; // To allow SSL connection to Heroku database 
 
     console.log('Connected to postgres! Getting schemas...');
-    if (username == 'Vicancy') { // REMOVE/COMMENT THIS CODE IF PRODUCTION STARTS!!!
-        username = 'Start People'; // This is for testing if we could retrieve out the data from the data base.
-    }
+    // if (username == 'Vicancy') { // REMOVE/COMMENT THIS CODE IF PRODUCTION STARTS!!!
+    //     username = 'Start People'; // This is for testing if we could retrieve out the data from the data base.
+    // }
     client.query("SELECT clients.external_id,clients.name,clients.email,clients.language,resellers.token FROM resellers INNER JOIN clients on resellers.id = clients.reseller_id WHERE resellers.name = '" + reseller + "' AND clients.name = '" + username + "'", function (err, result) {
 
         if (result.rows.length == 0) { //When there are no rows return means there are no client in the database
