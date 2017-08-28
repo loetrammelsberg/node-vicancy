@@ -4,25 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Vicancy</title>
-    
+
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://dashboard-staging.hrofficelabs.com/api/client-library" ></script>
     <link rel="stylesheet" href="style.css">
 
-    
+
     <script>
-        window.onload = function() {
-            localStorage.setItem("name","<%=name%>");
-            localStorage.setItem("id","<%=id%>");
-            localStorage.setItem("email","<%=email%>");
-            localStorage.setItem("language","<%=language%>");
-            localStorage.setItem("vToken","<%= vToken %>");
+        window.onload = function () {
+            localStorage.setItem("name", "<%=name%>");
+            localStorage.setItem("id", "<%=id%>");
+            localStorage.setItem("email", "<%=email%>");
+            localStorage.setItem("language", "<%=language%>");
+            localStorage.setItem("vToken", "<%= vToken %>");
         }
+        HROapi.$(function () {
+            HROapi.loadComplete();
+        });
     </script>
 </head>
 
 <body>
-    <a href='#' target='_blank' onclick="window.open('/app')" >
+    <a href='#' target='_blank' onclick="window.open('/app')">
          <img src="Appstore-banner.png" >
     </a>
     <script async src="//vicancy.herokuapp.com/assets/widget-api.js" type="text/javascript"></script>
