@@ -161,7 +161,7 @@ function selectCilent(username, callback) {
             console.log(email);
             console.log(vToken);
             console.log(language);
-            console.log(window.location.href);
+            
             callback(null, result.rows.length);
         }
     });
@@ -282,7 +282,8 @@ app.get('/api', function (req, res) {//this where we show the vicancy logo for t
     console.log(name);
     console.log(vToken);
     console.log(language);
-    
+    var id = req.query;
+    console.log(id);
     res.render('widget.ejs', { id: id, name: name, vToken: vToken, email: email, language: language });
 });
 
