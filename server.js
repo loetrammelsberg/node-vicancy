@@ -57,7 +57,7 @@ var username = '';
  * @desc expose web service via POST request to HRAppstore to recieve token from it (Take note: Token can only be use once!)
  */
 router.post('/', function (req, res) {
-    console.log(req.url);
+    console.log(req.url + "HELLOS");
     var token = req.body.token; //get token from request body
     var result = '';
     Sync(function () { //Synchronise the code. 
