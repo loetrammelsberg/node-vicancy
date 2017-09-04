@@ -20,6 +20,7 @@
             localStorage.setItem("vToken", "<%= vToken %>");
             localStorage.setItem("url", "<%= url %>");
         }
+        console.log(localStorage.getItem("url"));
         HROapi.$(function () {
             HROapi.loadComplete();
             HROapi.SubscribeEvent("SaveSettings", function () {

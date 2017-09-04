@@ -284,7 +284,7 @@ app.get('/api', function (req, res) {//this where we show the vicancy logo for t
     console.log(vToken);
     console.log(language);
     console.log(url);
-    res.render('widget.ejs' + url, { id: id, name: name, vToken: vToken, email: email, language: language, url : url });
+    res.render('widget.ejs', { id: id, name: name, vToken: vToken, email: email, language: language, url : url });
 });
 
 app.get('/', function (req, res) {
