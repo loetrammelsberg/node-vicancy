@@ -18,6 +18,11 @@
 
         HROapi.$(function () {
             HROapi.loadComplete();
+            HROapi.SubscribeEvent("SaveSettings", function () {
+                    //Save actual settings
+                    //...
+                    HROapi.closeSettingsWindow();
+                });
         });
     </script>
 </head>
