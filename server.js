@@ -49,7 +49,7 @@ var name = '';
 var email = '';
 var vToken = '';
 var language = '';
-
+var url = '';
 var reseller = '';
 var username = '';
 
@@ -57,7 +57,7 @@ var username = '';
  * @desc expose web service via POST request to HRAppstore to recieve token from it (Take note: Token can only be use once!)
  */
 router.post('/', function (req, res) {
-    console.log(req.url + "HELLOS");
+    url = req.url;
     var token = req.body.token; //get token from request body
     var result = '';
     Sync(function () { //Synchronise the code. 
@@ -283,7 +283,8 @@ app.get('/api', function (req, res) {//this where we show the vicancy logo for t
     console.log(name);
     console.log(vToken);
     console.log(language);
-    res.render('widget.ejs', { id: id, name: name, vToken: vToken, email: email, language: language });
+    console.log(url);
+    res.render('widget.ejs' + url, { id: id, name: name, vToken: vToken, email: email, language: language, url : url });
 });
 
 app.get('/', function (req, res) {
