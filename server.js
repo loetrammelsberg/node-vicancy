@@ -70,10 +70,10 @@ router.post('/', function (req, res) {
                 newUser = selectCilent.sync(null, username); // return if user is successful added
             })
             if (newUser == 0) { // if user is successfull added redirect to /api -> widget.ejs
-                res.redirect('/api');
+                res.redirect('/api' + url);
             }
         } else { //if client exist redirect to /api -> widget.ejs
-            res.redirect('/api'); 
+            res.redirect('/api' + url); 
         }
     });
     token = '';
